@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import Tutorials from './pages/Tutorials';
-import Attendance from './pages/Attendance';
-import Students from './pages/Students';
-import Graduations from './pages/Graduations';
-import PhysicalMetrics from './pages/PhysicalMetrics';
-import Reports from './pages/Reports';
-import RulesCBJJ from './pages/RulesCBJJ';
-import Tournaments from './pages/Tournaments';
-import LineageBJJ from './pages/LineageBJJ';
 import CyberOrientalBackground from './components/CyberOrientalBackground';
+
+// Lazy-loaded pages to make initial app load instantaneous
+const Tutorials = lazy(() => import('./pages/Tutorials'));
+const Attendance = lazy(() => import('./pages/Attendance'));
+const Students = lazy(() => import('./pages/Students'));
+const Graduations = lazy(() => import('./pages/Graduations'));
+const PhysicalMetrics = lazy(() => import('./pages/PhysicalMetrics'));
+const Reports = lazy(() => import('./pages/Reports'));
+const Tournaments = lazy(() => import('./pages/Tournaments'));
+const LineageBJJ = lazy(() => import('./pages/LineageBJJ'));
+const RulesCBJJ = lazy(() => import('./pages/RulesCBJJ'));
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -50,16 +52,23 @@ function AppContent() {
         />
 
         <main className="flex-1 p-3 sm:p-6 lg:p-8 min-w-0 overflow-y-auto">
-          {activeTab === 'dashboard' && <Dashboard onNavigate={setActiveTab} />}
-          {activeTab === 'tutorials' && <Tutorials />}
-          {activeTab === 'attendance' && <Attendance />}
-          {activeTab === 'students' && <Students />}
-          {activeTab === 'graduations' && <Graduations />}
-          {activeTab === 'physical' && <PhysicalMetrics />}
-          {activeTab === 'reports' && <Reports />}
-          {activeTab === 'tournaments' && <Tournaments />}
-          {activeTab === 'lineage' && <LineageBJJ />}
-          {activeTab === 'rules' && <RulesCBJJ />}
+          <Suspense fallback={
+            <div className="flex flex-col items-center justify-center py-24 gap-3">
+              <div className="w-8 h-8 border-2 border-amber-500/20 border-t-amber-500 rounded-full animate-spin shadow-[0_0_10px_#f59e0b]" />
+              <span className="text-xs text-zinc-500 font-mono">Carregando tatame...</span>
+            </div>
+          }>
+            {activeTab === 'dashboard' && <Dashboard onNavigate={setActiveTab} />}
+            {activeTab === 'tutorials' && <Tutorials />}
+            {activeTab === 'attendance' && <Attendance />}
+            {activeTab === 'students' && <Students />}
+            {activeTab === 'graduations' && <Graduations />}
+            {activeTab === 'physical' && <PhysicalMetrics />}
+            {activeTab === 'reports' && <Reports />}
+            {activeTab === 'tournaments' && <Tournaments />}
+            {activeTab === 'lineage' && <LineageBJJ />}
+            {activeTab === 'rules' && <RulesCBJJ />}
+          </Suspense>
         </main>
       </div>
     </div>

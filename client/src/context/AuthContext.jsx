@@ -4,8 +4,21 @@ import { api } from '../utils/api';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(() => {
+    try {
+      const cached = localStorage.getItem('artesuave_user');
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [loading, setLoading] = useState(() => {
+    const token = localStorage.getItem('artesuave_token');
+    const cached = localStorage.getItem('artesuave_user');
+    // If no token or we already have cached user, do NOT block the UI!
+    return Boolean(token && !cached);
+  });
 
   useEffect(() => {
     const token = localStorage.getItem('artesuave_token');
@@ -13,9 +26,13 @@ export function AuthProvider({ children }) {
       api.get('/auth/me')
         .then(userData => {
           setUser(userData);
+          try {
+            localStorage.setItem('artesuave_user', JSON.stringify(userData));
+          } catch {}
         })
         .catch(() => {
           localStorage.removeItem('artesuave_token');
+          localStorage.removeItem('artesuave_user');
           setUser(null);
         })
         .finally(() => setLoading(false));
@@ -27,6 +44,9 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password });
     localStorage.setItem('artesuave_token', res.token);
+    try {
+      localStorage.setItem('artesuave_user', JSON.stringify(res.user));
+    } catch {}
     setUser(res.user);
     return res.user;
   };
@@ -34,12 +54,16 @@ export function AuthProvider({ children }) {
   const register = async (userData) => {
     const res = await api.post('/auth/register', userData);
     localStorage.setItem('artesuave_token', res.token);
+    try {
+      localStorage.setItem('artesuave_user', JSON.stringify(res.user));
+    } catch {}
     setUser(res.user);
     return res.user;
   };
 
   const logout = () => {
     localStorage.removeItem('artesuave_token');
+    localStorage.removeItem('artesuave_user');
     setUser(null);
   };
 
@@ -47,6 +71,9 @@ export function AuthProvider({ children }) {
     try {
       const refreshed = await api.get('/auth/me');
       setUser(refreshed);
+      try {
+        localStorage.setItem('artesuave_user', JSON.stringify(refreshed));
+      } catch {}
     } catch (e) {
       console.error(e);
     }

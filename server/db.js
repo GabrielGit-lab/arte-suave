@@ -10,8 +10,12 @@ if (!fs.existsSync(databaseDir)) {
 const dbPath = path.join(databaseDir, 'artesuave.db');
 const db = new DatabaseSync(dbPath);
 
-// Enable foreign keys
+// SQLite Performance Tuning
 db.exec('PRAGMA foreign_keys = ON;');
+db.exec('PRAGMA journal_mode = WAL;');
+db.exec('PRAGMA synchronous = NORMAL;');
+db.exec('PRAGMA cache_size = -20000;');
+db.exec('PRAGMA temp_store = MEMORY;');
 
 function initDatabase() {
   db.exec(`
@@ -184,6 +188,15 @@ function initDatabase() {
       rules_type TEXT,
       created_at TEXT DEFAULT (datetime('now'))
     );
+
+    CREATE INDEX IF NOT EXISTS idx_attendances_student ON attendances(student_id);
+    CREATE INDEX IF NOT EXISTS idx_attendances_class ON attendances(class_id);
+    CREATE INDEX IF NOT EXISTS idx_physical_student ON physical_records(student_id);
+    CREATE INDEX IF NOT EXISTS idx_graduations_student ON graduations(student_id);
+    CREATE INDEX IF NOT EXISTS idx_classes_date ON classes(date);
+    CREATE INDEX IF NOT EXISTS idx_tournament_matches_tour ON tournament_matches(tournament_id);
+    CREATE INDEX IF NOT EXISTS idx_tournament_athletes_tour ON tournament_athletes(tournament_id);
+    CREATE INDEX IF NOT EXISTS idx_fed_tournaments_fed_status ON federation_tournaments(federation, status);
   `);
 
   seedData();
