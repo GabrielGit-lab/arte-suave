@@ -1,0 +1,592 @@
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { api } from '../utils/api';
+import BeltBadge from '../components/BeltBadge';
+import Modal from '../components/Modal';
+import { 
+  Users, 
+  Search, 
+  Plus, 
+  Phone, 
+  Mail, 
+  Calendar, 
+  Scale, 
+  Award, 
+  Clock, 
+  Trash2, 
+  Edit3, 
+  AlertCircle,
+  FileText,
+  UserCheck
+} from 'lucide-react';
+
+const BELTS = ['Todas', 'Branca', 'Azul', 'Roxa', 'Marrom', 'Preta'];
+
+export default function Students() {
+  const { user } = useAuth();
+  const isProfessor = user?.role === 'professor';
+
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [beltFilter, setBeltFilter] = useState('Todas');
+
+  // Selected student for full profile modal
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [studentDetails, setStudentDetails] = useState(null);
+  const [detailsLoading, setDetailsLoading] = useState(false);
+
+  // New student modal
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [addLoading, setAddLoading] = useState(false);
+  const [newName, setNewName] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('senha123');
+  const [newBelt, setNewBelt] = useState('Branca');
+  const [newDegrees, setNewDegrees] = useState(0);
+  const [newPhone, setNewPhone] = useState('');
+  const [newBirthdate, setNewBirthdate] = useState('');
+  const [newWeight, setNewWeight] = useState('');
+  const [newHeight, setNewHeight] = useState('');
+  const [newEmergency, setNewEmergency] = useState('');
+
+  useEffect(() => {
+    fetchStudents();
+  }, [beltFilter]);
+
+  const fetchStudents = async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams();
+      if (beltFilter !== 'Todas') params.append('belt', beltFilter);
+      if (search.trim()) params.append('search', search.trim());
+
+      const data = await api.get(`/students?${params.toString()}`);
+      setStudents(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    fetchStudents();
+  };
+
+  const openStudentProfile = async (s) => {
+    setSelectedStudent(s);
+    setDetailsLoading(true);
+    try {
+      const details = await api.get(`/students/${s.id}`);
+      setStudentDetails(details);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setDetailsLoading(false);
+    }
+  };
+
+  const handleCreateStudent = async (e) => {
+    e.preventDefault();
+    setAddLoading(true);
+    try {
+      await api.post('/auth/register', {
+        name: newName,
+        email: newEmail,
+        password: newPassword,
+        role: 'student',
+        belt: newBelt,
+        degrees: parseInt(newDegrees, 10),
+        phone: newPhone,
+        birthdate: newBirthdate,
+        weight: newWeight ? parseFloat(newWeight) : null,
+        height: newHeight ? parseFloat(newHeight) : null,
+        emergency_contact: newEmergency,
+      });
+
+      setIsAddOpen(false);
+      // Reset
+      setNewName('');
+      setNewEmail('');
+      setNewPhone('');
+      setNewWeight('');
+      setNewHeight('');
+      setNewEmergency('');
+      fetchStudents();
+    } catch (err) {
+      alert(err.message || 'Erro ao cadastrar aluno');
+    } finally {
+      setAddLoading(false);
+    }
+  };
+
+  const handleDeleteStudent = async (id, name, e) => {
+    if (e) e.stopPropagation();
+    if (!window.confirm(`Tem certeza que deseja remover o aluno ${name}?`)) return;
+    try {
+      await api.delete(`/students/${id}`);
+      if (selectedStudent?.id === id) {
+        setSelectedStudent(null);
+        setStudentDetails(null);
+      }
+      fetchStudents();
+    } catch (err) {
+      alert(err.message || 'Erro ao remover aluno');
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              Quadro de Alunos
+            </span>
+            <span className="text-slate-500 text-xs">• Perfis, Histórico e Contatos</span>
+          </div>
+          <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+            <Users className="w-6 h-6 text-blue-400" />
+            Cadastro e Perfis dos Alunos
+          </h2>
+          <p className="text-xs text-slate-400 mt-1">
+            Consulte peso, altura, faixa atual, histórico de treinos e graduações de cada atleta.
+          </p>
+        </div>
+
+        {isProfessor && (
+          <button
+            onClick={() => setIsAddOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold text-xs shadow-md transition whitespace-nowrap"
+          >
+            <Plus className="w-4 h-4" />
+            Matricular Novo Aluno
+          </button>
+        )}
+      </div>
+
+      {/* Filter and Search Bar */}
+      <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+        <form onSubmit={handleSearchSubmit} className="flex gap-2">
+          <div className="relative flex-1">
+            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Buscar por nome ou e-mail do aluno..."
+              className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition"
+          >
+            Buscar
+          </button>
+        </form>
+
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+          <span className="text-xs text-slate-500 font-semibold mr-1">Filtrar Faixa:</span>
+          {BELTS.map((b) => (
+            <button
+              key={b}
+              onClick={() => setBeltFilter(b)}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
+                beltFilter === b
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'bg-slate-950 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
+              }`}
+            >
+              {b}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Students List Cards */}
+      {loading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
+        </div>
+      ) : students.length === 0 ? (
+        <div className="p-12 text-center rounded-2xl bg-slate-900 border border-slate-800 text-slate-400">
+          <Users className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+          <h4 className="text-base font-bold text-slate-200">Nenhum aluno encontrado</h4>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {students.map((student) => (
+            <div
+              key={student.id}
+              onClick={() => openStudentProfile(student)}
+              className="p-4 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-blue-500/40 transition cursor-pointer shadow-sm flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={student.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80'}
+                      alt={student.name}
+                      className="w-12 h-12 rounded-full object-cover ring-2 ring-slate-800"
+                    />
+                    <div>
+                      <h4 className="text-sm font-bold text-white">{student.name}</h4>
+                      <p className="text-[11px] text-slate-400">{student.email}</p>
+                    </div>
+                  </div>
+
+                  {isProfessor && (
+                    <button
+                      onClick={(e) => handleDeleteStudent(student.id, student.name, e)}
+                      title="Excluir Aluno"
+                      className="p-1.5 text-slate-500 hover:text-red-400 rounded-lg hover:bg-red-950/30 transition"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+
+                <div className="my-2">
+                  <BeltBadge belt={student.belt} degrees={student.degrees} size="md" showLabel={true} />
+                </div>
+
+                {student.is_eligible_for_promotion && (
+                  <div className="mt-2 p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[11px] font-bold flex items-center gap-1.5">
+                    <Award className="w-3.5 h-3.5 shrink-0" />
+                    Elegível para próximo grau / faixa!
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 gap-2 mt-3 p-2.5 rounded-lg bg-slate-950 border border-slate-800/80 text-xs">
+                  <div>
+                    <span className="text-slate-500 text-[10px] block">Presenças:</span>
+                    <span className="font-bold text-emerald-400">{student.total_attendances || 0} treinos</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 text-[10px] block">Peso Atual:</span>
+                    <span className="font-bold text-slate-200">{student.current_weight ? `${student.current_weight} kg` : 'N/A'}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+                <span>Início: {student.academy_join_date || '2025'}</span>
+                <span className="text-blue-400 font-bold hover:underline">Ver Dossiê Completo →</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Student Dossier Modal */}
+      {selectedStudent && (
+        <Modal
+          isOpen={!!selectedStudent}
+          onClose={() => {
+            setSelectedStudent(null);
+            setStudentDetails(null);
+          }}
+          title={`Dossiê do Atleta: ${selectedStudent.name}`}
+          maxWidth="max-w-3xl"
+        >
+          {detailsLoading || !studentDetails ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {/* Header profile info */}
+              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={studentDetails.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80'}
+                    alt={studentDetails.name}
+                    className="w-16 h-16 rounded-full object-cover ring-2 ring-blue-500/40"
+                  />
+                  <div>
+                    <h3 className="text-lg font-black text-white">{studentDetails.name}</h3>
+                    <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+                      <Mail className="w-3.5 h-3.5" /> {studentDetails.email}
+                    </p>
+                    <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+                      <Phone className="w-3.5 h-3.5" /> {studentDetails.phone || 'Não informado'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="text-center sm:text-right">
+                  <BeltBadge belt={studentDetails.belt} degrees={studentDetails.degrees} size="md" showLabel={true} />
+                  <p className="text-[11px] text-emerald-400 font-bold mt-1">
+                    {studentDetails.total_attendances} Presenças Confirmadas
+                  </p>
+                </div>
+              </div>
+
+              {/* Personal & Emergency Details */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <div>
+                  <span className="text-slate-500 text-[10px] block">Nascimento:</span>
+                  <span className="text-slate-300 font-medium">{studentDetails.birthdate || 'Não informado'}</span>
+                </div>
+                <div>
+                  <span className="text-slate-500 text-[10px] block">Matrícula:</span>
+                  <span className="text-slate-300 font-medium">{studentDetails.academy_join_date || '2025'}</span>
+                </div>
+                <div className="col-span-2 sm:col-span-1">
+                  <span className="text-slate-500 text-[10px] block">Contato de Emergência:</span>
+                  <span className="text-slate-300 font-medium">{studentDetails.emergency_contact || 'Nenhum'}</span>
+                </div>
+              </div>
+
+              {/* Graduation Timeline */}
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                  <Award className="w-4 h-4 text-amber-400" />
+                  Histórico de Graduações & Graus
+                </h4>
+                <div className="space-y-2">
+                  {studentDetails.graduation_history?.length === 0 ? (
+                    <p className="text-xs text-slate-500">Nenhuma graduação registrada.</p>
+                  ) : (
+                    studentDetails.graduation_history?.map((grad) => (
+                      <div key={grad.id} className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-3">
+                          <BeltBadge belt={grad.belt} degrees={grad.degrees} size="sm" showLabel={true} />
+                          <span className="text-slate-400 text-[11px]">{grad.notes}</span>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-slate-300 font-semibold">{grad.awarded_date}</span>
+                          <span className="text-[10px] text-slate-500 block">por {grad.awarded_by_name || 'Mestre Carlos'}</span>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Physical Weighing History */}
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                  <Scale className="w-4 h-4 text-amber-400" />
+                  Histórico de Pesagens & Medidas
+                </h4>
+                <div className="space-y-2">
+                  {studentDetails.physical_history?.length === 0 ? (
+                    <p className="text-xs text-slate-500">Nenhum registro físico ainda.</p>
+                  ) : (
+                    studentDetails.physical_history?.map((phy) => (
+                      <div key={phy.id} className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-3">
+                          <span className="font-black text-amber-400">{phy.weight} kg</span>
+                          {phy.height && <span className="text-slate-400">{phy.height} cm</span>}
+                          {phy.wingspan && <span className="text-slate-400">Envergadura: {phy.wingspan} cm</span>}
+                          {phy.notes && <span className="text-slate-500 italic text-[11px]">"{phy.notes}"</span>}
+                        </div>
+                        <span className="text-slate-400 text-[11px]">{phy.recorded_at}</span>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Recent Attendances */}
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                  <Clock className="w-4 h-4 text-emerald-400" />
+                  Treinos Recentes ({studentDetails.recent_attendances?.length || 0})
+                </h4>
+                <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
+                  {studentDetails.recent_attendances?.map((att) => (
+                    <div key={att.id} className="p-2 rounded bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
+                      <div>
+                        <span className="font-semibold text-slate-200">{att.class_title}</span>
+                        <span className="text-[10px] text-slate-500 block">{att.class_type} • Tatame 1</span>
+                      </div>
+                      <span className="text-emerald-400 font-semibold text-[11px]">{att.class_date}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </Modal>
+      )}
+
+      {/* Professor Add Student Modal */}
+      {isAddOpen && (
+        <Modal
+          isOpen={isAddOpen}
+          onClose={() => setIsAddOpen(false)}
+          title="Matricular Novo Aluno no Tatame"
+          maxWidth="max-w-xl"
+        >
+          <form onSubmit={handleCreateStudent} className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">
+                Nome Completo do Aluno
+              </label>
+              <input
+                type="text"
+                required
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                placeholder="Ex: Leandro Lo da Silva"
+                className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  E-mail
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  placeholder="aluno@artesuave.com"
+                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  Senha Provisória
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  Faixa Inicial
+                </label>
+                <select
+                  value={newBelt}
+                  onChange={(e) => setNewBelt(e.target.value)}
+                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                >
+                  {BELTS.filter((b) => b !== 'Todas').map((b) => (
+                    <option key={b} value={b}>{b}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  Graus (0 a 4)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max="4"
+                  value={newDegrees}
+                  onChange={(e) => setNewDegrees(e.target.value)}
+                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  Peso Inicial (kg)
+                </label>
+                <input
+                  type="number"
+                  step="0.1"
+                  value={newWeight}
+                  onChange={(e) => setNewWeight(e.target.value)}
+                  placeholder="Ex: 77.5"
+                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  Altura (cm)
+                </label>
+                <input
+                  type="number"
+                  value={newHeight}
+                  onChange={(e) => setNewHeight(e.target.value)}
+                  placeholder="Ex: 178"
+                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  Telefone / WhatsApp
+                </label>
+                <input
+                  type="text"
+                  value={newPhone}
+                  onChange={(e) => setNewPhone(e.target.value)}
+                  placeholder="(11) 98888-7777"
+                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  Data de Nascimento
+                </label>
+                <input
+                  type="date"
+                  value={newBirthdate}
+                  onChange={(e) => setNewBirthdate(e.target.value)}
+                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">
+                Contato de Emergência
+              </label>
+              <input
+                type="text"
+                value={newEmergency}
+                onChange={(e) => setNewEmergency(e.target.value)}
+                placeholder="Ex: Esposa: Ana (11) 99999-0000"
+                className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+              />
+            </div>
+
+            <div className="flex justify-end gap-2 pt-3 border-t border-slate-800">
+              <button
+                type="button"
+                onClick={() => setIsAddOpen(false)}
+                className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                disabled={addLoading}
+                className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition disabled:opacity-50"
+              >
+                {addLoading ? 'Cadastrando...' : 'Concluir Matrícula'}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
+    </div>
+  );
+}

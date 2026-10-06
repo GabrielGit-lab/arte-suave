@@ -1,0 +1,236 @@
+[
+  {
+    "id": 1,
+    "class_id": 1,
+    "student_id": 3,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:13",
+    "notes": "Excelente foco técnico"
+  },
+  {
+    "id": 2,
+    "class_id": 1,
+    "student_id": 4,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:13",
+    "notes": "Treino forte"
+  },
+  {
+    "id": 3,
+    "class_id": 1,
+    "student_id": 7,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:13",
+    "notes": "Técnica impecável"
+  },
+  {
+    "id": 4,
+    "class_id": 2,
+    "student_id": 3,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Excelente foco técnico"
+  },
+  {
+    "id": 5,
+    "class_id": 2,
+    "student_id": 5,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Bom rendimento"
+  },
+  {
+    "id": 6,
+    "class_id": 2,
+    "student_id": 7,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Técnica impecável"
+  },
+  {
+    "id": 7,
+    "class_id": 3,
+    "student_id": 3,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Excelente foco técnico"
+  },
+  {
+    "id": 8,
+    "class_id": 3,
+    "student_id": 4,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Treino forte"
+  },
+  {
+    "id": 9,
+    "class_id": 3,
+    "student_id": 7,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Técnica impecável"
+  },
+  {
+    "id": 10,
+    "class_id": 4,
+    "student_id": 3,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Excelente foco técnico"
+  },
+  {
+    "id": 11,
+    "class_id": 4,
+    "student_id": 5,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Bom rendimento"
+  },
+  {
+    "id": 12,
+    "class_id": 4,
+    "student_id": 7,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Técnica impecável"
+  },
+  {
+    "id": 13,
+    "class_id": 5,
+    "student_id": 3,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Excelente foco técnico"
+  },
+  {
+    "id": 14,
+    "class_id": 5,
+    "student_id": 4,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Treino forte"
+  },
+  {
+    "id": 15,
+    "class_id": 5,
+    "student_id": 7,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Técnica impecável"
+  },
+  {
+    "id": 16,
+    "class_id": 6,
+    "student_id": 3,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Excelente foco técnico"
+  },
+  {
+    "id": 17,
+    "class_id": 6,
+    "student_id": 5,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Bom rendimento"
+  },
+  {
+    "id": 18,
+    "class_id": 6,
+    "student_id": 7,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Técnica impecável"
+  },
+  {
+    "id": 19,
+    "class_id": 7,
+    "student_id": 3,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Excelente foco técnico"
+  },
+  {
+    "id": 20,
+    "class_id": 7,
+    "student_id": 4,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Treino forte"
+  },
+  {
+    "id": 21,
+    "class_id": 7,
+    "student_id": 7,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Técnica impecável"
+  },
+  {
+    "id": 22,
+    "class_id": 8,
+    "student_id": 3,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Excelente foco técnico"
+  },
+  {
+    "id": 23,
+    "class_id": 8,
+    "student_id": 4,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Treino forte"
+  },
+  {
+    "id": 24,
+    "class_id": 8,
+    "student_id": 5,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Bom rendimento"
+  },
+  {
+    "id": 25,
+    "class_id": 8,
+    "student_id": 7,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:04:14",
+    "notes": "Técnica impecável"
+  },
+  {
+    "id": 26,
+    "class_id": 10,
+    "student_id": 3,
+    "signed_by_instructor_id": 1,
+    "status": "present",
+    "signed_at": "2026-10-05 23:14:10",
+    "notes": ""
+  }
+]

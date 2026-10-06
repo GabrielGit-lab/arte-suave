@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+client/node_modules/
+
+# Production build (can be included or rebuilt, keep dist if needed for direct serve or ignore)
+# client/dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment & Temp
+.env
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

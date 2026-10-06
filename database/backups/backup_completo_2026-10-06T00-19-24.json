@@ -1,0 +1,910 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Mestre Carlos Gracie Silva",
+      "email": "professor@artesuave.com",
+      "password_hash": "$2b$10$0.DVluh8SShACfVM1YT8B.5i.nQL27OxqgcMLKU4oLhse0jXrwGa6",
+      "role": "professor",
+      "phone": "(11) 98765-4321",
+      "birthdate": "1985-04-12",
+      "belt": "Preta",
+      "degrees": 3,
+      "academy_join_date": "2015-01-10",
+      "avatar": "https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=300&auto=format&fit=crop&q=80",
+      "emergency_contact": "Esposa: Fabiana (11) 97777-1111",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 2,
+      "name": "Lucas \"Pitbull\" Mendes",
+      "email": "lucas@artesuave.com",
+      "password_hash": "$2b$10$0.DVluh8SShACfVM1YT8B.5i.nQL27OxqgcMLKU4oLhse0jXrwGa6",
+      "role": "professor",
+      "phone": "(11) 98111-2233",
+      "birthdate": "1992-08-23",
+      "belt": "Marrom",
+      "degrees": 2,
+      "academy_join_date": "2018-03-15",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80",
+      "emergency_contact": "Irmão: Marcos (11) 96666-2222",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 3,
+      "name": "Gabriel Rocha",
+      "email": "aluno@artesuave.com",
+      "password_hash": "$2b$10$0.DVluh8SShACfVM1YT8B.5i.nQL27OxqgcMLKU4oLhse0jXrwGa6",
+      "role": "student",
+      "phone": "(11) 99123-4567",
+      "birthdate": "1998-05-14",
+      "belt": "Branca",
+      "degrees": 3,
+      "academy_join_date": "2025-02-01",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
+      "emergency_contact": "Mãe: Sandra (11) 98888-0001",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 4,
+      "name": "Mariana Costa",
+      "email": "mariana@artesuave.com",
+      "password_hash": "$2b$10$0.DVluh8SShACfVM1YT8B.5i.nQL27OxqgcMLKU4oLhse0jXrwGa6",
+      "role": "student",
+      "phone": "(11) 97234-5678",
+      "birthdate": "2000-11-20",
+      "belt": "Azul",
+      "degrees": 2,
+      "academy_join_date": "2023-06-10",
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&auto=format&fit=crop&q=80",
+      "emergency_contact": "Pai: Roberto (11) 98888-0002",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 5,
+      "name": "Rodrigo \"Tanque\" Souza",
+      "email": "rodrigo@artesuave.com",
+      "password_hash": "$2b$10$0.DVluh8SShACfVM1YT8B.5i.nQL27OxqgcMLKU4oLhse0jXrwGa6",
+      "role": "student",
+      "phone": "(11) 96345-6789",
+      "birthdate": "1993-02-18",
+      "belt": "Roxa",
+      "degrees": 1,
+      "academy_join_date": "2021-09-01",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80",
+      "emergency_contact": "Esposa: Juliana (11) 98888-0003",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 6,
+      "name": "Felipe Lima",
+      "email": "felipe@artesuave.com",
+      "password_hash": "$2b$10$0.DVluh8SShACfVM1YT8B.5i.nQL27OxqgcMLKU4oLhse0jXrwGa6",
+      "role": "student",
+      "phone": "(11) 95456-7890",
+      "birthdate": "2003-09-08",
+      "belt": "Branca",
+      "degrees": 1,
+      "academy_join_date": "2025-08-15",
+      "avatar": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80",
+      "emergency_contact": "Tio: Cláudio (11) 98888-0004",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 7,
+      "name": "Camila Santos",
+      "email": "camila@artesuave.com",
+      "password_hash": "$2b$10$0.DVluh8SShACfVM1YT8B.5i.nQL27OxqgcMLKU4oLhse0jXrwGa6",
+      "role": "student",
+      "phone": "(11) 94567-8901",
+      "birthdate": "1997-01-30",
+      "belt": "Azul",
+      "degrees": 4,
+      "academy_join_date": "2023-01-10",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80",
+      "emergency_contact": "Mãe: Angela (11) 98888-0005",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 8,
+      "name": "Gabriel Lima Lucas Santos",
+      "email": "lucas151santos@gmail.com",
+      "password_hash": "$2b$10$bxFg7xnfCW9glFNog3pUu.xw9Ca75dd4Ei7uQFjP/5VZj5MySF0ae",
+      "role": "student",
+      "phone": "11991898311",
+      "birthdate": "",
+      "belt": "Branca",
+      "degrees": 3,
+      "academy_join_date": "2026-10-05",
+      "avatar": null,
+      "emergency_contact": "",
+      "created_at": "2026-10-05 23:36:22"
+    }
+  ],
+  "classes": [
+    {
+      "id": 1,
+      "title": "Fundamentos - Passagem de Guarda",
+      "date": "2026-09-22",
+      "time": "19:30",
+      "class_type": "Fundamentos",
+      "instructor_id": 1,
+      "notes": "Tatame 1",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 2,
+      "title": "Treino de Competição Gi",
+      "date": "2026-09-24",
+      "time": "20:30",
+      "class_type": "Gi",
+      "instructor_id": 1,
+      "notes": "Tatame 1",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 3,
+      "title": "Treino No-Gi - Quedas e Chaves de Perna",
+      "date": "2026-09-26",
+      "time": "19:30",
+      "class_type": "No-Gi",
+      "instructor_id": 1,
+      "notes": "Tatame 1",
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 4,
+      "title": "Open Mat de Sábado",
+      "date": "2026-09-27",
+      "time": "10:00",
+      "class_type": "Open Mat",
+      "instructor_id": 1,
+      "notes": "Tatame 1",
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 5,
+      "title": "Fundamentos - Guarda Fechada e Raspagens",
+      "date": "2026-09-29",
+      "time": "19:30",
+      "class_type": "Fundamentos",
+      "instructor_id": 1,
+      "notes": "Tatame 1",
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 6,
+      "title": "Avançado Gi - Guarda De La Riva e Berimbolo",
+      "date": "2026-10-01",
+      "time": "20:30",
+      "class_type": "Avançado",
+      "instructor_id": 1,
+      "notes": "Tatame 1",
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 7,
+      "title": "No-Gi Submission Wrestling",
+      "date": "2026-10-03",
+      "time": "19:30",
+      "class_type": "No-Gi",
+      "instructor_id": 1,
+      "notes": "Tatame 1",
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 8,
+      "title": "Treino Especial de Graduação e Rola",
+      "date": "2026-10-05",
+      "time": "19:30",
+      "class_type": "Gi",
+      "instructor_id": 1,
+      "notes": "Tatame 1",
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 9,
+      "title": "Fundamentos - Defesa Pessoal e Quedas",
+      "date": "2026-10-06",
+      "time": "19:30",
+      "class_type": "Fundamentos",
+      "instructor_id": 1,
+      "notes": "Tatame 1",
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 10,
+      "title": "Treino Avançado - Ataques das Costas",
+      "date": "2026-10-07",
+      "time": "20:30",
+      "class_type": "Avançado",
+      "instructor_id": 1,
+      "notes": "Tatame 1",
+      "created_at": "2026-10-05 23:04:14"
+    }
+  ],
+  "attendances": [
+    {
+      "id": 1,
+      "class_id": 1,
+      "student_id": 3,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:13",
+      "notes": "Excelente foco técnico"
+    },
+    {
+      "id": 2,
+      "class_id": 1,
+      "student_id": 4,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:13",
+      "notes": "Treino forte"
+    },
+    {
+      "id": 3,
+      "class_id": 1,
+      "student_id": 7,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:13",
+      "notes": "Técnica impecável"
+    },
+    {
+      "id": 4,
+      "class_id": 2,
+      "student_id": 3,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Excelente foco técnico"
+    },
+    {
+      "id": 5,
+      "class_id": 2,
+      "student_id": 5,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Bom rendimento"
+    },
+    {
+      "id": 6,
+      "class_id": 2,
+      "student_id": 7,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Técnica impecável"
+    },
+    {
+      "id": 7,
+      "class_id": 3,
+      "student_id": 3,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Excelente foco técnico"
+    },
+    {
+      "id": 8,
+      "class_id": 3,
+      "student_id": 4,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Treino forte"
+    },
+    {
+      "id": 9,
+      "class_id": 3,
+      "student_id": 7,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Técnica impecável"
+    },
+    {
+      "id": 10,
+      "class_id": 4,
+      "student_id": 3,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Excelente foco técnico"
+    },
+    {
+      "id": 11,
+      "class_id": 4,
+      "student_id": 5,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Bom rendimento"
+    },
+    {
+      "id": 12,
+      "class_id": 4,
+      "student_id": 7,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Técnica impecável"
+    },
+    {
+      "id": 13,
+      "class_id": 5,
+      "student_id": 3,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Excelente foco técnico"
+    },
+    {
+      "id": 14,
+      "class_id": 5,
+      "student_id": 4,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Treino forte"
+    },
+    {
+      "id": 15,
+      "class_id": 5,
+      "student_id": 7,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Técnica impecável"
+    },
+    {
+      "id": 16,
+      "class_id": 6,
+      "student_id": 3,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Excelente foco técnico"
+    },
+    {
+      "id": 17,
+      "class_id": 6,
+      "student_id": 5,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Bom rendimento"
+    },
+    {
+      "id": 18,
+      "class_id": 6,
+      "student_id": 7,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Técnica impecável"
+    },
+    {
+      "id": 19,
+      "class_id": 7,
+      "student_id": 3,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Excelente foco técnico"
+    },
+    {
+      "id": 20,
+      "class_id": 7,
+      "student_id": 4,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Treino forte"
+    },
+    {
+      "id": 21,
+      "class_id": 7,
+      "student_id": 7,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Técnica impecável"
+    },
+    {
+      "id": 22,
+      "class_id": 8,
+      "student_id": 3,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Excelente foco técnico"
+    },
+    {
+      "id": 23,
+      "class_id": 8,
+      "student_id": 4,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Treino forte"
+    },
+    {
+      "id": 24,
+      "class_id": 8,
+      "student_id": 5,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Bom rendimento"
+    },
+    {
+      "id": 25,
+      "class_id": 8,
+      "student_id": 7,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:04:14",
+      "notes": "Técnica impecável"
+    },
+    {
+      "id": 26,
+      "class_id": 10,
+      "student_id": 3,
+      "signed_by_instructor_id": 1,
+      "status": "present",
+      "signed_at": "2026-10-05 23:14:10",
+      "notes": ""
+    }
+  ],
+  "graduations": [
+    {
+      "id": 1,
+      "student_id": 3,
+      "belt": "Branca",
+      "degrees": 0,
+      "awarded_by_id": 1,
+      "awarded_date": "2025-02-01",
+      "notes": "Matrícula na Arte Suave Academy",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 2,
+      "student_id": 3,
+      "belt": "Branca",
+      "degrees": 1,
+      "awarded_by_id": 1,
+      "awarded_date": "2025-04-15",
+      "notes": "1º Grau - Domínio das defesas básicas e disciplina",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 3,
+      "student_id": 3,
+      "belt": "Branca",
+      "degrees": 2,
+      "awarded_by_id": 1,
+      "awarded_date": "2025-08-10",
+      "notes": "2º Grau - Fuga de montada e passagem toureada",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 4,
+      "student_id": 3,
+      "belt": "Branca",
+      "degrees": 3,
+      "awarded_by_id": 1,
+      "awarded_date": "2025-12-05",
+      "notes": "3º Grau - Excelente evolução no rola e assiduidade",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 5,
+      "student_id": 4,
+      "belt": "Branca",
+      "degrees": 4,
+      "awarded_by_id": 1,
+      "awarded_date": "2023-06-10",
+      "notes": "Último grau de branca",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 6,
+      "student_id": 4,
+      "belt": "Azul",
+      "degrees": 0,
+      "awarded_by_id": 1,
+      "awarded_date": "2023-11-20",
+      "notes": "Graduada para Faixa Azul pelo Mestre Carlos",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 7,
+      "student_id": 4,
+      "belt": "Azul",
+      "degrees": 1,
+      "awarded_by_id": 1,
+      "awarded_date": "2024-06-15",
+      "notes": "1º Grau Faixa Azul",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 8,
+      "student_id": 4,
+      "belt": "Azul",
+      "degrees": 2,
+      "awarded_by_id": 1,
+      "awarded_date": "2025-03-10",
+      "notes": "2º Grau Faixa Azul",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 9,
+      "student_id": 5,
+      "belt": "Roxa",
+      "degrees": 0,
+      "awarded_by_id": 1,
+      "awarded_date": "2024-05-10",
+      "notes": "Promoção à Faixa Roxa",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 10,
+      "student_id": 5,
+      "belt": "Roxa",
+      "degrees": 1,
+      "awarded_by_id": 1,
+      "awarded_date": "2025-08-20",
+      "notes": "1º Grau Faixa Roxa",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 11,
+      "student_id": 6,
+      "belt": "Branca",
+      "degrees": 1,
+      "awarded_by_id": 1,
+      "awarded_date": "2025-11-10",
+      "notes": "1º Grau Faixa Branca",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 12,
+      "student_id": 7,
+      "belt": "Azul",
+      "degrees": 4,
+      "awarded_by_id": 1,
+      "awarded_date": "2025-10-18",
+      "notes": "4º Grau Faixa Azul - Pronta para a Faixa Roxa",
+      "created_at": "2026-10-05 23:04:13"
+    },
+    {
+      "id": 13,
+      "student_id": 8,
+      "belt": "Branca",
+      "degrees": 3,
+      "awarded_by_id": null,
+      "awarded_date": "2026-10-05",
+      "notes": "Início na academia",
+      "created_at": "2026-10-05 23:36:22"
+    }
+  ],
+  "physical_records": [
+    {
+      "id": 1,
+      "student_id": 3,
+      "weight": 82,
+      "height": 178,
+      "wingspan": 182,
+      "body_fat": 19.5,
+      "notes": "Início dos treinos. Foco em condicionamento e perda de peso.",
+      "recorded_at": "2025-02-05"
+    },
+    {
+      "id": 2,
+      "student_id": 3,
+      "weight": 80.2,
+      "height": 178,
+      "wingspan": 182,
+      "body_fat": 17.8,
+      "notes": "Ótima perda de gordura e mais gás no rola.",
+      "recorded_at": "2025-05-10"
+    },
+    {
+      "id": 3,
+      "student_id": 3,
+      "weight": 78.5,
+      "height": 178,
+      "wingspan": 182,
+      "body_fat": 16,
+      "notes": "Dentro da categoria Peso Médio CBJJ com folga.",
+      "recorded_at": "2025-09-20"
+    },
+    {
+      "id": 4,
+      "student_id": 3,
+      "weight": 77.8,
+      "height": 178,
+      "wingspan": 182,
+      "body_fat": 15.2,
+      "notes": "Peso atualizado, excelente ritmo e resistência.",
+      "recorded_at": "2026-03-01"
+    },
+    {
+      "id": 5,
+      "student_id": 4,
+      "weight": 63.5,
+      "height": 165,
+      "wingspan": 166,
+      "body_fat": 22,
+      "notes": "Pesagem para início do ciclo de campeonato.",
+      "recorded_at": "2024-03-10"
+    },
+    {
+      "id": 6,
+      "student_id": 4,
+      "weight": 61.2,
+      "height": 165,
+      "wingspan": 166,
+      "body_fat": 20.4,
+      "notes": "Enquadrada na categoria Pena feminino CBJJ.",
+      "recorded_at": "2025-10-15"
+    },
+    {
+      "id": 7,
+      "student_id": 5,
+      "weight": 95,
+      "height": 185,
+      "wingspan": 190,
+      "body_fat": 18,
+      "notes": "Pesagem pesada.",
+      "recorded_at": "2023-01-15"
+    },
+    {
+      "id": 8,
+      "student_id": 5,
+      "weight": 91.5,
+      "height": 185,
+      "wingspan": 190,
+      "body_fat": 15.5,
+      "notes": "Categoria Pesado IBJJF c/ kimono batida.",
+      "recorded_at": "2025-11-04"
+    },
+    {
+      "id": 9,
+      "student_id": 6,
+      "weight": 73,
+      "height": 175,
+      "wingspan": 176,
+      "body_fat": 14,
+      "notes": "Iniciou na categoria Leve.",
+      "recorded_at": "2025-08-20"
+    },
+    {
+      "id": 10,
+      "student_id": 7,
+      "weight": 56,
+      "height": 162,
+      "wingspan": 163,
+      "body_fat": 19,
+      "notes": "Categoria Pena feminina.",
+      "recorded_at": "2024-02-01"
+    },
+    {
+      "id": 11,
+      "student_id": 3,
+      "weight": 77.2,
+      "height": 178,
+      "wingspan": 182,
+      "body_fat": null,
+      "notes": "Pesagem de teste pré-treino",
+      "recorded_at": "2026-10-05"
+    },
+    {
+      "id": 12,
+      "student_id": 3,
+      "weight": 77.2,
+      "height": 178,
+      "wingspan": 182,
+      "body_fat": null,
+      "notes": "Pesagem de teste pré-treino",
+      "recorded_at": "2026-10-05"
+    },
+    {
+      "id": 13,
+      "student_id": 3,
+      "weight": 77.2,
+      "height": 178,
+      "wingspan": 182,
+      "body_fat": null,
+      "notes": "Pesagem de teste pré-treino",
+      "recorded_at": "2026-10-05"
+    },
+    {
+      "id": 14,
+      "student_id": 8,
+      "weight": 72.5,
+      "height": 1.83,
+      "wingspan": null,
+      "body_fat": null,
+      "notes": "Cadastro inicial",
+      "recorded_at": "2026-10-05"
+    }
+  ],
+  "tutorials": [
+    {
+      "id": 1,
+      "title": "Armlock Clássico da Guarda Fechada",
+      "category": "Finalizações",
+      "difficulty": "Iniciante",
+      "gi_type": "Ambos",
+      "video_url": "https://www.youtube.com/embed/Pj15b6N-tO4",
+      "image_url": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80",
+      "description": "A finalização mais icônica e fundamental do Jiu-Jitsu brasileiro. Aprenda a quebrar a postura, criar o ângulo correto de alavanca com o quadril e finalizar com precisão cirúrgica.",
+      "steps": "[{\"step\":1,\"title\":\"Domínio de braço e postura\",\"desc\":\"Na guarda fechada, cruze o braço do oponente trazendo-o em direção ao seu peito oposto. Segure o tríceps com firmeza e quebre a postura puxando a nuca com a mão livre.\"},{\"step\":2,\"title\":\"Abertura de quadril e pé no quadril\",\"desc\":\"Coloque o pé do mesmo lado do braço preso no quadril do adversário. Use esse pé como alavanca para girar seu corpo 90 graus.\"},{\"step\":3,\"title\":\"Subida da perna na axila\",\"desc\":\"Suba a perna livre bem alta nas costas, encaixando na axila oposta para impedir que ele volte a posturar.\"},{\"step\":4,\"title\":\"Passagem da perna sobre a cabeça\",\"desc\":\"Empurre a cabeça do oponente levemente e passe a outra perna por cima da cabeça, fechando os calcanhares apontados para baixo.\"},{\"step\":5,\"title\":\"Ajuste do polegar e finalização\",\"desc\":\"Mantenha os joelhos bem aduzidos (espremidos), alinhe o polegar do adversário voltado para cima (em direção ao seu queixo) e eleve a pelve vagarosamente.\"}]",
+      "key_points": "[\"Nunca cruze os pés sobre o rosto do oponente, mantenha os calcanhares cravados para baixo.\",\"Mantenha os joelhos juntos e apertados como uma prensa durante todo o movimento.\",\"O polegar do oponente sempre aponta na direção contrária da flexão da articulação (para cima).\"]",
+      "counter_attacks": "Fuga do cotovelo girando com o ombro (Hitchhiker escape) ou esmagamento na pilha (Stack defense).",
+      "instructor_name": "Mestre Carlos Gracie Silva",
+      "created_by_id": 1,
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 2,
+      "title": "Triângulo Perfeito da Guarda Fechada",
+      "category": "Finalizações",
+      "difficulty": "Iniciante",
+      "gi_type": "Ambos",
+      "video_url": "https://www.youtube.com/embed/5U7zB1qZ4Vw",
+      "image_url": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&auto=format&fit=crop&q=80",
+      "description": "O estrangulamento mais versátil da guarda. Cria uma armadilha fatal utilizando a força das pernas contra o pescoço e a artéria carótida do adversário.",
+      "steps": "[{\"step\":1,\"title\":\"Isolamento de um braço (Regra Um Braço Dentro, Um Fora)\",\"desc\":\"Identifique quando o adversário tenta apoiar uma mão no seu peito ou tatame. Empurre o pulso dele para dentro enquanto puxa o outro braço para fora.\"},{\"step\":2,\"title\":\"Disparo das pernas no pescoço\",\"desc\":\"Lance suas pernas subindo o quadril explosivamente, laçando a nuca com uma panturrilha e deixando o braço dele isolado dentro do triângulo.\"},{\"step\":3,\"title\":\"Cruzamento do braço defensivo\",\"desc\":\"Levante o quadril no ar para desviar o braço do oponente atravessando o peito até a sua crista ilíaca oposta.\"},{\"step\":4,\"title\":\"Pegada na canela e ajuste de ângulo\",\"desc\":\"Segure a sua própria canela (nunca os dedos do pé) com a mão oposta. Apoie o pé no quadril para girar 90 graus e olhar na orelha dele.\"},{\"step\":5,\"title\":\"Travamento da fechadura (figura quatro)\",\"desc\":\"Passe o joelho por cima do tornozelo, formando o quatro perfeito. Abaixe a cabeça dele e comprima as coxas.\"}]",
+      "key_points": "[\"A pressão do estrangulamento vem da artéria carótida sendo pressionada pelo próprio ombro do adversário de um lado e pela sua coxa do outro.\",\"Nunca feche o triângulo de frente; o ângulo em 90 graus é o segredo dos faixas pretas.\"]",
+      "counter_attacks": "Posturar imediatamente e passar o braço para trás da cintura antes do fechamento.",
+      "instructor_name": "Mestre Carlos Gracie Silva",
+      "created_by_id": 1,
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 3,
+      "title": "Raspagem Tesourinha (Scissor Sweep)",
+      "category": "Raspagens",
+      "difficulty": "Iniciante",
+      "gi_type": "Gi",
+      "video_url": "https://www.youtube.com/embed/3eC98yLpU1I",
+      "image_url": "https://images.unsplash.com/photo-1564415051543-cb73a7468103?w=600&auto=format&fit=crop&q=80",
+      "description": "Uma das raspagens mais antigas e eficazes do Jiu-Jitsu tradicional com kimono. Converte a defesa da guarda fechada em 2 pontos e montada dominante.",
+      "steps": "[{\"step\":1,\"title\":\"Pegadas de gola e manga\",\"desc\":\"Da guarda fechada, estabeleça pegada firme de quatro dedos na manga direita e pegada alta na gola esquerda cruzada.\"},{\"step\":2,\"title\":\"Fuga de quadril (Shrimp)\",\"desc\":\"Abra a guarda, coloque o pé direito no tatame e dê uma fugida de quadril para fora, criando espaço de ação.\"},{\"step\":3,\"title\":\"Escudo de canela transversal\",\"desc\":\"Posicione a canela esquerda atravessada no peito do oponente, funcionando como uma mola e mantenedor de distância.\"},{\"step\":4,\"title\":\"Chute tesoura simultâneo\",\"desc\":\"A perna superior chuta na direção da axila enquanto a perna inferior rasteira a canela dele rente ao tatame, puxando a manga.\"},{\"step\":5,\"title\":\"Subida e montada técnica\",\"desc\":\"Aproveite a inércia da queda para montar imediatamente mantendo o controle das pegadas.\"}]",
+      "key_points": "[\"O pé de baixo deve raspar rente ao chão, como uma tesoura que corta na raiz.\",\"A pegada na manga é o que impede o oponente de apoiar a mão e defender a queda.\"]",
+      "counter_attacks": "Passar por cima da canela esmagando com o joelho ou recuar a perna base.",
+      "instructor_name": "Lucas \"Pitbull\" Mendes",
+      "created_by_id": 1,
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 4,
+      "title": "Passagem de Guarda Toureada (Toreando Pass)",
+      "category": "Passagens de Guarda",
+      "difficulty": "Intermediário",
+      "gi_type": "Ambos",
+      "video_url": "https://www.youtube.com/embed/9g_8zL0pQ_s",
+      "image_url": "https://images.unsplash.com/photo-1517438476312-10d79c077509?w=600&auto=format&fit=crop&q=80",
+      "description": "A passagem de guarda mais utilizada em competições mundiais de alto nível. Combina velocidade, desarme de ganchos e imposição de ritmo.",
+      "steps": "[{\"step\":1,\"title\":\"Pegadas nas calças perto dos joelhos\",\"desc\":\"Em pé ou semi-flexionado, faça a pegada de concha do lado de fora do joelho das calças do guardeiro.\"},{\"step\":2,\"title\":\"Pressão nos pés e projeção lateral\",\"desc\":\"Empurre os joelhos dele em direção ao peito dele para dobrar as pernas e lance ambas as pernas dele em um arco rápido para o lado.\"},{\"step\":3,\"title\":\"Mudança de nível e cabeça no plexo\",\"desc\":\"Jogue seu quadril e peito na direção oposta das pernas jogadas, cravando o joelho no chão e a cabeça no esterno dele.\"},{\"step\":4,\"title\":\"Abraço da cabeça e estabilização nos 100kg\",\"desc\":\"Passe a mão livre por trás do pescoço, bloqueie o quadril dele com o joelho e conquiste os 3 pontos dos 100kg.\"}]",
+      "key_points": "[\"Mantenha os cotovelos colados às suas costelas para não tomar armlock ou triângulo voador.\",\"A velocidade no primeiro passo dita o sucesso da manobra.\"]",
+      "counter_attacks": "Giro em quatro apoios (Granby roll) ou recolhimento dos joelhos como escudo.",
+      "instructor_name": "Mestre Carlos Gracie Silva",
+      "created_by_id": 1,
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 5,
+      "title": "Kimura Clássica da Meia Guarda / Guarda Fechada",
+      "category": "Finalizações",
+      "difficulty": "Intermediário",
+      "gi_type": "Ambos",
+      "video_url": "https://www.youtube.com/embed/9Y9m_Q2JcK8",
+      "image_url": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop&q=80",
+      "description": "Chave de ombro de rotação hiper-eficiente batizada em homenagem ao lendário judoca Masahiko Kimura. Uma das melhores ferramentas de finalização e raspagem.",
+      "steps": "[{\"step\":1,\"title\":\"Identificação do braço isolado\",\"desc\":\"Quando o oponente apoia a mão no tatame ou tenta abraçar sua cintura, laçe o pulso dele por cima com a mão do mesmo lado.\"},{\"step\":2,\"title\":\"Passagem em quatro (Figure 4 grip)\",\"desc\":\"Passe seu outro braço por baixo da axila dele e feche a pegada com seu polegar escondido no seu próprio punho.\"},{\"step\":3,\"title\":\"Abertura de guarda e fuga de quadril\",\"desc\":\"Saia o quadril para o lado do braço preso para criar o espaço necessário para a rotação.\"},{\"step\":4,\"title\":\"Fixação das costas e torção no ombro\",\"desc\":\"Passe a perna por cima das costelas do adversário para prender a postura e gire a mão dele em direção à nuca em ângulo de 90 graus.\"}]",
+      "key_points": "[\"Mantenha o braço dele dobrado em 90 graus durante toda a alavanca; se o braço esticar ele escapa.\",\"A força não vem dos braços, vem da rotação do seu próprio tronco e quadril.\"]",
+      "counter_attacks": "Travar as mãos na faixa ou coxa interna e rolar de frente para aliviar a rotação.",
+      "instructor_name": "Lucas \"Pitbull\" Mendes",
+      "created_by_id": 1,
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 6,
+      "title": "Guarda De La Riva: Estrutura Fundamental",
+      "category": "Guardas",
+      "difficulty": "Intermediário",
+      "gi_type": "Gi",
+      "video_url": "https://www.youtube.com/embed/Z0oI04F_Kx8",
+      "image_url": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80",
+      "description": "Criada pelo mestre Ricardo De La Riva, esta guarda revolucionou o Jiu-Jitsu moderno, fornecendo ataques contínuos para as costas e raspagens fluidas.",
+      "steps": "[{\"step\":1,\"title\":\"Enquadramento e pegadas\",\"desc\":\"Com o adversário em pé, estabeleça pegada no calcanhar ou boca de calça dele e pegada na gola oposta.\"},{\"step\":2,\"title\":\"Inserção do gancho De La Riva\",\"desc\":\"Passe sua perna de fora por trás do joelho dele, apontando o dedão do pé para a virilha para travar a base.\"},{\"step\":3,\"title\":\"Uso do pé no quadril ou bíceps\",\"desc\":\"O outro pé controla a distância pressionando a coxa oposta ou o quadril, desequilibrando o passador constantemente.\"},{\"step\":4,\"title\":\"Desequilíbrio para trás e raspagem de giro\",\"desc\":\"Empurre a gola enquanto puxa o calcanhar, desestabilizando a base para derrubá-lo de costas ou girar para as costas (Berimbolo).\"}]",
+      "key_points": "[\"O gancho deve estar ativo o tempo todo, colado na parte interna da coxa.\",\"Nunca solte a pegada do calcanhar, pois ela é a âncora que impede o recuo do oponente.\"]",
+      "counter_attacks": "Estourar o gancho empurrando a canela com a mão livre e passar com esgrima baixa.",
+      "instructor_name": "Mestre Carlos Gracie Silva",
+      "created_by_id": 1,
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 7,
+      "title": "Saída e Escape do Cem Quilos (100kg)",
+      "category": "Defesas e Saídas",
+      "difficulty": "Iniciante",
+      "gi_type": "Ambos",
+      "video_url": "https://www.youtube.com/embed/5_VnJ4_wRQI",
+      "image_url": "https://images.unsplash.com/photo-1517438476312-10d79c077509?w=600&auto=format&fit=crop&q=80",
+      "description": "A sobrevivência básica sob o controle lateral dos 100kg. Aprenda a criar estruturas rígidas de ossos para recuperar a guarda sem cansar os músculos.",
+      "steps": "[{\"step\":1,\"title\":\"Enquadramento das molduras (Frames)\",\"desc\":\"Não deixe o adversário colar peito com peito. Coloque o antebraço cruzado no pescoço dele e a outra mão no quadril oposto.\"},{\"step\":2,\"title\":\"Ponte explosiva (Upa)\",\"desc\":\"Traga os calcanhares o mais perto possível das nádegas e dê uma ponte explosiva para cima e na diagonal, abrindo espaço.\"},{\"step\":3,\"title\":\"Fuga de quadril (Camarão)\",\"desc\":\"No pico da ponte, empurre o oponente com os antebraços e jogue seu quadril para longe dele.\"},{\"step\":4,\"title\":\"Inserção do joelho de resgate\",\"desc\":\"Insira o joelho de baixo como uma cunha no espaço aberto entre o seu peito e a barriga dele.\"},{\"step\":5,\"title\":\"Recuperação total da guarda\",\"desc\":\"Gire de frente e feche a guarda fechada ou guarda aberta.\"}]",
+      "key_points": "[\"Nunca tente empurrar o oponente com as mãos esticadas ou sofrerá armlock.\",\"A ponte e a fuga de quadril devem ser fluidas e contínuas.\"]",
+      "counter_attacks": "O passador deve afundar o ombro no queixo (crossface) e espalhar o quadril rente ao tatame.",
+      "instructor_name": "Mestre Carlos Gracie Silva",
+      "created_by_id": 1,
+      "created_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 8,
+      "title": "Mata-Leão (Rear Naked Choke)",
+      "category": "Finalizações",
+      "difficulty": "Iniciante",
+      "gi_type": "Ambos",
+      "video_url": "https://www.youtube.com/embed/wV9bJ5b8f6o",
+      "image_url": "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop&q=80",
+      "description": "O golpe definitivo das artes marciais. Quando executado corretamente a partir do domínio das costas, possui taxa de sucesso próxima de 100%.",
+      "steps": "[{\"step\":1,\"title\":\"Controle de cinto de segurança (Seatbelt grip)\",\"desc\":\"Com os ganchos nas costas do oponente, passe um braço por cima do ombro e o outro por baixo da axila, fechando as mãos peito a peito.\"},{\"step\":2,\"title\":\"Queda para o lado do braço de estrangulamento\",\"desc\":\"Incline o corpo para o lado onde seu braço está por cima do ombro para que o oponente não escape da cabeça.\"},{\"step\":3,\"title\":\"Deslizamento do antebraço na carótida\",\"desc\":\"A mão dominante desliza sob o queixo como uma faca até o pomo de adão do adversário.\"},{\"step\":4,\"title\":\"Mão no bíceps e mão atrás da nuca\",\"desc\":\"Feche a mão dominante segurando seu próprio bíceps oposto e esconda a outra mão atrás da cabeça dele.\"},{\"step\":5,\"title\":\"Expansão torácica e finalização\",\"desc\":\"Mantenha a cabeça colada na dele, expanda o peito e aperte suavemente as axilas.\"}]",
+      "key_points": "[\"Nunca cruze os pés na frente do quadril do oponente, para evitar a chave de tornozelo surpresa.\",\"O queixo do adversário não é barreira: o estrangulamento pode passar até quebrando a resistência.\"]",
+      "counter_attacks": "Defesa dois em um na mão de estrangulamento antes que ela feche a fechadura.",
+      "instructor_name": "Mestre Carlos Gracie Silva",
+      "created_by_id": 1,
+      "created_at": "2026-10-05 23:04:14"
+    }
+  ],
+  "tutorial_bookmarks": [
+    {
+      "id": 1,
+      "user_id": 3,
+      "tutorial_id": 1,
+      "status": "favorite",
+      "updated_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 2,
+      "user_id": 3,
+      "tutorial_id": 1,
+      "status": "practiced",
+      "updated_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "tutorial_id": 2,
+      "status": "practiced",
+      "updated_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 4,
+      "user_id": 3,
+      "tutorial_id": 3,
+      "status": "to_master",
+      "updated_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 5,
+      "user_id": 3,
+      "tutorial_id": 7,
+      "status": "practiced",
+      "updated_at": "2026-10-05 23:04:14"
+    },
+    {
+      "id": 7,
+      "user_id": 3,
+      "tutorial_id": 8,
+      "status": "favorite",
+      "updated_at": "2026-10-05 23:14:10"
+    }
+  ]
+}

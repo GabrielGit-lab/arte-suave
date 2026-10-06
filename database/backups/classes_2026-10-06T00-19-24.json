@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "title": "Fundamentos - Passagem de Guarda",
+    "date": "2026-09-22",
+    "time": "19:30",
+    "class_type": "Fundamentos",
+    "instructor_id": 1,
+    "notes": "Tatame 1",
+    "created_at": "2026-10-05 23:04:13"
+  },
+  {
+    "id": 2,
+    "title": "Treino de Competição Gi",
+    "date": "2026-09-24",
+    "time": "20:30",
+    "class_type": "Gi",
+    "instructor_id": 1,
+    "notes": "Tatame 1",
+    "created_at": "2026-10-05 23:04:13"
+  },
+  {
+    "id": 3,
+    "title": "Treino No-Gi - Quedas e Chaves de Perna",
+    "date": "2026-09-26",
+    "time": "19:30",
+    "class_type": "No-Gi",
+    "instructor_id": 1,
+    "notes": "Tatame 1",
+    "created_at": "2026-10-05 23:04:14"
+  },
+  {
+    "id": 4,
+    "title": "Open Mat de Sábado",
+    "date": "2026-09-27",
+    "time": "10:00",
+    "class_type": "Open Mat",
+    "instructor_id": 1,
+    "notes": "Tatame 1",
+    "created_at": "2026-10-05 23:04:14"
+  },
+  {
+    "id": 5,
+    "title": "Fundamentos - Guarda Fechada e Raspagens",
+    "date": "2026-09-29",
+    "time": "19:30",
+    "class_type": "Fundamentos",
+    "instructor_id": 1,
+    "notes": "Tatame 1",
+    "created_at": "2026-10-05 23:04:14"
+  },
+  {
+    "id": 6,
+    "title": "Avançado Gi - Guarda De La Riva e Berimbolo",
+    "date": "2026-10-01",
+    "time": "20:30",
+    "class_type": "Avançado",
+    "instructor_id": 1,
+    "notes": "Tatame 1",
+    "created_at": "2026-10-05 23:04:14"
+  },
+  {
+    "id": 7,
+    "title": "No-Gi Submission Wrestling",
+    "date": "2026-10-03",
+    "time": "19:30",
+    "class_type": "No-Gi",
+    "instructor_id": 1,
+    "notes": "Tatame 1",
+    "created_at": "2026-10-05 23:04:14"
+  },
+  {
+    "id": 8,
+    "title": "Treino Especial de Graduação e Rola",
+    "date": "2026-10-05",
+    "time": "19:30",
+    "class_type": "Gi",
+    "instructor_id": 1,
+    "notes": "Tatame 1",
+    "created_at": "2026-10-05 23:04:14"
+  },
+  {
+    "id": 9,
+    "title": "Fundamentos - Defesa Pessoal e Quedas",
+    "date": "2026-10-06",
+    "time": "19:30",
+    "class_type": "Fundamentos",
+    "instructor_id": 1,
+    "notes": "Tatame 1",
+    "created_at": "2026-10-05 23:04:14"
+  },
+  {
+    "id": 10,
+    "title": "Treino Avançado - Ataques das Costas",
+    "date": "2026-10-07",
+    "time": "20:30",
+    "class_type": "Avançado",
+    "instructor_id": 1,
+    "notes": "Tatame 1",
+    "created_at": "2026-10-05 23:04:14"
+  }
+]
