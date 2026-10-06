@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: arte-suave-bjj
+    env: node
+    plan: free
+    nodeVersion: 22.14.0
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production

@@ -7,10 +7,13 @@
     "start": "node server/server.js",
     "server": "node server/server.js",
     "client": "npm --prefix client run dev",
-    "build": "npm --prefix client run build",
+    "build": "npm --prefix client install && npm --prefix client run build",
     "online": "npx cloudflared tunnel --url http://localhost:5000",
     "tunnel": "npx cloudflared tunnel --url http://localhost:5000",
     "install:all": "npm install && npm --prefix client install"
+  },
+  "engines": {
+    "node": ">=22.5.0"
   },
   "keywords": [],
   "author": "",
