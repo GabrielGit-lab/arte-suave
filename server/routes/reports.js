@@ -73,9 +73,9 @@ router.get('/dashboard', authenticateToken, (req, res) => {
   let studentStats = null;
   if (!isProfessor) {
     const studentId = req.user.id;
-    const userAttendanceCount = db.prepare('SELECT COUNT(*) as count FROM attendances WHERE student_id = ? AND status = "present"').get(studentId).count;
-    const userPracticedTechs = db.prepare('SELECT COUNT(*) as count FROM tutorial_bookmarks WHERE user_id = ? AND status = "practiced"').get(studentId).count;
-    const userFavorites = db.prepare('SELECT COUNT(*) as count FROM tutorial_bookmarks WHERE user_id = ? AND status = "favorite"').get(studentId).count;
+    const userAttendanceCount = db.prepare("SELECT COUNT(*) as count FROM attendances WHERE student_id = ? AND status = 'present'").get(studentId).count;
+    const userPracticedTechs = db.prepare("SELECT COUNT(*) as count FROM tutorial_bookmarks WHERE user_id = ? AND status = 'practiced'").get(studentId).count;
+    const userFavorites = db.prepare("SELECT COUNT(*) as count FROM tutorial_bookmarks WHERE user_id = ? AND status = 'favorite'").get(studentId).count;
 
     const userAttendancesByMonth = db.prepare(`
       SELECT strftime('%Y-%m', c.date) as month, COUNT(a.id) as count
