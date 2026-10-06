@@ -73,6 +73,7 @@ export default function Tournaments() {
   const [detailLoading, setDetailLoading] = useState(false);
 
   // Filters
+  const [filterBelt, setFilterBelt] = useState('Todas');
   const [filterGi, setFilterGi] = useState('Todos');
   const [filterCategory, setFilterCategory] = useState('Todos');
   const [filterGender, setFilterGender] = useState('Todos');
@@ -116,21 +117,29 @@ export default function Tournaments() {
   useEffect(() => {
     fetchTournaments();
     api.get('/students').then(setAcademyStudents).catch(() => {});
-  }, [filterGi, filterCategory, filterGender]);
+  }, [filterBelt, filterGi, filterCategory, filterGender]);
 
   const fetchTournaments = async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
+      if (filterBelt !== 'Todas') params.append('belt', filterBelt);
       if (filterGi !== 'Todos') params.append('gi_type', filterGi);
       if (filterCategory !== 'Todos') params.append('category_type', filterCategory);
       if (filterGender !== 'Todos') params.append('gender', filterGender);
 
       const data = await api.get(`/tournaments?${params.toString()}`);
       setTournaments(data);
-      if (data.length > 0 && !selectedTourId) {
-        setSelectedTourId(data[0].id);
-        fetchTournamentDetail(data[0].id);
+      if (data.length > 0) {
+        // If current selection is not in filtered list, auto select first
+        const exists = data.some(t => t.id === selectedTourId);
+        if (!exists || !selectedTourId) {
+          setSelectedTourId(data[0].id);
+          fetchTournamentDetail(data[0].id);
+        }
+      } else {
+        setSelectedTourId(null);
+        setTournamentDetail(null);
       }
     } catch (err) {
       console.error(err);
@@ -330,11 +339,42 @@ export default function Tournaments() {
         )}
       </div>
 
+      {/* Belt Categories Tabs (Chaveamentos por Faixa) */}
+      <div className="bg-slate-900/80 p-2 rounded-2xl border border-slate-800 shadow-sm">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+          {[
+            { id: 'Todas', label: 'Todas as Faixas', icon: '🥋', color: 'bg-slate-800 text-slate-200 border-slate-700' },
+            { id: 'Branca', label: 'Faixa Branca', icon: '⚪', color: 'bg-slate-100 text-slate-900 border-slate-300 font-black' },
+            { id: 'Azul', label: 'Faixa Azul', icon: '🔵', color: 'bg-blue-600 text-white border-blue-400 font-black' },
+            { id: 'Roxa', label: 'Faixa Roxa', icon: '🟣', color: 'bg-purple-600 text-white border-purple-400 font-black' },
+            { id: 'Marrom', label: 'Faixa Marrom', icon: '🟤', color: 'bg-amber-900 text-amber-100 border-amber-700 font-black' },
+            { id: 'Preta', label: 'Faixa Preta', icon: '⚫', color: 'bg-slate-950 text-red-400 border-red-600 font-black ring-1 ring-red-500/40' },
+            { id: 'Absoluto', label: 'Absoluto / Open Class', icon: '🏆', color: 'bg-amber-500 text-slate-950 border-amber-300 font-black' },
+          ].map((tab) => {
+            const isActive = filterBelt === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setFilterBelt(tab.id)}
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
+                  isActive
+                    ? `${tab.color} shadow-md scale-102 ring-2 ring-amber-400/50`
+                    : 'bg-slate-950/70 text-slate-400 border-slate-800 hover:text-white hover:bg-slate-800/60'
+                }`}
+              >
+                <span>{tab.icon}</span>
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Filter Bar */}
       <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-slate-500 font-semibold flex items-center gap-1">
-            <Filter className="w-3.5 h-3.5 text-amber-400" /> Filtros:
+            <Filter className="w-3.5 h-3.5 text-amber-400" /> Filtros extras:
           </span>
 
           <select
@@ -368,6 +408,15 @@ export default function Tournaments() {
             <option value="Feminino">Feminino</option>
           </select>
         </div>
+
+        {filterBelt !== 'Todas' && (
+          <button
+            onClick={() => setFilterBelt('Todas')}
+            className="text-[11px] text-amber-400 hover:text-amber-300 underline font-medium"
+          >
+            Limpar filtro de faixa ({filterBelt})
+          </button>
+        )}
       </div>
 
       {/* Main Grid: Tournaments List & Bracket Viewer */}

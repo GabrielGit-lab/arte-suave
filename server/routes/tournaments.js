@@ -36,8 +36,12 @@ router.get('/', authenticateToken, (req, res) => {
   }
 
   if (belt && belt !== 'Todas') {
-    query += ` AND t.belt_category LIKE ?`;
-    params.push(`%${belt}%`);
+    if (belt === 'Absoluto') {
+      query += ` AND (t.belt_category LIKE '%Absoluto%' OR t.belt_category LIKE '%Open Class%' OR t.category_type = 'Absoluto')`;
+    } else {
+      query += ` AND t.belt_category LIKE ?`;
+      params.push(`%${belt}%`);
+    }
   }
 
   query += ` ORDER BY t.date DESC, t.id DESC`;

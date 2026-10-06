@@ -753,6 +753,178 @@ function seedTournaments() {
     null, null, 0, 0, 0, 0, 0, 0, null, 'Regra IBJJF No-Gi com Heel Hook liberado',
     finalT2, 2, 'pending'
   );
+
+  // Tournament 3: CHAVE FAIXA BRANCA
+  const tBranca = db.prepare(`
+    INSERT INTO tournaments (title, date, location, gi_type, category_type, weight_division, gender, belt_category, status, created_by_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    'Copa Arte Suave 2026 — Chave Faixa Branca Gi',
+    '2026-10-12',
+    'Tatame 1 (Iniciantes)',
+    'Gi',
+    'Peso',
+    'Médio (até 82.3kg)',
+    'Masculino',
+    'Faixa Branca',
+    'ongoing',
+    profId
+  ).lastInsertRowid;
+
+  const w1 = insertAth.run(tBranca, 'Gabriel Rocha', 'Branca', 77.8, 'Arte Suave BJJ', 1).lastInsertRowid;
+  const w2 = insertAth.run(tBranca, 'Felipe Lima', 'Branca', 73.0, 'Arte Suave BJJ', 2).lastInsertRowid;
+  const w3 = insertAth.run(tBranca, 'Thiago Santos', 'Branca', 79.5, 'Gracie Barra', 3).lastInsertRowid;
+  const w4 = insertAth.run(tBranca, 'Daniel Alves', 'Branca', 81.0, 'Alliance BJJ', 4).lastInsertRowid;
+
+  const finalBranca = insertMatch.run(
+    tBranca, 'Final Faixa Branca', 2, 3,
+    w1, w3, 'Gabriel Rocha', 'Thiago Santos', 'Branca', 'Branca',
+    null, null, 0, 0, 0, 0, 0, 0, null, 'Disputa da Medalha de Ouro',
+    null, null, 'pending'
+  ).lastInsertRowid;
+
+  insertMatch.run(
+    tBranca, 'Semifinal 1', 1, 1,
+    w1, w2, 'Gabriel Rocha', 'Felipe Lima', 'Branca', 'Branca',
+    w1, 'Gabriel Rocha', 6, 0, 1, 0, 0, 0, 'Pontos (6 x 0)', 'Passagem e montada',
+    finalBranca, 1, 'completed'
+  );
+
+  insertMatch.run(
+    tBranca, 'Semifinal 2', 1, 2,
+    w3, w4, 'Thiago Santos', 'Daniel Alves', 'Branca', 'Branca',
+    w3, 'Thiago Santos', 2, 0, 0, 0, 0, 0, 'Pontos (2 x 0)', 'Queda no início',
+    finalBranca, 2, 'completed'
+  );
+
+  // Tournament 4: CHAVE FAIXA AZUL
+  const tAzul = db.prepare(`
+    INSERT INTO tournaments (title, date, location, gi_type, category_type, weight_division, gender, belt_category, status, created_by_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    'Copa Arte Suave 2026 — Chave Faixa Azul Gi',
+    '2026-10-12',
+    'Tatame 2 (Graduados)',
+    'Gi',
+    'Peso',
+    'Leve (até 76.0kg)',
+    'Misto',
+    'Faixa Azul',
+    'ongoing',
+    profId
+  ).lastInsertRowid;
+
+  const bl1 = insertAth.run(tAzul, 'Mariana Costa', 'Azul', 61.2, 'Arte Suave BJJ', 1).lastInsertRowid;
+  const bl2 = insertAth.run(tAzul, 'Camila Santos', 'Azul', 56.0, 'Arte Suave BJJ', 2).lastInsertRowid;
+  const bl3 = insertAth.run(tAzul, 'Leonardo Barbosa', 'Azul', 75.0, 'Checkmat', 3).lastInsertRowid;
+  const bl4 = insertAth.run(tAzul, 'Rafael Nogueira', 'Azul', 74.5, 'Nova União', 4).lastInsertRowid;
+
+  const finalAzul = insertMatch.run(
+    tAzul, 'Final Faixa Azul', 2, 3,
+    bl1, bl3, 'Mariana Costa', 'Leonardo Barbosa', 'Azul', 'Azul',
+    null, null, 0, 0, 0, 0, 0, 0, null, 'Disputa de Ouro Faixa Azul',
+    null, null, 'pending'
+  ).lastInsertRowid;
+
+  insertMatch.run(
+    tAzul, 'Semifinal 1', 1, 1,
+    bl1, bl2, 'Mariana Costa', 'Camila Santos', 'Azul', 'Azul',
+    bl1, 'Mariana Costa', 4, 2, 2, 0, 0, 0, 'Finalização (Armlock)', 'Armlock da guarda fechada',
+    finalAzul, 1, 'completed'
+  );
+
+  insertMatch.run(
+    tAzul, 'Semifinal 2', 1, 2,
+    bl3, bl4, 'Leonardo Barbosa', 'Rafael Nogueira', 'Azul', 'Azul',
+    bl3, 'Leonardo Barbosa', 3, 0, 1, 0, 0, 0, 'Pontos (3 x 0)', 'Passagem toureada',
+    finalAzul, 2, 'completed'
+  );
+
+  // Tournament 5: CHAVE FAIXA ROXA
+  const tRoxa = db.prepare(`
+    INSERT INTO tournaments (title, date, location, gi_type, category_type, weight_division, gender, belt_category, status, created_by_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    'Copa Arte Suave 2026 — Chave Faixa Roxa Gi',
+    '2026-10-14',
+    'Tatame 3 (Elite)',
+    'Gi',
+    'Peso',
+    'Pesado (até 94.3kg)',
+    'Masculino',
+    'Faixa Roxa',
+    'ongoing',
+    profId
+  ).lastInsertRowid;
+
+  const rx1 = insertAth.run(tRoxa, 'Rodrigo "Tanque" Souza', 'Roxa', 91.5, 'Arte Suave BJJ', 1).lastInsertRowid;
+  const rx2 = insertAth.run(tRoxa, 'Bruno "Trator" Alencar', 'Roxa', 93.0, 'Alliance BJJ', 2).lastInsertRowid;
+  const rx3 = insertAth.run(tRoxa, 'Matheus Diniz Jr.', 'Roxa', 89.0, 'Dream Art', 3).lastInsertRowid;
+  const rx4 = insertAth.run(tRoxa, 'André "Pitbull" Costa', 'Roxa', 88.5, 'Gracie Barra', 4).lastInsertRowid;
+
+  const finalRoxa = insertMatch.run(
+    tRoxa, 'Final Faixa Roxa', 2, 3,
+    rx1, rx3, 'Rodrigo "Tanque" Souza', 'Matheus Diniz Jr.', 'Roxa', 'Roxa',
+    null, null, 0, 0, 0, 0, 0, 0, null, 'Disputa de Cinturão Roxa',
+    null, null, 'pending'
+  ).lastInsertRowid;
+
+  insertMatch.run(
+    tRoxa, 'Semifinal 1', 1, 1,
+    rx1, rx2, 'Rodrigo "Tanque" Souza', 'Bruno "Trator" Alencar', 'Roxa', 'Roxa',
+    rx1, 'Rodrigo "Tanque" Souza', 5, 0, 1, 0, 0, 0, 'Pontos (5 x 0)', 'Queda e passagem de guarda',
+    finalRoxa, 1, 'completed'
+  );
+
+  insertMatch.run(
+    tRoxa, 'Semifinal 2', 1, 2,
+    rx3, rx4, 'Matheus Diniz Jr.', 'André "Pitbull" Costa', 'Roxa', 'Roxa',
+    rx3, 'Matheus Diniz Jr.', 2, 0, 0, 0, 0, 0, 'Finalização (Triângulo)', 'Triângulo invertido',
+    finalRoxa, 2, 'completed'
+  );
+
+  // Tournament 6: CHAVE FAIXA PRETA & MESTRES
+  const tPreta = db.prepare(`
+    INSERT INTO tournaments (title, date, location, gi_type, category_type, weight_division, gender, belt_category, status, created_by_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    'Copa Arte Suave 2026 — Super Lutas Faixa Preta',
+    '2026-10-15',
+    'Tatame Principal Arena Show',
+    'Gi',
+    'Absoluto',
+    'Absoluto Livre',
+    'Masculino',
+    'Faixa Preta',
+    'ongoing',
+    profId
+  ).lastInsertRowid;
+
+  const p1 = insertAth.run(tPreta, 'Mestre Carlos Gracie Silva', 'Preta', 82.0, 'Arte Suave BJJ', 1).lastInsertRowid;
+  const p2 = insertAth.run(tPreta, 'Thiago "Monstro" Silva', 'Preta', 94.0, 'Fight Zone', 2).lastInsertRowid;
+  const p3 = insertAth.run(tPreta, 'Marcelo Garcia Jr.', 'Preta', 77.0, 'Alliance BJJ', 3).lastInsertRowid;
+  const p4 = insertAth.run(tPreta, 'Bernardo Faria Jr.', 'Preta', 99.0, 'BJJ Fanatics Academy', 4).lastInsertRowid;
+
+  const finalPreta = insertMatch.run(
+    tPreta, 'Grande Final Faixa Preta', 2, 3,
+    p1, p4, 'Mestre Carlos Gracie Silva', 'Bernardo Faria Jr.', 'Preta', 'Preta',
+    null, null, 0, 0, 0, 0, 0, 0, null, 'Disputa de Troféu dos Mestres',
+    null, null, 'pending'
+  ).lastInsertRowid;
+
+  insertMatch.run(
+    tPreta, 'Semifinal 1', 1, 1,
+    p1, p3, 'Mestre Carlos Gracie Silva', 'Marcelo Garcia Jr.', 'Preta', 'Preta',
+    p1, 'Mestre Carlos Gracie Silva', 4, 2, 1, 0, 0, 0, 'Finalização (Mata-Leão)', 'Pegada pelas costas no minuto 7',
+    finalPreta, 1, 'completed'
+  );
+
+  insertMatch.run(
+    tPreta, 'Semifinal 2', 1, 2,
+    p2, p4, 'Thiago "Monstro" Silva', 'Bernardo Faria Jr.', 'Preta', 'Preta',
+    p4, 'Bernardo Faria Jr.', 2, 0, 2, 0, 0, 0, 'Pontos (2 x 0)', 'Raspagem meia guarda profunda',
+    finalPreta, 2, 'completed'
+  );
 }
 
 module.exports = {
