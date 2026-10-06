@@ -14,6 +14,7 @@ import {
   Sparkles,
   HelpCircle
 } from 'lucide-react';
+import CyberOrientalBackground from '../components/CyberOrientalBackground';
 
 const BELT_OPTIONS = ['Branca', 'Azul', 'Roxa', 'Marrom', 'Preta'];
 
@@ -156,15 +157,9 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden">
-      {/* Background ambient glow & Oriental Kanji Watermark */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 left-10 w-72 h-72 bg-red-900/15 rounded-full blur-3xl pointer-events-none" />
-      
-      {/* Giant Background Kanji */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 text-[140px] sm:text-[200px] font-black font-serif text-amber-500/[0.03] select-none pointer-events-none leading-none">
-        柔術
-      </div>
+    <div className="min-h-screen bg-[#060608] flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden">
+      {/* Background Animated Floating Bolinhas & Cyber Oriental Matrix */}
+      <CyberOrientalBackground />
 
       <div className="w-full max-w-md z-10">
         {/* Header Branding */}

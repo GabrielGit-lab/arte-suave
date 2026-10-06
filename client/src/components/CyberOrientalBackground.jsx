@@ -26,44 +26,76 @@ export default function CyberOrientalBackground() {
 
     window.addEventListener('resize', handleResize);
 
-    // Subtle floating glowing embers (gold & crimson cyber sparks)
-    const sparks = Array.from({ length: 32 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 2 + 0.8,
-      speedX: (Math.random() - 0.5) * 0.4,
-      speedY: -Math.random() * 0.6 - 0.2, // Drift gently upwards
-      opacity: Math.random() * 0.6 + 0.2,
-      pulse: Math.random() * Math.PI * 2,
-      color: Math.random() > 0.4 ? 'rgba(245, 158, 11,' : 'rgba(239, 68, 68,' // gold or crimson
-    }));
+    // Rich floating luminous bolinhas & cyber embers (gold, amber & crimson)
+    const sparks = Array.from({ length: 48 }, (_, i) => {
+      const isOrb = i % 3 === 0; // 1 in 3 is a larger soft luminous bolinha
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        baseSize: isOrb ? Math.random() * 3.5 + 3.0 : Math.random() * 2.0 + 1.2, // 3-6.5px for orbs, 1.2-3.2px for sparks
+        size: isOrb ? Math.random() * 3.5 + 3.0 : Math.random() * 2.0 + 1.2,
+        isOrb,
+        speedX: (Math.random() - 0.5) * 0.45,
+        speedY: isOrb ? -Math.random() * 0.4 - 0.15 : -Math.random() * 0.7 - 0.25, // Orbs drift slowly, sparks drift faster
+        opacity: isOrb ? Math.random() * 0.5 + 0.25 : Math.random() * 0.7 + 0.3,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: Math.random() * 0.03 + 0.015,
+        swayOffset: Math.random() * Math.PI * 2,
+        colorType: Math.random() > 0.35 ? 'gold' : 'crimson'
+      };
+    });
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Render drifting embers
+      // Render drifting bolinhas and embers
       for (let i = 0; i < sparks.length; i++) {
         const s = sparks[i];
-        s.x += s.speedX;
+        s.pulse += s.pulseSpeed;
+        s.swayOffset += 0.02;
+
+        // Gentle sinusoidal horizontal sway + upward vertical drift
+        s.x += s.speedX + Math.sin(s.swayOffset) * 0.3;
         s.y += s.speedY;
-        s.pulse += 0.03;
 
         // Reset if drifted off screen
-        if (s.y < -10) {
-          s.y = height + 10;
+        if (s.y < -15) {
+          s.y = height + 15;
           s.x = Math.random() * width;
         }
-        if (s.x < -10) s.x = width + 10;
-        if (s.x > width + 10) s.x = -10;
+        if (s.x < -15) s.x = width + 15;
+        if (s.x > width + 15) s.x = -15;
 
-        const currentOpacity = s.opacity * (0.6 + 0.4 * Math.sin(s.pulse));
+        const currentOpacity = s.opacity * (0.65 + 0.35 * Math.sin(s.pulse));
+        const currentSize = s.baseSize * (0.85 + 0.15 * Math.sin(s.pulse));
 
         ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-        ctx.fillStyle = `${s.color} ${currentOpacity})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = s.color === 'rgba(245, 158, 11,' ? '#f59e0b' : '#ef4444';
-        ctx.fill();
+        ctx.arc(s.x, s.y, currentSize, 0, Math.PI * 2);
+
+        if (s.isOrb) {
+          // Soft glowing luminous bolinha with radial gradient
+          const grad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, currentSize * 2.2);
+          if (s.colorType === 'gold') {
+            grad.addColorStop(0, `rgba(253, 230, 138, ${currentOpacity * 0.95})`);
+            grad.addColorStop(0.4, `rgba(245, 158, 11, ${currentOpacity * 0.7})`);
+            grad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+          } else {
+            grad.addColorStop(0, `rgba(254, 202, 202, ${currentOpacity * 0.95})`);
+            grad.addColorStop(0.4, `rgba(239, 68, 68, ${currentOpacity * 0.7})`);
+            grad.addColorStop(1, 'rgba(239, 68, 68, 0)');
+          }
+          ctx.fillStyle = grad;
+          ctx.shadowBlur = 14;
+          ctx.shadowColor = s.colorType === 'gold' ? '#f59e0b' : '#ef4444';
+          ctx.fill();
+        } else {
+          // Crisp glowing ember dot
+          const colorPrefix = s.colorType === 'gold' ? 'rgba(245, 158, 11,' : 'rgba(239, 68, 68,';
+          ctx.fillStyle = `${colorPrefix} ${currentOpacity})`;
+          ctx.shadowBlur = 9;
+          ctx.shadowColor = s.colorType === 'gold' ? '#f59e0b' : '#ef4444';
+          ctx.fill();
+        }
       }
 
       animationFrameId = requestAnimationFrame(render);

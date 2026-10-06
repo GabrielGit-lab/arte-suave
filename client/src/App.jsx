@@ -22,8 +22,9 @@ function AppContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
+      <div className="min-h-screen bg-[#060608] flex items-center justify-center relative overflow-hidden">
+        <CyberOrientalBackground />
+        <div className="flex flex-col items-center gap-3 relative z-10">
           <div className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin shadow-[0_0_20px_#f59e0b]" />
           <span className="text-sm font-semibold text-amber-300 tracking-wider">🥋 柔術 • Inicializando Dojo Digital...</span>
         </div>
