@@ -30,9 +30,23 @@ export default function Dashboard({ onNavigate }) {
   const { user } = useAuth();
   const isProfessor = user?.role === 'professor';
 
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [classesToday, setClassesToday] = useState([]);
+  const [stats, setStats] = useState(() => {
+    try {
+      const cached = localStorage.getItem('artesuave_dashboard_cache');
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [classesToday, setClassesToday] = useState(() => {
+    try {
+      const cached = localStorage.getItem('artesuave_classes_cache');
+      return cached ? JSON.parse(cached) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [loading, setLoading] = useState(false);
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const [isCuriositiesModalOpen, setIsCuriositiesModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
@@ -42,30 +56,24 @@ export default function Dashboard({ onNavigate }) {
   }, [user]);
 
   const fetchDashboardData = async () => {
-    setLoading(true);
     try {
       const data = await api.get('/reports/dashboard');
       setStats(data);
+      try {
+        localStorage.setItem('artesuave_dashboard_cache', JSON.stringify(data));
+      } catch {}
 
       const classesData = await api.get('/classes?limit=5');
       setClassesToday(classesData);
+      try {
+        localStorage.setItem('artesuave_classes_cache', JSON.stringify(classesData));
+      } catch {}
     } catch (err) {
       console.error('Erro ao carregar dados do dashboard:', err);
     } finally {
       setLoading(false);
     }
   };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
-          <span className="text-xs text-zinc-400 font-medium">Carregando tatame...</span>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-4 sm:space-y-6">

@@ -22,13 +22,24 @@ function AppContent() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  if (loading) {
+  if (loading && !user) {
     return (
-      <div className="min-h-screen bg-[#060608] flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-screen bg-[#060608] text-zinc-100 flex flex-col selection:bg-amber-500 selection:text-black relative overflow-x-hidden">
         <CyberOrientalBackground />
-        <div className="flex flex-col items-center gap-3 relative z-10">
-          <div className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin shadow-[0_0_20px_#f59e0b]" />
-          <span className="text-sm font-semibold text-amber-300 tracking-wider">🥋 柔術 • Inicializando Dojo Digital...</span>
+        <Navbar onMobileMenuToggle={() => setMobileOpen(!mobileOpen)} />
+        <div className="flex-1 flex max-w-7xl w-full mx-auto">
+          <Sidebar
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            mobileOpen={mobileOpen}
+            setMobileOpen={setMobileOpen}
+          />
+          <main className="flex-1 p-3 sm:p-6 lg:p-8 min-w-0 flex items-center justify-center py-24">
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-10 h-10 border-2 border-amber-500/20 border-t-amber-500 rounded-full animate-spin shadow-[0_0_15px_#f59e0b]" />
+              <span className="text-xs text-amber-400 font-mono tracking-wider">🥋 柔術 • Sincronizando Dojo...</span>
+            </div>
+          </main>
         </div>
       </div>
     );
