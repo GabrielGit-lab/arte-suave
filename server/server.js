@@ -11,6 +11,7 @@ const graduationRoutes = require('./routes/graduations');
 const physicalRoutes = require('./routes/physical');
 const tutorialRoutes = require('./routes/tutorials');
 const reportRoutes = require('./routes/reports');
+const tournamentRoutes = require('./routes/tournaments');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -31,6 +32,7 @@ app.use('/api/graduations', graduationRoutes);
 app.use('/api/physical', physicalRoutes);
 app.use('/api/tutorials', tutorialRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/tournaments', tournamentRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

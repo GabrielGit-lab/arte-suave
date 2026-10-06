@@ -11,6 +11,7 @@ import Graduations from './pages/Graduations';
 import PhysicalMetrics from './pages/PhysicalMetrics';
 import Reports from './pages/Reports';
 import RulesCBJJ from './pages/RulesCBJJ';
+import Tournaments from './pages/Tournaments';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -52,6 +53,7 @@ function AppContent() {
           {activeTab === 'graduations' && <Graduations />}
           {activeTab === 'physical' && <PhysicalMetrics />}
           {activeTab === 'reports' && <Reports />}
+          {activeTab === 'tournaments' && <Tournaments />}
           {activeTab === 'rules' && <RulesCBJJ />}
         </main>
       </div>

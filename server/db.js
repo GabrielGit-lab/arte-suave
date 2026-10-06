@@ -100,9 +100,63 @@ function initDatabase() {
       updated_at TEXT DEFAULT (datetime('now')),
       UNIQUE(user_id, tutorial_id, status)
     );
+
+    CREATE TABLE IF NOT EXISTS tournaments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      date TEXT NOT NULL,
+      location TEXT,
+      gi_type TEXT NOT NULL CHECK(gi_type IN ('Gi', 'No-Gi')),
+      category_type TEXT NOT NULL CHECK(category_type IN ('Absoluto', 'Peso')),
+      weight_division TEXT DEFAULT 'Absoluto Livre',
+      gender TEXT NOT NULL CHECK(gender IN ('Masculino', 'Feminino', 'Misto')),
+      belt_category TEXT NOT NULL,
+      status TEXT DEFAULT 'ongoing' CHECK(status IN ('draft', 'ongoing', 'finished')),
+      created_by_id INTEGER REFERENCES users(id),
+      created_at TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS tournament_athletes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      tournament_id INTEGER NOT NULL REFERENCES tournaments(id) ON DELETE CASCADE,
+      user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      athlete_name TEXT NOT NULL,
+      belt TEXT NOT NULL,
+      weight REAL,
+      team TEXT DEFAULT 'Arte Suave BJJ',
+      seed INTEGER DEFAULT 0
+    );
+
+    CREATE TABLE IF NOT EXISTS tournament_matches (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      tournament_id INTEGER NOT NULL REFERENCES tournaments(id) ON DELETE CASCADE,
+      round_name TEXT NOT NULL,
+      round_number INTEGER NOT NULL,
+      match_number INTEGER NOT NULL,
+      athlete1_id INTEGER REFERENCES tournament_athletes(id) ON DELETE SET NULL,
+      athlete2_id INTEGER REFERENCES tournament_athletes(id) ON DELETE SET NULL,
+      athlete1_name TEXT,
+      athlete2_name TEXT,
+      athlete1_belt TEXT,
+      athlete2_belt TEXT,
+      winner_id INTEGER REFERENCES tournament_athletes(id) ON DELETE SET NULL,
+      winner_name TEXT,
+      score1 INTEGER DEFAULT 0,
+      score2 INTEGER DEFAULT 0,
+      adv1 INTEGER DEFAULT 0,
+      adv2 INTEGER DEFAULT 0,
+      pen1 INTEGER DEFAULT 0,
+      pen2 INTEGER DEFAULT 0,
+      win_type TEXT,
+      notes TEXT,
+      next_match_id INTEGER,
+      next_match_slot INTEGER,
+      status TEXT DEFAULT 'pending' CHECK(status IN ('pending', 'in_progress', 'completed'))
+    );
   `);
 
   seedData();
+  seedTournaments();
 }
 
 function seedData() {
@@ -552,7 +606,158 @@ function seedData() {
   insertBookmark.run(s1Id, 7, 'practiced');
 }
 
+function seedTournaments() {
+  const count = db.prepare('SELECT COUNT(*) as count FROM tournaments').get().count;
+  if (count > 0) return;
+
+  const prof = db.prepare("SELECT id FROM users WHERE role = 'professor' LIMIT 1").get();
+  const profId = prof ? prof.id : 1;
+
+  // Tournament 1: Grand Prix Absoluto Gi (Misto e Todas as Faixas)
+  const t1Result = db.prepare(`
+    INSERT INTO tournaments (title, date, location, gi_type, category_type, weight_division, gender, belt_category, status, created_by_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    'Grand Prix Absoluto Gi — Copa Arte Suave 2026',
+    '2026-10-10',
+    'Tatame Central Arte Suave Arena',
+    'Gi',
+    'Absoluto',
+    'Absoluto Aberto (Livre)',
+    'Misto',
+    'Todas as Faixas (Open Class)',
+    'ongoing',
+    profId
+  );
+  const t1Id = t1Result.lastInsertRowid;
+
+  // Insert 8 Athletes
+  const insertAth = db.prepare(`
+    INSERT INTO tournament_athletes (tournament_id, athlete_name, belt, weight, team, seed)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `);
+
+  const a1 = insertAth.run(t1Id, 'Gabriel Rocha', 'Branca', 77.8, 'Arte Suave BJJ', 1).lastInsertRowid;
+  const a2 = insertAth.run(t1Id, 'Felipe Lima', 'Branca', 73.0, 'Arte Suave BJJ', 8).lastInsertRowid;
+  const a3 = insertAth.run(t1Id, 'Mariana Costa', 'Azul', 61.2, 'Arte Suave BJJ', 4).lastInsertRowid;
+  const a4 = insertAth.run(t1Id, 'Camila Santos', 'Azul', 56.0, 'Arte Suave BJJ', 5).lastInsertRowid;
+  const a5 = insertAth.run(t1Id, 'Rodrigo "Tanque"', 'Roxa', 91.5, 'Gracie Barra', 2).lastInsertRowid;
+  const a6 = insertAth.run(t1Id, 'Bruno "Trator" Alencar', 'Roxa', 98.0, 'Alliance BJJ', 7).lastInsertRowid;
+  const a7 = insertAth.run(t1Id, 'Lucas "Pitbull" Mendes', 'Marrom', 84.0, 'Arte Suave BJJ', 3).lastInsertRowid;
+  const a8 = insertAth.run(t1Id, 'Leonardo Barbosa', 'Azul', 80.0, 'Checkmat', 6).lastInsertRowid;
+
+  // Create Bracket Matches (Single Elimination: 4 Quarterfinals, 2 Semifinals, 1 Final)
+  const insertMatch = db.prepare(`
+    INSERT INTO tournament_matches (
+      tournament_id, round_name, round_number, match_number,
+      athlete1_id, athlete2_id, athlete1_name, athlete2_name, athlete1_belt, athlete2_belt,
+      winner_id, winner_name, score1, score2, adv1, adv2, pen1, pen2, win_type, notes,
+      next_match_id, next_match_slot, status
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  // Final Match (Round 3)
+  const finalMatch = insertMatch.run(
+    t1Id, 'Grande Final Absoluto', 3, 7,
+    a1, a7, 'Gabriel Rocha', 'Lucas "Pitbull" Mendes', 'Branca', 'Marrom',
+    null, null, 0, 0, 0, 0, 0, 0, null, 'Disputa pelo Troféu e Cinturão Absoluto',
+    null, null, 'pending'
+  ).lastInsertRowid;
+
+  // Semifinal 1 (Round 2) -> advances to final slot 1
+  const semi1 = insertMatch.run(
+    t1Id, 'Semifinal 1', 2, 5,
+    a1, a3, 'Gabriel Rocha', 'Mariana Costa', 'Branca', 'Azul',
+    a1, 'Gabriel Rocha', 4, 2, 1, 0, 0, 0, 'Pontos (4 x 2)', 'Raspagem nos últimos segundos',
+    finalMatch, 1, 'completed'
+  ).lastInsertRowid;
+
+  // Semifinal 2 (Round 2) -> advances to final slot 2
+  const semi2 = insertMatch.run(
+    t1Id, 'Semifinal 2', 2, 6,
+    a5, a7, 'Rodrigo "Tanque"', 'Lucas "Pitbull" Mendes', 'Roxa', 'Marrom',
+    a7, 'Lucas "Pitbull" Mendes', 0, 2, 0, 1, 0, 0, 'Finalização (Triângulo)', 'Ataque fulminante da guarda fechada',
+    finalMatch, 2, 'completed'
+  ).lastInsertRowid;
+
+  // Quarterfinals (Round 1)
+  insertMatch.run(
+    t1Id, 'Quartas de Final 1', 1, 1,
+    a1, a2, 'Gabriel Rocha', 'Felipe Lima', 'Branca', 'Branca',
+    a1, 'Gabriel Rocha', 4, 0, 2, 0, 0, 0, 'Finalização (Armlock)', 'Armlock clássico no minuto 3:20',
+    semi1, 1, 'completed'
+  );
+
+  insertMatch.run(
+    t1Id, 'Quartas de Final 2', 1, 2,
+    a3, a4, 'Mariana Costa', 'Camila Santos', 'Azul', 'Azul',
+    a3, 'Mariana Costa', 2, 2, 2, 1, 0, 0, 'Vantagens (2 x 1)', 'Luta muito técnica e parelha',
+    semi1, 2, 'completed'
+  );
+
+  insertMatch.run(
+    t1Id, 'Quartas de Final 3', 1, 3,
+    a5, a6, 'Rodrigo "Tanque"', 'Bruno "Trator" Alencar', 'Roxa', 'Roxa',
+    a5, 'Rodrigo "Tanque"', 6, 2, 1, 0, 0, 0, 'Pontos (6 x 2)', 'Duas quedas potentes',
+    semi2, 1, 'completed'
+  );
+
+  insertMatch.run(
+    t1Id, 'Quartas de Final 4', 1, 4,
+    a7, a8, 'Lucas "Pitbull" Mendes', 'Leonardo Barbosa', 'Marrom', 'Azul',
+    a7, 'Lucas "Pitbull" Mendes', 7, 0, 0, 0, 0, 0, 'Finalização (Kimura)', 'Kimura da meia guarda',
+    semi2, 2, 'completed'
+  );
+
+  // Tournament 2: No-Gi Submission Only Absoluto
+  const t2Result = db.prepare(`
+    INSERT INTO tournaments (title, date, location, gi_type, category_type, weight_division, gender, belt_category, status, created_by_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    'No-Gi Submission Challenge 2026 — Absoluto Marrom & Preta',
+    '2026-10-18',
+    'Tatame 2 - Cage & Mat',
+    'No-Gi',
+    'Absoluto',
+    'Absoluto Sem Kimono',
+    'Masculino',
+    'Faixa Marrom & Preta',
+    'draft',
+    profId
+  );
+  const t2Id = t2Result.lastInsertRowid;
+
+  const b1 = insertAth.run(t2Id, 'Lucas "Pitbull" Mendes', 'Marrom', 84.0, 'Arte Suave BJJ', 1).lastInsertRowid;
+  const b2 = insertAth.run(t2Id, 'Mestre Carlos Gracie', 'Preta', 82.0, 'Arte Suave BJJ', 2).lastInsertRowid;
+  const b3 = insertAth.run(t2Id, 'Thiago "Monstro" Silva', 'Preta', 94.0, 'Fight Zone', 3).lastInsertRowid;
+  const b4 = insertAth.run(t2Id, 'Renato "Alemão" Krause', 'Marrom', 77.0, 'Nova União', 4).lastInsertRowid;
+
+  // Bracket for Tournament 2: 4 athletes (Semifinals and Final)
+  const finalT2 = insertMatch.run(
+    t2Id, 'Final No-Gi Absoluto', 2, 3,
+    null, null, 'Vencedor Semi 1', 'Vencedor Semi 2', 'Preta', 'Marrom',
+    null, null, 0, 0, 0, 0, 0, 0, null, 'Disputa de Cinturão No-Gi',
+    null, null, 'pending'
+  ).lastInsertRowid;
+
+  insertMatch.run(
+    t2Id, 'Semifinal 1 No-Gi', 1, 1,
+    b1, b4, 'Lucas "Pitbull" Mendes', 'Renato "Alemão" Krause', 'Marrom', 'Marrom',
+    null, null, 0, 0, 0, 0, 0, 0, null, 'Regra IBJJF No-Gi com Heel Hook liberado',
+    finalT2, 1, 'pending'
+  );
+
+  insertMatch.run(
+    t2Id, 'Semifinal 2 No-Gi', 1, 2,
+    b2, b3, 'Mestre Carlos Gracie', 'Thiago "Monstro" Silva', 'Preta', 'Preta',
+    null, null, 0, 0, 0, 0, 0, 0, null, 'Regra IBJJF No-Gi com Heel Hook liberado',
+    finalT2, 2, 'pending'
+  );
+}
+
 module.exports = {
   db,
   initDatabase,
+  seedTournaments,
 };
+

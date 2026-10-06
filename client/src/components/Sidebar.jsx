@@ -9,7 +9,8 @@ import {
   BarChart3,
   UserCheck,
   ShieldCheck,
-  FileText
+  FileText,
+  Trophy
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -66,6 +67,13 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
       icon: BarChart3,
       badge: null,
       desc: 'Frequência e ranking'
+    },
+    {
+      id: 'tournaments',
+      label: 'Chaveamento de Torneios',
+      icon: Trophy,
+      badge: 'Brackets',
+      desc: 'Absoluto, Gi/No-Gi e Faixas'
     },
     {
       id: 'rules',
