@@ -143,6 +143,44 @@ router.get('/me', authenticateToken, (req, res) => {
   });
 });
 
+// PUT /api/auth/avatar - Update avatar (base64 or URL)
+router.put('/avatar', authenticateToken, (req, res) => {
+  const { avatar } = req.body;
+
+  if (avatar === undefined) {
+    return res.status(400).json({ error: 'Nenhuma foto fornecida' });
+  }
+
+  db.prepare('UPDATE users SET avatar = ? WHERE id = ?').run(avatar || null, req.user.id);
+
+  const updatedUser = db.prepare(`
+    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact, created_at
+    FROM users WHERE id = ?
+  `).get(req.user.id);
+
+  res.json({
+    success: true,
+    message: avatar ? 'Foto de perfil atualizada com sucesso!' : 'Foto de perfil removida!',
+    user: updatedUser
+  });
+});
+
+// DELETE /api/auth/avatar - Remove avatar
+router.delete('/avatar', authenticateToken, (req, res) => {
+  db.prepare('UPDATE users SET avatar = NULL WHERE id = ?').run(req.user.id);
+
+  const updatedUser = db.prepare(`
+    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact, created_at
+    FROM users WHERE id = ?
+  `).get(req.user.id);
+
+  res.json({
+    success: true,
+    message: 'Foto de perfil removida com sucesso!',
+    user: updatedUser
+  });
+});
+
 // In-memory store for reset codes: email -> { code, expires }
 const resetTokens = new Map();
 

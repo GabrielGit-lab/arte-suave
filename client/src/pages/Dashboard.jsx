@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../utils/api';
 import BeltBadge from '../components/BeltBadge';
+import AvatarUploadModal from '../components/AvatarUploadModal';
 import { 
   Users, 
   Calendar, 
@@ -13,7 +14,8 @@ import {
   BookOpen, 
   ChevronRight,
   Flame,
-  AlertCircle
+  AlertCircle,
+  Camera
 } from 'lucide-react';
 
 export default function Dashboard({ onNavigate }) {
@@ -43,6 +45,8 @@ export default function Dashboard({ onNavigate }) {
     }
   };
 
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
@@ -60,25 +64,59 @@ export default function Dashboard({ onNavigate }) {
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900/90 to-amber-950/40 border border-slate-800 p-6 sm:p-8">
         <div className="absolute top-0 right-0 w-80 h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent pointer-events-none" />
         
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                {isProfessor ? 'Professor Responsável' : 'Área do Aluno'}
-              </span>
-              <span className="text-slate-500 text-xs">• Arte Suave BJJ</span>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative z-10">
+          <div className="flex items-start sm:items-center gap-4">
+            {/* Interactive Profile Photo */}
+            <div className="relative group shrink-0">
+              {user?.avatar ? (
+                <img
+                  src={user.avatar}
+                  alt={user.name}
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-4 ring-amber-500/40 shadow-lg"
+                />
+              ) : (
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-800 ring-4 ring-slate-700 flex items-center justify-center text-slate-300 font-black text-2xl sm:text-3xl shadow-lg">
+                  {user?.name ? user.name[0].toUpperCase() : 'U'}
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={() => setIsAvatarModalOpen(true)}
+                title="Alterar ou remover foto de perfil"
+                className="absolute inset-0 rounded-full bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white cursor-pointer"
+              >
+                <Camera className="w-5 h-5 text-amber-400" />
+                <span className="text-[9px] font-bold mt-0.5">Editar</span>
+              </button>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              Oss, {user?.name}!
-            </h2>
-            <p className="text-sm text-slate-400 mt-1 max-w-xl">
-              {isProfessor 
-                ? 'Monitore a frequência dos alunos, controle chamadas do dia e acompanhe a evolução de graduação de cada faixa.'
-                : 'Acompanhe seu ritmo de treinos, evolução física de peso e aprimore seu jogo com a biblioteca de posições.'}
-            </p>
+
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  {isProfessor ? 'Professor Responsável' : 'Área do Aluno'}
+                </span>
+                <span className="text-slate-500 text-xs">• Arte Suave BJJ</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                Oss, {user?.name}!
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl">
+                {isProfessor 
+                  ? 'Monitore a frequência dos alunos, controle chamadas do dia e acompanhe a evolução de graduação de cada faixa.'
+                  : 'Acompanhe seu ritmo de treinos, evolução física de peso e aprimore seu jogo com a biblioteca de posições.'}
+              </p>
+              <button
+                type="button"
+                onClick={() => setIsAvatarModalOpen(true)}
+                className="mt-2 text-[11px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold"
+              >
+                <Camera className="w-3.5 h-3.5" />
+                {user?.avatar ? 'Alterar / Remover foto de perfil' : 'Adicionar foto de perfil'}
+              </button>
+            </div>
           </div>
 
-          <div className="bg-slate-950/80 p-4 rounded-xl border border-slate-800 flex flex-col items-center min-w-[200px]">
+          <div className="bg-slate-950/80 p-4 rounded-xl border border-slate-800 flex flex-col items-center min-w-[200px] shrink-0">
             <span className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-1">
               Graduação Atual
             </span>
@@ -89,6 +127,14 @@ export default function Dashboard({ onNavigate }) {
           </div>
         </div>
       </div>
+
+      {/* Avatar Modal */}
+      {isAvatarModalOpen && (
+        <AvatarUploadModal
+          isOpen={isAvatarModalOpen}
+          onClose={() => setIsAvatarModalOpen(false)}
+        />
+      )}
 
       {/* KPI Cards */}
       {isProfessor ? (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../utils/api';
 import BeltBadge from '../components/BeltBadge';
@@ -17,7 +17,9 @@ import {
   Edit3, 
   AlertCircle,
   FileText,
-  UserCheck
+  UserCheck,
+  Camera,
+  Upload
 } from 'lucide-react';
 
 const BELTS = ['Todas', 'Branca', 'Azul', 'Roxa', 'Marrom', 'Preta'];
@@ -85,6 +87,60 @@ export default function Students() {
       console.error(err);
     } finally {
       setDetailsLoading(false);
+    }
+  };
+
+  const studentFileInputRef = useRef(null);
+  const [avatarLoading, setAvatarLoading] = useState(false);
+
+  const handleStudentFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !studentDetails) return;
+
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor selecione um arquivo de imagem válido (JPG, PNG, WebP).');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('A imagem deve ter no máximo 5MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const base64 = event.target.result;
+      setAvatarLoading(true);
+      try {
+        await api.put(`/students/${studentDetails.id}`, { avatar: base64 });
+        setStudentDetails((prev) => ({ ...prev, avatar: base64 }));
+        setStudents((prev) =>
+          prev.map((s) => (s.id === studentDetails.id ? { ...s, avatar: base64 } : s))
+        );
+      } catch (err) {
+        alert(err.message || 'Erro ao atualizar foto');
+      } finally {
+        setAvatarLoading(false);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveStudentAvatar = async () => {
+    if (!studentDetails) return;
+    if (!window.confirm(`Deseja remover a foto de perfil de ${studentDetails.name}?`)) return;
+
+    setAvatarLoading(true);
+    try {
+      await api.put(`/students/${studentDetails.id}`, { avatar: null });
+      setStudentDetails((prev) => ({ ...prev, avatar: null }));
+      setStudents((prev) =>
+        prev.map((s) => (s.id === studentDetails.id ? { ...s, avatar: null } : s))
+      );
+    } catch (err) {
+      alert(err.message || 'Erro ao remover foto');
+    } finally {
+      setAvatarLoading(false);
     }
   };
 
@@ -302,11 +358,41 @@ export default function Students() {
               {/* Header profile info */}
               <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  <img
-                    src={studentDetails.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80'}
-                    alt={studentDetails.name}
-                    className="w-16 h-16 rounded-full object-cover ring-2 ring-blue-500/40"
+                  <div className="relative group shrink-0">
+                    {studentDetails.avatar ? (
+                      <img
+                        src={studentDetails.avatar}
+                        alt={studentDetails.name}
+                        className="w-16 h-16 rounded-full object-cover ring-2 ring-blue-500/40 shadow"
+                      />
+                    ) : (
+                      <div className="w-16 h-16 rounded-full bg-slate-800 ring-2 ring-slate-700 flex items-center justify-center text-slate-300 font-bold text-2xl shadow">
+                        {studentDetails.name ? studentDetails.name[0].toUpperCase() : 'A'}
+                      </div>
+                    )}
+
+                    {isProfessor && (
+                      <button
+                        type="button"
+                        onClick={() => studentFileInputRef.current?.click()}
+                        disabled={avatarLoading}
+                        title="Trocar foto do aluno"
+                        className="absolute inset-0 rounded-full bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white cursor-pointer"
+                      >
+                        <Camera className="w-4 h-4 text-amber-400" />
+                        <span className="text-[8px] font-bold mt-0.5">Editar</span>
+                      </button>
+                    )}
+                  </div>
+
+                  <input
+                    ref={studentFileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleStudentFileSelect}
                   />
+
                   <div>
                     <h3 className="text-lg font-black text-white">{studentDetails.name}</h3>
                     <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
@@ -315,6 +401,31 @@ export default function Students() {
                     <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
                       <Phone className="w-3.5 h-3.5" /> {studentDetails.phone || 'Não informado'}
                     </p>
+
+                    {isProfessor && (
+                      <div className="flex items-center gap-2 mt-2">
+                        <button
+                          type="button"
+                          onClick={() => studentFileInputRef.current?.click()}
+                          disabled={avatarLoading}
+                          className="text-[10px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold"
+                        >
+                          <Upload className="w-3 h-3" />
+                          {avatarLoading ? 'Atualizando...' : 'Nova Foto'}
+                        </button>
+                        {studentDetails.avatar && (
+                          <button
+                            type="button"
+                            onClick={handleRemoveStudentAvatar}
+                            disabled={avatarLoading}
+                            className="text-[10px] text-red-400 hover:text-red-300 flex items-center gap-1 font-semibold"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                            Remover Foto
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
 

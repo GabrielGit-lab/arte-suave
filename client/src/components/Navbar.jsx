@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import BeltBadge from './BeltBadge';
-import { LogOut, ShieldAlert, Award, User, RefreshCw } from 'lucide-react';
+import AvatarUploadModal from './AvatarUploadModal';
+import { LogOut, ShieldAlert, Award, User, RefreshCw, Camera } from 'lucide-react';
 
 export default function Navbar({ onMobileMenuToggle }) {
   const { user, logout, login } = useAuth();
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
 
   const handleQuickSwitch = async (role) => {
     try {
@@ -100,23 +102,34 @@ export default function Navbar({ onMobileMenuToggle }) {
                 </div>
               </div>
 
-              {/* Avatar */}
-              <div className="relative">
+              {/* Avatar Clickable */}
+              <button
+                type="button"
+                onClick={() => setIsAvatarModalOpen(true)}
+                title="Clique para alterar ou remover foto de perfil"
+                className="relative group cursor-pointer focus:outline-none"
+              >
                 {user.avatar ? (
                   <img
                     src={user.avatar}
                     alt={user.name}
-                    className="w-9 h-9 rounded-full object-cover ring-2 ring-amber-500/40"
+                    className="w-9 h-9 rounded-full object-cover ring-2 ring-amber-500/40 group-hover:ring-amber-400 transition"
                   />
                 ) : (
-                  <div className="w-9 h-9 rounded-full bg-slate-800 ring-2 ring-slate-700 flex items-center justify-center text-slate-300 font-bold text-sm">
+                  <div className="w-9 h-9 rounded-full bg-slate-800 ring-2 ring-slate-700 group-hover:ring-amber-400 flex items-center justify-center text-slate-300 font-bold text-sm transition">
                     {user.name ? user.name[0].toUpperCase() : 'U'}
                   </div>
                 )}
+
+                {/* Hover overlay with camera icon */}
+                <div className="absolute inset-0 rounded-full bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                  <Camera className="w-3.5 h-3.5 text-amber-400" />
+                </div>
+
                 <span className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-slate-950 ${
                   user.role === 'professor' ? 'bg-amber-400' : 'bg-blue-500'
                 }`} />
-              </div>
+              </button>
             </div>
 
             <button
@@ -129,6 +142,14 @@ export default function Navbar({ onMobileMenuToggle }) {
           </div>
         )}
       </div>
+
+      {/* Avatar Modal */}
+      {isAvatarModalOpen && (
+        <AvatarUploadModal
+          isOpen={isAvatarModalOpen}
+          onClose={() => setIsAvatarModalOpen(false)}
+        />
+      )}
     </header>
   );
 }
