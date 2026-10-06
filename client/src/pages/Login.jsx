@@ -157,52 +157,62 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden">
-      {/* Background ambient glow */}
+      {/* Background ambient glow & Oriental Kanji Watermark */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 left-10 w-72 h-72 bg-red-900/15 rounded-full blur-3xl pointer-events-none" />
+      
+      {/* Giant Background Kanji */}
+      <div className="absolute top-12 left-1/2 -translate-x-1/2 text-[140px] sm:text-[200px] font-black font-serif text-amber-500/[0.03] select-none pointer-events-none leading-none">
+        柔術
+      </div>
 
       <div className="w-full max-w-md z-10">
         {/* Header Branding */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-red-950/40 border border-amber-500/40 mb-3 shadow-lg">
-            <span className="text-3xl">🥋</span>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 via-black to-red-950/40 border border-amber-500/50 mb-3 shadow-[0_0_20px_rgba(245,158,11,0.25)] relative group animate-float">
+            <span className="text-3xl filter drop-shadow">🥋</span>
+            <span className="absolute -bottom-1 -right-1 text-[8px] font-black px-1 rounded bg-black border border-amber-500/50 text-amber-400 font-mono">
+              柔術
+            </span>
           </div>
           <h1 className="text-3xl font-black uppercase tracking-wider bg-gradient-to-r from-amber-300 via-amber-100 to-amber-400 bg-clip-text text-transparent">
             Arte Suave
           </h1>
-          <p className="text-xs sm:text-sm text-zinc-400 mt-0.5">
-            Plataforma de Gestão, Graduação e Treinos de Jiu-Jitsu
+          <p className="text-xs sm:text-sm text-zinc-400 mt-0.5 flex items-center justify-center gap-1.5 font-medium">
+            <span>Cyber Dojo</span>
+            <span className="text-zinc-600">•</span>
+            <span className="text-amber-400/90 font-mono">押忍 BJJ PLATFORM</span>
           </p>
         </div>
 
         {/* Demo Accounts Quick-Access */}
-        <div className="mb-5 p-3.5 rounded-xl bg-zinc-950/90 border border-amber-500/30 shadow-md">
+        <div className="mb-5 p-3.5 rounded-xl bg-zinc-950/90 border border-amber-500/35 shadow-lg cyber-card">
           <div className="text-xs font-bold text-zinc-300 mb-2 flex items-center gap-1.5 uppercase tracking-wide">
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-            Entrar com 1 clique (Demonstração):
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+            <span>Acesso Rápido com 1 Clique:</span>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => handleQuickLogin('professor@artesuave.com', 'senha123')}
-              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold transition shadow-xs"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold transition shadow-xs hover:shadow-[0_0_10px_rgba(245,158,11,0.3)]"
             >
-              <ShieldCheck className="w-3.5 h-3.5" />
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
               Mestre Carlos (Prof)
             </button>
             <button
               type="button"
               onClick={() => handleQuickLogin('aluno@artesuave.com', 'senha123')}
-              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-red-950/60 hover:bg-red-900/60 border border-red-700/50 text-red-300 text-xs font-bold transition shadow-xs"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-red-950/60 hover:bg-red-900/60 border border-red-700/50 text-red-300 text-xs font-bold transition shadow-xs hover:shadow-[0_0_10px_rgba(239,68,68,0.3)]"
             >
-              <UserCheck className="w-3.5 h-3.5" />
+              <UserCheck className="w-3.5 h-3.5 text-red-400" />
               Gabriel Rocha (Aluno)
             </button>
           </div>
         </div>
 
         {/* Main Card with Tabs */}
-        <div className="bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden">
+        <div className="bg-zinc-950 border border-amber-500/30 rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden cyber-glow-gold">
           {/* Top Tabs */}
           <div className="grid grid-cols-3 border-b border-zinc-800 bg-black/80 text-xs font-bold">
             <button

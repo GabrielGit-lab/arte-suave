@@ -178,46 +178,59 @@ export default function Dashboard({ onNavigate }) {
       )}
 
       {/* Athlete Curiosities & Game Style Spotlight Card */}
-      <div className="p-5 rounded-2xl bg-gradient-to-r from-zinc-950 via-black to-neutral-950 border border-amber-500/30 shadow-xl">
+      <div className="relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-zinc-950 via-black to-neutral-950 border border-amber-500/35 shadow-2xl cyber-card">
+        {/* Subtle kanji background watermark */}
+        <div className="absolute top-2 right-4 text-7xl font-serif text-amber-500/[0.03] select-none pointer-events-none">
+          技
+        </div>
+
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-zinc-800">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400">
-              <Crosshair className="w-5 h-5" />
+            <div className="p-2 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.2)]">
+              <Crosshair className="w-5 h-5 animate-pulse" />
             </div>
             <div>
-              <h3 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
-                Ficha Técnica & Curiosidades de Tatame
-                <span className="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-red-950 text-red-300 border border-red-700/50">
-                  {user?.game_style || 'Guardeiro'}
+              <h3 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2 flex-wrap">
+                <span>DNA Marcial & Curiosidades</span>
+                <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider border shadow-sm ${
+                  user?.game_style === 'Passador'
+                    ? 'bg-amber-950/90 text-amber-300 border-amber-600/60 shadow-[0_0_8px_rgba(245,158,11,0.3)]'
+                    : user?.game_style === 'Guardeiro'
+                    ? 'bg-red-950/90 text-red-300 border-red-700/60 shadow-[0_0_8px_rgba(239,68,68,0.3)]'
+                    : 'bg-zinc-900 text-zinc-300 border-zinc-700'
+                }`}>
+                  {user?.game_style === 'Passador' && '⚡ 攻 PASSADOR'}
+                  {user?.game_style === 'Guardeiro' && '🥋 守 GUARDEIRO'}
+                  {(!user?.game_style || user?.game_style === 'Equilibrado') && '⚔️ 全 HÍBRIDO'}
                 </span>
               </h3>
               <p className="text-xs text-zinc-400">
-                Seu DNA marcial: preferências de jogo, posições de controle e golpes de assinatura.
+                Preferências táticas no tatame, posições de controle e golpes de assinatura.
               </p>
             </div>
           </div>
 
           <button
             onClick={() => setIsProfileModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-amber-500/30 text-amber-300 text-xs font-bold transition shadow-xs whitespace-nowrap"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-zinc-900 via-black to-zinc-900 hover:from-zinc-800 hover:to-zinc-800 border border-amber-500/40 text-amber-300 text-xs font-bold transition shadow-sm whitespace-nowrap hover:shadow-[0_0_12px_rgba(245,158,11,0.3)]"
           >
             <Edit3 className="w-3.5 h-3.5 text-amber-400" />
             Aba de Curiosidades no Perfil
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
           {/* Style */}
-          <div className="p-3.5 rounded-xl bg-black border border-zinc-800 flex flex-col justify-between">
+          <div className="p-3.5 rounded-xl bg-black border border-zinc-800/90 hover:border-amber-500/50 transition flex flex-col justify-between cyber-card">
             <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
               <Crosshair className="w-3.5 h-3.5 text-amber-400" /> Estilo de Luta
             </span>
             <div className="mt-1.5">
               <span className={`inline-block px-2 py-0.5 rounded text-xs font-black uppercase border ${
                 user?.game_style === 'Passador'
-                  ? 'bg-amber-950/80 text-amber-300 border-amber-600/60'
+                  ? 'bg-amber-950/80 text-amber-300 border-amber-600/60 shadow-[0_0_8px_rgba(245,158,11,0.3)]'
                   : user?.game_style === 'Guardeiro'
-                  ? 'bg-red-950/80 text-red-300 border-red-700/60'
+                  ? 'bg-red-950/80 text-red-300 border-red-700/60 shadow-[0_0_8px_rgba(239,68,68,0.3)]'
                   : 'bg-zinc-900 text-zinc-300 border-zinc-700'
               }`}>
                 {user?.game_style || 'Guardeiro'}
@@ -233,7 +246,7 @@ export default function Dashboard({ onNavigate }) {
           </div>
 
           {/* Favorite Position */}
-          <div className="p-3.5 rounded-xl bg-black border border-zinc-800 flex flex-col justify-between">
+          <div className="p-3.5 rounded-xl bg-black border border-zinc-800/90 hover:border-amber-500/50 transition flex flex-col justify-between cyber-card">
             <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
               <Flame className="w-3.5 h-3.5 text-amber-400" /> Posição Favorita
             </span>
@@ -248,7 +261,7 @@ export default function Dashboard({ onNavigate }) {
           </div>
 
           {/* Signature Submission */}
-          <div className="p-3.5 rounded-xl bg-black border border-zinc-800 flex flex-col justify-between">
+          <div className="p-3.5 rounded-xl bg-black border border-zinc-800/90 hover:border-red-600/50 transition flex flex-col justify-between cyber-card">
             <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
               <Zap className="w-3.5 h-3.5 text-red-400" /> Finalização de Assinatura
             </span>
@@ -263,7 +276,7 @@ export default function Dashboard({ onNavigate }) {
           </div>
 
           {/* Idol / Reference */}
-          <div className="p-3.5 rounded-xl bg-black border border-zinc-800 flex flex-col justify-between">
+          <div className="p-3.5 rounded-xl bg-black border border-zinc-800/90 hover:border-amber-500/50 transition flex flex-col justify-between cyber-card">
             <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
               <Award className="w-3.5 h-3.5 text-amber-400" /> Ídolo / Inspiração
             </span>

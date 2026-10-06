@@ -25,6 +25,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     {
       id: 'dashboard',
       label: 'Painel Geral',
+      kanji: '主',
       icon: LayoutDashboard,
       badge: null,
       desc: 'Visão geral e métricas'
@@ -32,6 +33,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     {
       id: 'lineage',
       label: 'Árvore Genealógica',
+      kanji: '系',
       icon: GitFork,
       badge: 'Linhagens',
       desc: 'Origens e grandes mestres'
@@ -39,6 +41,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     {
       id: 'tutorials',
       label: 'Biblioteca de Posições',
+      kanji: '技',
       icon: BookOpen,
       badge: 'Vídeo/Fotos',
       desc: 'Técnicas passo a passo'
@@ -46,6 +49,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     {
       id: 'attendance',
       label: 'Controle de Presença',
+      kanji: '席',
       icon: ClipboardCheck,
       badge: isProfessor ? 'Chamada' : 'Minhas Aulas',
       desc: 'Assinatura de treinos'
@@ -53,6 +57,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     {
       id: 'students',
       label: isProfessor ? 'Cadastro de Alunos' : 'Comunidade / Perfil',
+      kanji: '門',
       icon: Users,
       badge: null,
       desc: 'Perfis e históricos'
@@ -60,6 +65,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     {
       id: 'graduations',
       label: 'Gestão de Graduação',
+      kanji: '段',
       icon: Award,
       badge: 'CBJJ',
       desc: 'Faixas e graus'
@@ -67,6 +73,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     {
       id: 'physical',
       label: 'Dados Físicos & Peso',
+      kanji: '体',
       icon: Scale,
       badge: 'IBJJF',
       desc: 'Pesagem e evolução'
@@ -74,6 +81,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     {
       id: 'reports',
       label: 'Relatórios & Estatísticas',
+      kanji: '計',
       icon: BarChart3,
       badge: null,
       desc: 'Frequência e ranking'
@@ -81,6 +89,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     {
       id: 'tournaments',
       label: 'Chaveamento de Torneios',
+      kanji: '合',
       icon: Trophy,
       badge: 'Brackets',
       desc: 'Absoluto, Gi/No-Gi e Faixas'
@@ -88,6 +97,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     {
       id: 'rules',
       label: 'Manual de Regras CBJJ',
+      kanji: '規',
       icon: FileText,
       badge: '2026',
       desc: 'Pontos, golpes e faltas'
@@ -183,22 +193,27 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
                 key={item.id}
                 onClick={() => handleSelect(item.id)}
                 className={`
-                  w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-sm font-semibold transition-all group
+                  w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-sm font-semibold transition-all group cyber-card
                   ${isActive 
-                    ? 'bg-gradient-to-r from-amber-500/20 via-black to-red-950/20 text-amber-300 border border-amber-500/40 shadow-sm' 
-                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 border border-transparent'}
+                    ? 'bg-gradient-to-r from-amber-500/20 via-black to-red-950/20 text-amber-300 border border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]' 
+                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/80 border border-transparent hover:border-amber-500/20'}
                 `}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`p-1.5 rounded-lg transition-colors ${
+                  <div className={`p-1.5 rounded-lg transition-all relative ${
                     isActive 
-                      ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
-                      : 'bg-zinc-900 text-zinc-400 group-hover:text-zinc-200 group-hover:bg-zinc-800'
+                      ? 'bg-gradient-to-br from-amber-500/30 to-red-950/40 text-amber-300 border border-amber-500/40 shadow-[0_0_10px_#f59e0b]' 
+                      : 'bg-zinc-900/90 text-zinc-400 group-hover:text-amber-300 group-hover:bg-zinc-800'
                   }`}>
                     <Icon className="w-4 h-4" />
+                    <span className="absolute -top-1 -right-1 text-[8px] font-bold font-serif px-0.5 rounded bg-black/90 text-amber-400/80 border border-amber-500/30 leading-none">
+                      {item.kanji}
+                    </span>
                   </div>
                   <div>
-                    <div className="leading-tight">{item.label}</div>
+                    <div className="leading-tight flex items-center gap-1.5">
+                      <span>{item.label}</span>
+                    </div>
                     <div className="text-[10px] font-normal text-zinc-500 group-hover:text-zinc-400">
                       {item.desc}
                     </div>
@@ -206,10 +221,10 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
                 </div>
 
                 {item.badge && (
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold uppercase ${
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold uppercase transition ${
                     isActive 
-                      ? 'bg-red-950/80 text-red-300 border border-red-700/40' 
-                      : 'bg-zinc-900 text-zinc-400 border border-zinc-800'
+                      ? 'bg-red-950/90 text-red-300 border border-red-600/50 shadow-[0_0_8px_rgba(239,68,68,0.3)]' 
+                      : 'bg-zinc-900 text-zinc-400 border border-zinc-800 group-hover:border-zinc-700'
                   }`}>
                     {item.badge}
                   </span>

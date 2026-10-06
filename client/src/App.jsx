@@ -13,6 +13,7 @@ import Reports from './pages/Reports';
 import RulesCBJJ from './pages/RulesCBJJ';
 import Tournaments from './pages/Tournaments';
 import LineageBJJ from './pages/LineageBJJ';
+import CyberOrientalBackground from './components/CyberOrientalBackground';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -23,8 +24,8 @@ function AppContent() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
-          <span className="text-sm font-semibold text-zinc-400">Carregando tatame...</span>
+          <div className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin shadow-[0_0_20px_#f59e0b]" />
+          <span className="text-sm font-semibold text-amber-300 tracking-wider">🥋 柔術 • Inicializando Dojo Digital...</span>
         </div>
       </div>
     );
@@ -35,7 +36,8 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#08080a] text-zinc-100 flex flex-col selection:bg-amber-500 selection:text-black">
+    <div className="min-h-screen bg-[#060608] text-zinc-100 flex flex-col selection:bg-amber-500 selection:text-black relative overflow-x-hidden">
+      <CyberOrientalBackground />
       <Navbar onMobileMenuToggle={() => setMobileOpen(!mobileOpen)} />
 
       <div className="flex-1 flex max-w-7xl w-full mx-auto">

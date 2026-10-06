@@ -23,13 +23,16 @@ export default function Navbar({ onMobileMenuToggle }) {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-amber-500/20 bg-black/95 backdrop-blur-md">
-      <div className="flex items-center justify-between px-4 sm:px-6 h-16">
+    <header className="sticky top-0 z-40 w-full border-b border-amber-500/25 bg-[#07070a]/95 backdrop-blur-md relative overflow-hidden">
+      {/* Top luminous cyber line */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_10px_#f59e0b]" />
+
+      <div className="flex items-center justify-between px-3 sm:px-6 h-16">
         {/* Left: Brand & Mobile Toggle */}
         <div className="flex items-center gap-3">
           <button
             onClick={onMobileMenuToggle}
-            className="md:hidden p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-900"
+            className="md:hidden p-2 text-zinc-400 hover:text-amber-400 rounded-lg hover:bg-zinc-900 border border-transparent hover:border-amber-500/30 transition"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -37,18 +40,25 @@ export default function Navbar({ onMobileMenuToggle }) {
           </button>
 
           <div className="flex items-center gap-2.5">
-            <span className="text-2xl filter drop-shadow">🥋</span>
+            <div className="relative group">
+              <span className="text-2xl filter drop-shadow inline-block animate-float">🥋</span>
+              <div className="absolute -inset-1 rounded-full bg-amber-500/20 blur-xs -z-10 group-hover:bg-amber-500/40 transition" />
+            </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-black tracking-wider text-base sm:text-lg bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500 bg-clip-text text-transparent uppercase">
                   Arte Suave
                 </span>
-                <span className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-bold rounded-sm bg-red-950/80 text-red-400 border border-red-700/50 uppercase tracking-widest">
-                  BJJ ACADEMY
+                <span className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-[9px] font-black rounded-sm bg-gradient-to-r from-red-950 to-zinc-950 text-red-300 border border-red-700/60 uppercase tracking-widest shadow-[0_0_8px_rgba(239,68,68,0.25)]">
+                  <span>柔術</span>
+                  <span className="text-amber-400">CYBER BJJ</span>
                 </span>
               </div>
-              <p className="text-[10px] text-zinc-400 hidden sm:block">
-                Gestão e Treinamento de Jiu-Jitsu Brasileiro
+              <p className="text-[10px] text-zinc-400 hidden sm:flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#10b981]" />
+                <span>Gestão & Dojo Digital</span>
+                <span className="text-zinc-600">•</span>
+                <span className="text-amber-400/90 font-mono text-[9px]">押忍 OSS</span>
               </p>
             </div>
           </div>

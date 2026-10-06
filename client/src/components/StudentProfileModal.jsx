@@ -442,32 +442,37 @@ export default function StudentProfileModal({
               {!isEditingCuriosities ? (
                 <>
                   {/* Style Hero Card */}
-                  <div className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+                  <div className={`p-4 sm:p-5 rounded-2xl border transition-all relative overflow-hidden cyber-card ${
                     details.game_style === 'Passador'
-                      ? 'bg-gradient-to-br from-amber-950/60 via-black to-zinc-950 border-amber-500/40'
+                      ? 'bg-gradient-to-br from-amber-950/70 via-black to-zinc-950 border-amber-500/50 shadow-[0_0_20px_rgba(245,158,11,0.2)]'
                       : details.game_style === 'Guardeiro'
-                      ? 'bg-gradient-to-br from-red-950/60 via-black to-zinc-950 border-red-600/40'
-                      : 'bg-gradient-to-br from-zinc-900/60 via-black to-zinc-950 border-zinc-700'
+                      ? 'bg-gradient-to-br from-red-950/70 via-black to-zinc-950 border-red-600/50 shadow-[0_0_20px_rgba(239,68,68,0.25)]'
+                      : 'bg-gradient-to-br from-zinc-900/70 via-black to-zinc-950 border-zinc-700 shadow-md'
                   }`}>
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3">
+                    {/* Watermark Kanji */}
+                    <div className="absolute top-1 right-3 text-7xl sm:text-8xl font-serif text-amber-500/[0.04] select-none pointer-events-none">
+                      {details.game_style === 'Passador' ? '攻' : details.game_style === 'Guardeiro' ? '守' : '全'}
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3 relative z-10">
                       <div className="flex items-center gap-2.5">
-                        <span className="text-2xl">
+                        <span className="text-3xl filter drop-shadow">
                           {details.game_style === 'Passador' ? '⚡' : details.game_style === 'Guardeiro' ? '🥋' : '⚔️'}
                         </span>
                         <div>
-                          <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">
-                            Identidade Tática no Tatame
+                          <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest block font-mono">
+                            // IDENTIDADE TÁTICA • 柔術
                           </span>
-                          <h4 className="text-lg font-black text-white flex items-center gap-2">
-                            {details.game_style === 'Passador' && 'Atleta Passador'}
-                            {details.game_style === 'Guardeiro' && 'Atleta Guardeiro'}
-                            {details.game_style === 'Equilibrado' && 'Atleta Completo / Híbrido'}
-                            {!details.game_style && 'Atleta Guardeiro'}
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border ${
+                          <h4 className="text-lg font-black text-white flex items-center gap-2 flex-wrap">
+                            {details.game_style === 'Passador' && 'Atleta Passador (攻め)'}
+                            {details.game_style === 'Guardeiro' && 'Atleta Guardeiro (守り)'}
+                            {details.game_style === 'Equilibrado' && 'Atleta Completo (全能)'}
+                            {!details.game_style && 'Atleta Guardeiro (守り)'}
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border shadow-xs ${
                               details.game_style === 'Passador'
-                                ? 'bg-amber-950 text-amber-300 border-amber-600/60'
+                                ? 'bg-amber-950 text-amber-300 border-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]'
                                 : details.game_style === 'Guardeiro'
-                                ? 'bg-red-950 text-red-300 border-red-700/60'
+                                ? 'bg-red-950 text-red-300 border-red-600 shadow-[0_0_8px_rgba(239,68,68,0.4)]'
                                 : 'bg-zinc-800 text-zinc-300 border-zinc-600'
                             }`}>
                               {details.game_style || 'Guardeiro'}
@@ -480,7 +485,7 @@ export default function StudentProfileModal({
                         <button
                           type="button"
                           onClick={() => setIsEditingCuriosities(true)}
-                          className="px-3.5 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-amber-500/30 text-amber-300 text-xs font-bold transition flex items-center gap-1.5 shadow"
+                          className="px-3.5 py-1.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-amber-500/40 text-amber-300 text-xs font-bold transition flex items-center gap-1.5 shadow hover:shadow-[0_0_12px_rgba(245,158,11,0.3)] cyber-btn-shimmer"
                         >
                           <Edit3 className="w-3.5 h-3.5 text-amber-400" />
                           Editar Curiosidades
@@ -488,7 +493,7 @@ export default function StudentProfileModal({
                       )}
                     </div>
 
-                    <p className="text-xs text-zinc-300 leading-relaxed bg-black/40 p-3 rounded-xl border border-zinc-800/80">
+                    <p className="text-xs text-zinc-300 leading-relaxed bg-black/60 p-3 rounded-xl border border-zinc-800/90 relative z-10 backdrop-blur-xs">
                       {details.game_style === 'Passador'
                         ? '🔥 Estilo focado em controle territorial, pressão contínua por cima, esgrima forte, transições de passagem e submissões a partir de posições de domínio.'
                         : details.game_style === 'Guardeiro'
@@ -500,12 +505,12 @@ export default function StudentProfileModal({
                   {/* 4 Details Cards Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     {/* Favorite Position */}
-                    <div className="p-4 rounded-xl bg-black border border-zinc-800/90 hover:border-amber-500/40 transition">
+                    <div className="p-4 rounded-xl bg-black border border-zinc-800/90 hover:border-amber-500/60 transition cyber-card">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1.5">
                           <Flame className="w-4 h-4 text-amber-400" /> Posição Favorita
                         </span>
-                        <span className="text-[10px] text-zinc-600 font-mono">#Controle</span>
+                        <span className="text-[10px] text-amber-400/80 font-mono">技 #Controle</span>
                       </div>
                       <p className="text-sm font-black text-amber-200">
                         {details.favorite_position || 'Não informada ainda'}
@@ -516,12 +521,12 @@ export default function StudentProfileModal({
                     </div>
 
                     {/* Signature Submission */}
-                    <div className="p-4 rounded-xl bg-black border border-zinc-800/90 hover:border-red-600/40 transition">
+                    <div className="p-4 rounded-xl bg-black border border-zinc-800/90 hover:border-red-600/60 transition cyber-card">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1.5">
                           <Zap className="w-4 h-4 text-red-400" /> Finalização de Assinatura
                         </span>
-                        <span className="text-[10px] text-zinc-600 font-mono">#Golpe</span>
+                        <span className="text-[10px] text-red-400/80 font-mono">極 #Golpe</span>
                       </div>
                       <p className="text-sm font-black text-red-300">
                         {details.favorite_submission || 'Não informada ainda'}
@@ -532,12 +537,12 @@ export default function StudentProfileModal({
                     </div>
 
                     {/* Idol / Inspiration */}
-                    <div className="p-4 rounded-xl bg-black border border-zinc-800/90 hover:border-amber-500/40 transition">
+                    <div className="p-4 rounded-xl bg-black border border-zinc-800/90 hover:border-amber-500/60 transition cyber-card">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1.5">
                           <Award className="w-4 h-4 text-amber-400" /> Maior Ídolo / Inspiração
                         </span>
-                        <span className="text-[10px] text-zinc-600 font-mono">#Referência</span>
+                        <span className="text-[10px] text-amber-400/80 font-mono">師 #Mestre</span>
                       </div>
                       <p className="text-sm font-black text-zinc-100">
                         {details.idol || 'Lendas da Arte Suave'}
@@ -548,12 +553,12 @@ export default function StudentProfileModal({
                     </div>
 
                     {/* BJJ Motto */}
-                    <div className="p-4 rounded-xl bg-black border border-zinc-800/90 hover:border-red-600/40 transition">
+                    <div className="p-4 rounded-xl bg-black border border-zinc-800/90 hover:border-red-600/60 transition cyber-card">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1.5">
                           <Quote className="w-4 h-4 text-red-400" /> Lema / Filosofia de Tatame
                         </span>
-                        <span className="text-[10px] text-zinc-600 font-mono">#Mentalidade</span>
+                        <span className="text-[10px] text-zinc-500 font-mono">道 #Bushido</span>
                       </div>
                       <p className="text-xs font-semibold italic text-zinc-300 leading-snug">
                         "{details.bjj_motto || 'A mente comanda, o corpo obedece. Foco e disciplina diária no tatame.'}"
