@@ -50,6 +50,63 @@ router.get('/', authenticateToken, (req, res) => {
   res.json(tournaments);
 });
 
+// GET /api/tournaments/federations - List major federation tournaments with live stats
+router.get('/federations', authenticateToken, (req, res) => {
+  const { federation, gi_type, status, search } = req.query;
+
+  let query = `SELECT * FROM federation_tournaments WHERE 1=1`;
+  const params = [];
+
+  if (federation && federation !== 'Todas') {
+    query += ` AND federation = ?`;
+    params.push(federation);
+  }
+
+  if (gi_type && gi_type !== 'Todos') {
+    query += ` AND (gi_type = ? OR gi_type = 'Ambos')`;
+    params.push(gi_type);
+  }
+
+  if (status && status !== 'Todos') {
+    query += ` AND status = ?`;
+    params.push(status);
+  }
+
+  if (search) {
+    query += ` AND (name LIKE ? OR city LIKE ? OR country LIKE ? OR venue LIKE ?)`;
+    params.push(`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`);
+  }
+
+  query += ` ORDER BY 
+    CASE status
+      WHEN 'live' THEN 1
+      WHEN 'registration_open' THEN 2
+      WHEN 'check_phase' THEN 3
+      WHEN 'upcoming' THEN 4
+      ELSE 5
+    END,
+    date ASC
+  `;
+
+  const tournaments = db.prepare(query).all(...params);
+
+  // Compute live summary statistics
+  const total = db.prepare('SELECT COUNT(*) as count FROM federation_tournaments').get().count;
+  const liveCount = db.prepare("SELECT COUNT(*) as count FROM federation_tournaments WHERE status = 'live'").get().count;
+  const openCount = db.prepare("SELECT COUNT(*) as count FROM federation_tournaments WHERE status = 'registration_open'").get().count;
+  const checkCount = db.prepare("SELECT COUNT(*) as count FROM federation_tournaments WHERE status = 'check_phase'").get().count;
+
+  res.json({
+    tournaments,
+    stats: {
+      total,
+      liveCount,
+      openCount,
+      checkCount
+    }
+  });
+});
+
 // GET /api/tournaments/:id - Single tournament details with athletes and matches
 router.get('/:id', authenticateToken, (req, res) => {
   const tourId = parseInt(req.params.id, 10);

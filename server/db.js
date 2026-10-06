@@ -158,10 +158,37 @@ function initDatabase() {
       next_match_slot INTEGER,
       status TEXT DEFAULT 'pending' CHECK(status IN ('pending', 'in_progress', 'completed'))
     );
+
+    CREATE TABLE IF NOT EXISTS federation_tournaments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      federation TEXT NOT NULL,
+      federation_full_name TEXT NOT NULL,
+      name TEXT NOT NULL,
+      date TEXT NOT NULL,
+      end_date TEXT,
+      city TEXT NOT NULL,
+      country TEXT NOT NULL,
+      venue TEXT,
+      gi_type TEXT NOT NULL,
+      status TEXT NOT NULL,
+      status_label TEXT,
+      registration_deadline TEXT,
+      registration_batch TEXT,
+      prize_pool TEXT,
+      ranking_points TEXT,
+      stream_platform TEXT,
+      stream_url TEXT,
+      official_url TEXT NOT NULL,
+      description TEXT,
+      featured_division TEXT,
+      rules_type TEXT,
+      created_at TEXT DEFAULT (datetime('now'))
+    );
   `);
 
   seedData();
   seedTournaments();
+  seedFederationTournaments();
 }
 
 function seedData() {
@@ -932,9 +959,250 @@ function seedTournaments() {
   );
 }
 
+function seedFederationTournaments() {
+  const count = db.prepare('SELECT COUNT(*) as count FROM federation_tournaments').get().count;
+  if (count > 0) return;
+
+  const insertFed = db.prepare(`
+    INSERT INTO federation_tournaments (
+      federation, federation_full_name, name, date, end_date, city, country, venue,
+      gi_type, status, status_label, registration_deadline, registration_batch,
+      prize_pool, ranking_points, stream_platform, stream_url, official_url,
+      description, featured_division, rules_type
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  // 1. IBJJF World Championship 2026
+  insertFed.run(
+    'IBJJF',
+    'International Brazilian Jiu-Jitsu Federation',
+    'World Jiu-Jitsu IBJJF Championship 2026 (Mundial de Jiu-Jitsu)',
+    '2026-05-28',
+    '2026-05-31',
+    'Long Beach, Califórnia',
+    'Estados Unidos',
+    'Walter Pyramid (The Pyramid)',
+    'Gi',
+    'registration_open',
+    'Inscrições Abertas (Lote Oficial)',
+    '2026-05-18',
+    '2º Lote Oficial CBJJ/IBJJF',
+    'Troféu Mundial de Ouro & Cinturão Oficial IBJJF',
+    '7x Multiplicador Ranking Mundial IBJJF',
+    'FloGrappling',
+    'https://www.flograppling.com',
+    'https://ibjjf.com/events/calendar',
+    'O ápice do esporte mundial com kimono. O torneio mais tradicional e prestigiado de todo o Jiu-Jitsu brasileiro, coroando os novos campeões do mundo no sagrado tatame da Pirâmide de Long Beach.',
+    'Absoluto Faixa Preta Adulto Masculino & Feminino',
+    'Regras Oficiais CBJJ/IBJJF com Pesagem de Kimono Imediata Antes da 1ª Luta'
+  );
+
+  // 2. Craig Jones Invitational 2 (CJI) - LIVE
+  insertFed.run(
+    'CJI',
+    'Craig Jones Invitational / B-Team Grappling',
+    'Craig Jones Invitational 2 (CJI 2026)',
+    '2026-08-14',
+    '2026-08-15',
+    'Las Vegas, Nevada',
+    'Estados Unidos',
+    'Thomas & Mack Center',
+    'No-Gi',
+    'live',
+    '🔴 AO VIVO NO TATAME (Fase de Oitavas & Quartas)',
+    'Confirmados por Convite Direto',
+    'Chave Fechada de 16 Lutadores de Elite',
+    'US$ 1.000.000 (1 Milhão de Dólares por Categoria) + US$ 10.001 por Luta',
+    'Premiação Direta em Dinheiro & Troféu Maciço',
+    'YouTube Oficial CJI (100% Gratuito)',
+    'https://www.youtube.com',
+    'https://bteamjj.com',
+    'O maior prêmio em dinheiro da história da luta agarrada. Formato revolucionário em The Pit (paredes inclinadas), rounds de 5 minutos pontuados por juízes independentes estilo boxe/MMA.',
+    'Chaves Milionárias -80kg e +80kg com as maiores estrelas do No-Gi mundial',
+    'Sub-Only & Pontuação 10-9 por Round com The Pit, Heel Hooks e Slams liberados'
+  );
+
+  // 3. ADCC World Championship 2026
+  insertFed.run(
+    'ADCC',
+    'Abu Dhabi Combat Club Submission Fighting',
+    'ADCC World Championship 2026 (As Olimpíadas da Luta Agarrada)',
+    '2026-08-15',
+    '2026-08-16',
+    'Las Vegas, Nevada',
+    'Estados Unidos',
+    'T-Mobile Arena',
+    'No-Gi',
+    'check_phase',
+    '⏳ Fase de Checagem & Superlutas dos Titãs',
+    'Atletas Classificados nas Seletivas Mundiais',
+    'Elite Convocada Oficial',
+    'US$ 40.000 por campeão de categoria + Troféu Ouro Maciço & Anel ADCC',
+    'Hall da Fama ADCC & Título de Campeão Olímpico de Submission',
+    'UFC Fight Pass',
+    'https://ufcfightpass.com',
+    'https://adcombat.com',
+    'O maior e mais brutal espetáculo de submission grappling do planeta. Criado pelo Sheikh Tahnoon Bin Zayed, reúne os melhores grapplers, judocas e lutadores de MMA sem kimono.',
+    'Divisões Masculinas (-66kg, -77kg, -88kg, -99kg, +99kg), Femininas e Grande Absoluto',
+    'Regras ADCC (Sem pontos nos primeiros 5min, -1 ponto por puxar guarda, Heel Hooks e Chaves de Joelho liberadas)'
+  );
+
+  // 4. Campeonato Brasileiro CBJJ 2026
+  insertFed.run(
+    'CBJJ',
+    'Confederação Brasileira de Jiu-Jitsu',
+    'Campeonato Brasileiro de Jiu-Jitsu 2026 (Brasileirão CBJJ)',
+    '2026-04-25',
+    '2026-05-03',
+    'Barueri, São Paulo',
+    'Brasil',
+    'Ginásio Poliesportivo José Corrêa',
+    'Gi',
+    'registration_open',
+    '🟢 Inscrições Abertas (1º Lote com Desconto Filiado)',
+    '2026-04-14',
+    '1º Lote Filiado CBJJ',
+    'Medalhas Oficiais de Honra CBJJ e Vagas Classificatórias',
+    '5x Pontuação Máxima Ranking CBJJ / IBJJF Brasil',
+    'FloGrappling / Canal Oficial CBJJ YouTube',
+    'https://www.youtube.com',
+    'https://cbjj.com.br/events/calendar',
+    'O maior campeonato do planeta em contingente de atletas: mais de 8.500 competidores de todas as federações estaduais, faixas e idades (desde o Pré-Mirim até o Master 7).',
+    'Absolutos de Todas as Faixas (Branca, Azul, Roxa, Marrom e Preta)',
+    'Tabela Oficial de Pesos CBJJ com Pesagem Imediata de Kimono e Faixa'
+  );
+
+  // 5. Abu Dhabi World Pro 2026 (AJP)
+  insertFed.run(
+    'AJP',
+    'Abu Dhabi Jiu Jitsu Pro (UAEJJF)',
+    'Abu Dhabi World Professional Jiu-Jitsu Championship 2026 (World Pro)',
+    '2026-11-06',
+    '2026-11-14',
+    'Abu Dhabi',
+    'Emirados Árabes Unidos',
+    'Mubadala Arena (Zayed Sports City)',
+    'Gi',
+    'upcoming',
+    '📅 Em Breve (Abertura de Inscrições em Maio)',
+    '2026-10-25',
+    'Lote Internacional Antecipado',
+    'Mais de US$ 1.500.000 em Prêmios em Dinheiro Distribuídos',
+    '2000 Pontos Ranking Mundial AJP Tour World Ranking',
+    'AJP TV / YouTube Oficial AJP Tour',
+    'https://ajptour.com',
+    'https://ajptour.com',
+    'Com patrocínio real da família real de Abu Dhabi, o World Pro é famoso pela estrutura monumental de cinco estrelas, transporte oficial e as maiores premiações financeiras de kimono.',
+    'Categorias Profissionais Faixa Roxa, Marrom e Preta Masculino & Feminino',
+    'Regras AJP Tour: Combates dinâmicos sem vantagens, com Golden Score em caso de empate'
+  );
+
+  // 6. IBJJF Pan Championship 2026
+  insertFed.run(
+    'IBJJF',
+    'International Brazilian Jiu-Jitsu Federation',
+    'Pan Jiu-Jitsu IBJJF Championship 2026 (Pan-Americano)',
+    '2026-03-24',
+    '2026-03-29',
+    'Kissimmee, Flórida',
+    'Estados Unidos',
+    'Silver Spurs Arena (Osceola Heritage Park)',
+    'Gi',
+    'check_phase',
+    '⏳ Checagem Final de Atletas & Divulgação de Chaves',
+    '2026-03-15',
+    'Fase de Checagem Geral',
+    'Medalhas Oficiais Pan-Americanas de Ouro, Prata e Bronze',
+    '5x Pontos Ranking Mundial IBJJF',
+    'FloGrappling',
+    'https://www.flograppling.com',
+    'https://ibjjf.com/events/calendar',
+    'O segundo maior evento do Grand Slam anual da IBJJF nos Estados Unidos. Teste de fogo crucial antes do Mundial da Califórnia.',
+    'Absolutos Adulto e Master de Faixa Preta',
+    'Regras Oficiais CBJJ/IBJJF'
+  );
+
+  // 7. ADCC South American Trials 2026 (Seletiva São Paulo)
+  insertFed.run(
+    'ADCC',
+    'Abu Dhabi Combat Club',
+    'ADCC South American Trials 2026 (Seletiva Oficial Brasil)',
+    '2026-04-11',
+    '2026-04-12',
+    'São Paulo, SP',
+    'Brasil',
+    'Ginásio do Ibirapuera',
+    'No-Gi',
+    'registration_open',
+    '🟢 Inscrições Abertas (Últimas 100 Vagas)',
+    '2026-03-31',
+    'Último Lote de Vagas Restantes',
+    'Passagem Aérea + Hospedagem + Vaga Direta no ADCC World Championship Las Vegas',
+    'Classificação Direta para o Maior Palco do Mundo',
+    'FloGrappling',
+    'https://www.flograppling.com',
+    'https://adcombat.com',
+    'A seletiva mais dura e competitiva de todo o planeta. Centenas de finalizadores e lutadores de elite disputando uma única vaga por peso para representar a América do Sul no ADCC em Las Vegas.',
+    'Divisões de Peso Oficiais ADCC: -66kg, -77kg, -88kg, -99kg e +99kg',
+    'Regulamento Oficial ADCC Trials: Lutas de 6 minutos (finais com 8 minutos)'
+  );
+
+  // 8. CBJJ Rio Fall International Open & No-Gi Open 2026
+  insertFed.run(
+    'CBJJ',
+    'Confederação Brasileira de Jiu-Jitsu',
+    'Rio Fall International Open & Rio No-Gi Open 2026',
+    '2026-06-13',
+    '2026-06-14',
+    'Rio de Janeiro, RJ',
+    'Brasil',
+    'Tijuca Tênis Clube (O Templo do BJJ)',
+    'Ambos',
+    'registration_open',
+    '🟢 Inscrições Abertas (Gi & No-Gi)',
+    '2026-06-03',
+    '1º Lote Promocional',
+    'Medalhas Oficiais de Campeão Rio Open e Troféu Geral por Equipes',
+    '3x Pontuação Ranking CBJJ / IBJJF',
+    'FloGrappling / CBJJ Oficial',
+    'https://www.flograppling.com',
+    'https://cbjj.com.br/events/calendar',
+    'O lendário Tijuca Tênis Clube, berço histórico das maiores batalhas do Jiu-Jitsu carioca e mundial, sediando dois torneios no mesmo fim de semana: Com Kimono e Sem Kimono.',
+    'Categorias Peso e Absoluto de Todas as Faixas (Gi no sábado, No-Gi no domingo)',
+    'Regras Oficiais CBJJ'
+  );
+
+  // 9. AJP Grand Slam Rio de Janeiro 2026
+  insertFed.run(
+    'AJP',
+    'Abu Dhabi Jiu Jitsu Pro',
+    'AJP Tour Rio de Janeiro Grand Slam 2026',
+    '2026-07-24',
+    '2026-07-26',
+    'Rio de Janeiro, RJ',
+    'Brasil',
+    'Arena Carioca 1 (Parque Olímpico da Barra)',
+    'Gi',
+    'upcoming',
+    '📅 Em Breve (Calendário Grand Slam Tour)',
+    '2026-07-14',
+    'Inscrições Abertas em Junho',
+    'Premiação em Dólares para Campeões Profissionais Faixa Preta',
+    '1000 Pontos no Ranking Mundial AJP Tour',
+    'AJP TV / YouTube AJP',
+    'https://ajptour.com',
+    'https://ajptour.com',
+    'A etapa sul-americana do prestigiado circuito Grand Slam da AJP, disputada na moderna Arena Olímpica da Barra com transmissão internacional e tapetes de padrão mundial.',
+    'Profissionais Faixa Preta, Marrom e Masters',
+    'Regras Oficiais AJP Tour com Placar Eletrônico Dinâmico'
+  );
+}
+
 module.exports = {
   db,
   initDatabase,
   seedTournaments,
+  seedFederationTournaments,
 };
+
 

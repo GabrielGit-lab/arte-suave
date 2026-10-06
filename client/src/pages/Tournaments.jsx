@@ -19,8 +19,11 @@ import {
   Flame, 
   Scale, 
   Award,
-  Filter
+  Filter,
+  Globe,
+  Radio
 } from 'lucide-react';
+import FederationTournaments from '../components/FederationTournaments';
 
 const BELT_CATEGORIES = [
   'Todas as Faixas (Absoluto Livre)',
@@ -66,6 +69,7 @@ export default function Tournaments() {
   const { user } = useAuth();
   const isProfessor = user?.role === 'professor';
 
+  const [activeMainTab, setActiveMainTab] = useState('federations'); // 'federations' or 'internal'
   const [tournaments, setTournaments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTourId, setSelectedTourId] = useState(null);
@@ -310,34 +314,72 @@ export default function Tournaments() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              Chaveamento Oficial
+      {/* Top Tab Toggle: Circuitos Mundiais vs Chaveamentos Internos */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-2 rounded-2xl bg-black border border-amber-500/30 shadow-xl">
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-zinc-950/90 border border-zinc-800 w-full sm:w-auto overflow-x-auto">
+          <button
+            type="button"
+            onClick={() => setActiveMainTab('federations')}
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+              activeMainTab === 'federations'
+                ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            }`}
+          >
+            <Globe className="w-4 h-4" />
+            <span>Grandes Federações (Tempo Real)</span>
+            <span className="px-1.5 py-0.2 rounded text-[9px] font-black uppercase bg-red-950 text-red-300 border border-red-500 animate-pulse">
+              🔴 LIVE
             </span>
-            <span className="text-zinc-500 text-xs">• Brackets Gi, No-Gi & Absoluto</span>
-          </div>
-          <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-            <Trophy className="w-6 h-6 text-amber-400" />
-            Sistema de Chaves e Torneios de Jiu-Jitsu
-          </h2>
-          <p className="text-xs text-zinc-400 mt-1">
-            Gerador de chaves de eliminação simples, categorias por peso ou absoluto livre, mistas e por faixa.
-          </p>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveMainTab('internal')}
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+              activeMainTab === 'internal'
+                ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            }`}
+          >
+            <Trophy className="w-4 h-4" />
+            <span>Chaves & Copa da Academia</span>
+          </button>
         </div>
 
-        {isProfessor && (
+        {activeMainTab === 'internal' && isProfessor && (
           <button
             onClick={() => setIsCreateOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs shadow-md transition whitespace-nowrap"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs shadow-md transition whitespace-nowrap cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            Novo Torneio / Campeonato
+            Novo Torneio Interno
           </button>
         )}
       </div>
+
+      {activeMainTab === 'federations' ? (
+        <FederationTournaments />
+      ) : (
+        <>
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  Chaveamento Oficial
+                </span>
+                <span className="text-zinc-500 text-xs">• Brackets Gi, No-Gi & Absoluto</span>
+              </div>
+              <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                <Trophy className="w-6 h-6 text-amber-400" />
+                Sistema de Chaves e Torneios de Jiu-Jitsu
+              </h2>
+              <p className="text-xs text-zinc-400 mt-1">
+                Gerador de chaves de eliminação simples, categorias por peso ou absoluto livre, mistas e por faixa.
+              </p>
+            </div>
+          </div>
 
       {/* Belt Categories Tabs (Chaveamentos por Faixa) */}
       <div className="bg-zinc-950/80 p-2 rounded-2xl border border-zinc-800 shadow-sm">
@@ -682,6 +724,8 @@ export default function Tournaments() {
           )}
         </div>
       </div>
+        </>
+      )}
 
       {/* Match Score & Result Modal */}
       {activeMatch && (

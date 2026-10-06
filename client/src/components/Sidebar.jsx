@@ -88,11 +88,11 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
     },
     {
       id: 'tournaments',
-      label: 'Chaveamento de Torneios',
+      label: 'Federações & Campeonatos',
       kanji: '合',
       icon: Trophy,
-      badge: 'Brackets',
-      desc: 'Absoluto, Gi/No-Gi e Faixas'
+      badge: 'Mundial',
+      desc: 'IBJJF, CBJJ, ADCC & Chaves'
     },
     {
       id: 'rules',
