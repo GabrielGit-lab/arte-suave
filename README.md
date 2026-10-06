@@ -111,6 +111,15 @@ Você pode acessar instantaneamente com as contas pré-configuradas ou alternar 
 - **Normas de Kimono e Uniforme No-Gi**: medidas oficiais (Kimonometer), folgas de manga, cores autorizadas e regras de rashguards.
 - **Buscador Dinâmico de Regras**: pesquisa instantânea para tirar dúvidas rápidas sobre qualquer golpe ou penalidade.
 
+### 9. 🏆 Sistema de Chaveamento de Torneios & Brackets
+- **Categorias Absoluto (Open Class) e por Peso**: crie torneios sem limite de peso ou com divisões tradicionais (Galo até Pesadíssimo).
+- **Modalidades Gi e No-Gi**: torneios com kimono ou submission grappling sem kimono.
+- **Categorias Mistas e por Faixa**: suporte a categorias abertas/mistas (todas as faixas), faixas agrupadas ou divisões exclusivas (Branca, Azul, Roxa, Marrom & Preta).
+- **Gerador Automático de Chaves (Single Elimination)**: sorteio automático de confrontos (Quartas, Semifinais e Finais).
+- **Súmula e Lançamento de Placar ao Vivo**: registro de Pontos, Vantagens, Punições e tipo de vitória (*Armlock, Triângulo, Pontos, Decisão, DQ*).
+- **Avanço Automático do Vencedor**: o atleta vencedor progride automaticamente na chave até a Grande Final.
+- **Pódio & Premiação**: celebração de confete e exibição do Campeão (1º Lugar 🥇).
+
 ---
 
 Oss! 🥋
