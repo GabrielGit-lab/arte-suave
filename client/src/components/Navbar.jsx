@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import BeltBadge from './BeltBadge';
 import AvatarUploadModal from './AvatarUploadModal';
-import { LogOut, ShieldAlert, Award, User, RefreshCw, Camera } from 'lucide-react';
+import StudentProfileModal from './StudentProfileModal';
+import { LogOut, ShieldAlert, Award, User, RefreshCw, Camera, Crosshair } from 'lucide-react';
 
 export default function Navbar({ onMobileMenuToggle }) {
   const { user, logout, login } = useAuth();
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const handleQuickSwitch = async (role) => {
     try {
@@ -82,11 +84,16 @@ export default function Navbar({ onMobileMenuToggle }) {
 
         {/* Right: User Profile & Belt Badge */}
         {user && (
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 sm:gap-3 text-right">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              type="button"
+              onClick={() => setIsProfileModalOpen(true)}
+              title="Ver meu perfil completo & curiosidades"
+              className="flex items-center gap-2 sm:gap-3 text-right group cursor-pointer focus:outline-none p-1 sm:p-1.5 rounded-xl hover:bg-zinc-900/80 transition border border-transparent hover:border-amber-500/30"
+            >
               <div className="hidden sm:flex flex-col items-end">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-zinc-200 truncate max-w-[140px]">
+                  <span className="text-xs font-bold text-zinc-200 group-hover:text-amber-300 transition truncate max-w-[140px]">
                     {user.name}
                   </span>
                   <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded uppercase ${
@@ -97,18 +104,22 @@ export default function Navbar({ onMobileMenuToggle }) {
                     {user.role === 'professor' ? 'Professor' : 'Aluno'}
                   </span>
                 </div>
-                <div className="mt-0.5">
+                <div className="mt-0.5 flex items-center gap-1.5">
                   <BeltBadge belt={user.belt} degrees={user.degrees} size="sm" showLabel={true} />
+                  <span className={`text-[9px] font-black uppercase px-1 py-0.2 rounded border ${
+                    user.game_style === 'Passador'
+                      ? 'bg-amber-950/80 text-amber-400 border-amber-600/40'
+                      : user.game_style === 'Guardeiro'
+                      ? 'bg-red-950/80 text-red-400 border-red-700/40'
+                      : 'bg-zinc-900 text-zinc-400 border-zinc-700'
+                  }`}>
+                    {user.game_style || 'Guardeiro'}
+                  </span>
                 </div>
               </div>
 
               {/* Avatar Clickable */}
-              <button
-                type="button"
-                onClick={() => setIsAvatarModalOpen(true)}
-                title="Clique para alterar ou remover foto de perfil"
-                className="relative group cursor-pointer focus:outline-none"
-              >
+              <div className="relative shrink-0">
                 {user.avatar ? (
                   <img
                     src={user.avatar}
@@ -121,16 +132,16 @@ export default function Navbar({ onMobileMenuToggle }) {
                   </div>
                 )}
 
-                {/* Hover overlay with camera icon */}
+                {/* Hover overlay with crosshair/edit icon */}
                 <div className="absolute inset-0 rounded-full bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
-                  <Camera className="w-3.5 h-3.5 text-amber-400" />
+                  <Crosshair className="w-3.5 h-3.5 text-amber-400" />
                 </div>
 
                 <span className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-black ${
                   user.role === 'professor' ? 'bg-amber-400' : 'bg-red-600'
                 }`} />
-              </button>
-            </div>
+              </div>
+            </button>
 
             <button
               onClick={logout}
@@ -148,6 +159,16 @@ export default function Navbar({ onMobileMenuToggle }) {
         <AvatarUploadModal
           isOpen={isAvatarModalOpen}
           onClose={() => setIsAvatarModalOpen(false)}
+        />
+      )}
+
+      {/* Full Profile & Curiosities Modal */}
+      {isProfileModalOpen && user && (
+        <StudentProfileModal
+          isOpen={isProfileModalOpen}
+          studentId={user.id}
+          initialTab="curiosities"
+          onClose={() => setIsProfileModalOpen(false)}
         />
       )}
     </header>

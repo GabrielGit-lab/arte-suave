@@ -4,6 +4,7 @@ import { api } from '../utils/api';
 import BeltBadge from '../components/BeltBadge';
 import AvatarUploadModal from '../components/AvatarUploadModal';
 import ProfileCuriositiesModal from '../components/ProfileCuriositiesModal';
+import StudentProfileModal from '../components/StudentProfileModal';
 import { 
   Users, 
   Calendar, 
@@ -34,6 +35,7 @@ export default function Dashboard({ onNavigate }) {
   const [classesToday, setClassesToday] = useState([]);
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const [isCuriositiesModalOpen, setIsCuriositiesModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   useEffect(() => {
     fetchDashboardData();
@@ -125,11 +127,11 @@ export default function Dashboard({ onNavigate }) {
                 <span className="text-zinc-600">•</span>
                 <button
                   type="button"
-                  onClick={() => setIsCuriositiesModalOpen(true)}
+                  onClick={() => setIsProfileModalOpen(true)}
                   className="text-[11px] text-red-400 hover:text-red-300 flex items-center gap-1 font-semibold"
                 >
-                  <Edit3 className="w-3.5 h-3.5" />
-                  Editar Curiosidades (Guardeiro/Passador)
+                  <Crosshair className="w-3.5 h-3.5 text-amber-400" />
+                  Aba de Curiosidades no Perfil (Guardeiro / Passador)
                 </button>
               </div>
             </div>
@@ -155,11 +157,23 @@ export default function Dashboard({ onNavigate }) {
         />
       )}
 
-      {/* Curiosities Modal */}
+      {/* Athlete Curiosities & Profile Modal */}
+      {isProfileModalOpen && user && (
+        <StudentProfileModal
+          isOpen={isProfileModalOpen}
+          studentId={user.id}
+          initialTab="curiosities"
+          onClose={() => setIsProfileModalOpen(false)}
+          onUpdated={fetchDashboardData}
+        />
+      )}
+
+      {/* Legacy/Quick Curiosities Modal */}
       {isCuriositiesModalOpen && (
         <ProfileCuriositiesModal
           isOpen={isCuriositiesModalOpen}
           onClose={() => setIsCuriositiesModalOpen(false)}
+          onUpdated={fetchDashboardData}
         />
       )}
 
@@ -184,11 +198,11 @@ export default function Dashboard({ onNavigate }) {
           </div>
 
           <button
-            onClick={() => setIsCuriositiesModalOpen(true)}
+            onClick={() => setIsProfileModalOpen(true)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-amber-500/30 text-amber-300 text-xs font-bold transition shadow-xs whitespace-nowrap"
           >
             <Edit3 className="w-3.5 h-3.5 text-amber-400" />
-            Personalizar Meu Jogo
+            Aba de Curiosidades no Perfil
           </button>
         </div>
 

@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { api } from '../utils/api';
 import BeltBadge from '../components/BeltBadge';
 import Modal from '../components/Modal';
+import StudentProfileModal from '../components/StudentProfileModal';
 import { 
   Users, 
   Search, 
@@ -39,8 +40,6 @@ export default function Students() {
 
   // Selected student for full profile modal
   const [selectedStudent, setSelectedStudent] = useState(null);
-  const [studentDetails, setStudentDetails] = useState(null);
-  const [detailsLoading, setDetailsLoading] = useState(false);
 
   // New student modal
   const [isAddOpen, setIsAddOpen] = useState(false);
@@ -81,71 +80,8 @@ export default function Students() {
     fetchStudents();
   };
 
-  const openStudentProfile = async (s) => {
+  const openStudentProfile = (s) => {
     setSelectedStudent(s);
-    setDetailsLoading(true);
-    try {
-      const details = await api.get(`/students/${s.id}`);
-      setStudentDetails(details);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setDetailsLoading(false);
-    }
-  };
-
-  const studentFileInputRef = useRef(null);
-  const [avatarLoading, setAvatarLoading] = useState(false);
-
-  const handleStudentFileSelect = (e) => {
-    const file = e.target.files?.[0];
-    if (!file || !studentDetails) return;
-
-    if (!file.type.startsWith('image/')) {
-      alert('Por favor selecione um arquivo de imagem válido (JPG, PNG, WebP).');
-      return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert('A imagem deve ter no máximo 5MB.');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      const base64 = event.target.result;
-      setAvatarLoading(true);
-      try {
-        await api.put(`/students/${studentDetails.id}`, { avatar: base64 });
-        setStudentDetails((prev) => ({ ...prev, avatar: base64 }));
-        setStudents((prev) =>
-          prev.map((s) => (s.id === studentDetails.id ? { ...s, avatar: base64 } : s))
-        );
-      } catch (err) {
-        alert(err.message || 'Erro ao atualizar foto');
-      } finally {
-        setAvatarLoading(false);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleRemoveStudentAvatar = async () => {
-    if (!studentDetails) return;
-    if (!window.confirm(`Deseja remover a foto de perfil de ${studentDetails.name}?`)) return;
-
-    setAvatarLoading(true);
-    try {
-      await api.put(`/students/${studentDetails.id}`, { avatar: null });
-      setStudentDetails((prev) => ({ ...prev, avatar: null }));
-      setStudents((prev) =>
-        prev.map((s) => (s.id === studentDetails.id ? { ...s, avatar: null } : s))
-      );
-    } catch (err) {
-      alert(err.message || 'Erro ao remover foto');
-    } finally {
-      setAvatarLoading(false);
-    }
   };
 
   const handleCreateStudent = async (e) => {
@@ -356,250 +292,15 @@ export default function Students() {
         </div>
       )}
 
-      {/* Student Dossier Modal */}
+      {/* Student Dossier Modal with dedicated Curiosities Tab */}
       {selectedStudent && (
-        <Modal
+        <StudentProfileModal
           isOpen={!!selectedStudent}
-          onClose={() => {
-            setSelectedStudent(null);
-            setStudentDetails(null);
-          }}
-          title={`Dossiê do Atleta: ${selectedStudent.name}`}
-          maxWidth="max-w-3xl"
-        >
-          {detailsLoading || !studentDetails ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="w-8 h-8 border-4 border-amber-500/30 border-t-blue-500 rounded-full animate-spin" />
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {/* Header profile info */}
-              <div className="p-4 rounded-xl bg-black border border-zinc-800 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="relative group shrink-0">
-                    {studentDetails.avatar ? (
-                      <img
-                        src={studentDetails.avatar}
-                        alt={studentDetails.name}
-                        className="w-16 h-16 rounded-full object-cover ring-2 ring-blue-500/40 shadow"
-                      />
-                    ) : (
-                      <div className="w-16 h-16 rounded-full bg-slate-800 ring-2 ring-slate-700 flex items-center justify-center text-zinc-300 font-bold text-2xl shadow">
-                        {studentDetails.name ? studentDetails.name[0].toUpperCase() : 'A'}
-                      </div>
-                    )}
-
-                    {isProfessor && (
-                      <button
-                        type="button"
-                        onClick={() => studentFileInputRef.current?.click()}
-                        disabled={avatarLoading}
-                        title="Trocar foto do aluno"
-                        className="absolute inset-0 rounded-full bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white cursor-pointer"
-                      >
-                        <Camera className="w-4 h-4 text-amber-400" />
-                        <span className="text-[8px] font-bold mt-0.5">Editar</span>
-                      </button>
-                    )}
-                  </div>
-
-                  <input
-                    ref={studentFileInputRef}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleStudentFileSelect}
-                  />
-
-                  <div>
-                    <h3 className="text-lg font-black text-white">{studentDetails.name}</h3>
-                    <p className="text-xs text-zinc-400 flex items-center gap-1 mt-0.5">
-                      <Mail className="w-3.5 h-3.5" /> {studentDetails.email}
-                    </p>
-                    <p className="text-xs text-zinc-400 flex items-center gap-1 mt-0.5">
-                      <Phone className="w-3.5 h-3.5" /> {studentDetails.phone || 'Não informado'}
-                    </p>
-
-                    {isProfessor && (
-                      <div className="flex items-center gap-2 mt-2">
-                        <button
-                          type="button"
-                          onClick={() => studentFileInputRef.current?.click()}
-                          disabled={avatarLoading}
-                          className="text-[10px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold"
-                        >
-                          <Upload className="w-3 h-3" />
-                          {avatarLoading ? 'Atualizando...' : 'Nova Foto'}
-                        </button>
-                        {studentDetails.avatar && (
-                          <button
-                            type="button"
-                            onClick={handleRemoveStudentAvatar}
-                            disabled={avatarLoading}
-                            className="text-[10px] text-red-400 hover:text-red-300 flex items-center gap-1 font-semibold"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                            Remover Foto
-                          </button>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="text-center sm:text-right">
-                  <BeltBadge belt={studentDetails.belt} degrees={studentDetails.degrees} size="md" showLabel={true} />
-                  <p className="text-[11px] text-emerald-400 font-bold mt-1">
-                    {studentDetails.total_attendances} Presenças Confirmadas
-                  </p>
-                </div>
-              </div>
-
-              {/* Personal & Emergency Details */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-3.5 rounded-xl bg-black border border-zinc-800 text-xs">
-                <div>
-                  <span className="text-zinc-500 text-[10px] block">Nascimento:</span>
-                  <span className="text-zinc-300 font-medium">{studentDetails.birthdate || 'Não informado'}</span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 text-[10px] block">Matrícula:</span>
-                  <span className="text-zinc-300 font-medium">{studentDetails.academy_join_date || '2025'}</span>
-                </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <span className="text-zinc-500 text-[10px] block">Contato de Emergência:</span>
-                  <span className="text-zinc-300 font-medium">{studentDetails.emergency_contact || 'Nenhum'}</span>
-                </div>
-              </div>
-
-              {/* DNA de Luta & Curiosidades (Guardeiro/Passador, Posições) */}
-              <div className="p-4 rounded-xl bg-gradient-to-r from-zinc-950 via-black to-zinc-950 border border-amber-500/30 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-                    <Crosshair className="w-4 h-4" />
-                    DNA de Tatame & Curiosidades do Aluno
-                  </h4>
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border ${
-                    studentDetails.game_style === 'Passador'
-                      ? 'bg-amber-950/80 text-amber-300 border-amber-600/60'
-                      : studentDetails.game_style === 'Guardeiro'
-                      ? 'bg-red-950/80 text-red-300 border-red-700/60'
-                      : 'bg-zinc-900 text-zinc-300 border-zinc-700'
-                  }`}>
-                    {studentDetails.game_style || 'Equilibrado'}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  <div className="p-2.5 rounded-lg bg-black/80 border border-zinc-800">
-                    <span className="text-[10px] text-zinc-500 uppercase font-semibold flex items-center gap-1">
-                      <Flame className="w-3.5 h-3.5 text-amber-400" /> Posição Favorita:
-                    </span>
-                    <span className="text-zinc-200 font-bold block mt-0.5">
-                      {studentDetails.favorite_position || 'Não informada ainda'}
-                    </span>
-                  </div>
-
-                  <div className="p-2.5 rounded-lg bg-black/80 border border-zinc-800">
-                    <span className="text-[10px] text-zinc-500 uppercase font-semibold flex items-center gap-1">
-                      <Zap className="w-3.5 h-3.5 text-red-400" /> Finalização Predileta:
-                    </span>
-                    <span className="text-red-300 font-bold block mt-0.5">
-                      {studentDetails.favorite_submission || 'Não informada ainda'}
-                    </span>
-                  </div>
-
-                  <div className="p-2.5 rounded-lg bg-black/80 border border-zinc-800">
-                    <span className="text-[10px] text-zinc-500 uppercase font-semibold flex items-center gap-1">
-                      <Award className="w-3.5 h-3.5 text-amber-400" /> Ídolo / Referência:
-                    </span>
-                    <span className="text-amber-300 font-bold block mt-0.5">
-                      {studentDetails.idol || 'Lendas do Jiu-Jitsu'}
-                    </span>
-                  </div>
-
-                  <div className="p-2.5 rounded-lg bg-black/80 border border-zinc-800">
-                    <span className="text-[10px] text-zinc-500 uppercase font-semibold flex items-center gap-1">
-                      <Quote className="w-3.5 h-3.5 text-red-400" /> Lema Pessoal:
-                    </span>
-                    <span className="text-zinc-300 italic block mt-0.5 text-[11px]">
-                      {studentDetails.bjj_motto ? `"${studentDetails.bjj_motto}"` : 'Foco e disciplina no tatame.'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Graduation Timeline */}
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2 flex items-center gap-1.5">
-                  <Award className="w-4 h-4 text-amber-400" />
-                  Histórico de Graduações & Graus
-                </h4>
-                <div className="space-y-2">
-                  {studentDetails.graduation_history?.length === 0 ? (
-                    <p className="text-xs text-zinc-500">Nenhuma graduação registrada.</p>
-                  ) : (
-                    studentDetails.graduation_history?.map((grad) => (
-                      <div key={grad.id} className="p-3 rounded-lg bg-black border border-zinc-800 flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-3">
-                          <BeltBadge belt={grad.belt} degrees={grad.degrees} size="sm" showLabel={true} />
-                          <span className="text-zinc-400 text-[11px]">{grad.notes}</span>
-                        </div>
-                        <div className="text-right">
-                          <span className="text-zinc-300 font-semibold">{grad.awarded_date}</span>
-                          <span className="text-[10px] text-zinc-500 block">por {grad.awarded_by_name || 'Mestre Carlos'}</span>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-
-              {/* Physical Weighing History */}
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2 flex items-center gap-1.5">
-                  <Scale className="w-4 h-4 text-amber-400" />
-                  Histórico de Pesagens & Medidas
-                </h4>
-                <div className="space-y-2">
-                  {studentDetails.physical_history?.length === 0 ? (
-                    <p className="text-xs text-zinc-500">Nenhum registro físico ainda.</p>
-                  ) : (
-                    studentDetails.physical_history?.map((phy) => (
-                      <div key={phy.id} className="p-2.5 rounded-lg bg-black border border-zinc-800 flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-3">
-                          <span className="font-black text-amber-400">{phy.weight} kg</span>
-                          {phy.height && <span className="text-zinc-400">{phy.height} cm</span>}
-                          {phy.wingspan && <span className="text-zinc-400">Envergadura: {phy.wingspan} cm</span>}
-                          {phy.notes && <span className="text-zinc-500 italic text-[11px]">"{phy.notes}"</span>}
-                        </div>
-                        <span className="text-zinc-400 text-[11px]">{phy.recorded_at}</span>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-
-              {/* Recent Attendances */}
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2 flex items-center gap-1.5">
-                  <Clock className="w-4 h-4 text-emerald-400" />
-                  Treinos Recentes ({studentDetails.recent_attendances?.length || 0})
-                </h4>
-                <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
-                  {studentDetails.recent_attendances?.map((att) => (
-                    <div key={att.id} className="p-2 rounded bg-black border border-zinc-800 flex items-center justify-between text-xs">
-                      <div>
-                        <span className="font-semibold text-zinc-200">{att.class_title}</span>
-                        <span className="text-[10px] text-zinc-500 block">{att.class_type} • Tatame 1</span>
-                      </div>
-                      <span className="text-emerald-400 font-semibold text-[11px]">{att.class_date}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-        </Modal>
+          studentId={selectedStudent.id}
+          initialTab="curiosities"
+          onClose={() => setSelectedStudent(null)}
+          onUpdated={fetchStudents}
+        />
       )}
 
       {/* Professor Add Student Modal */}
