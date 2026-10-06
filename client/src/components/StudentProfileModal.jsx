@@ -242,19 +242,19 @@ export default function StudentProfileModal({
           <span className="text-xs text-zinc-400 font-medium">Carregando dossiê marcial...</span>
         </div>
       ) : (
-        <div className="space-y-5">
+        <div className="space-y-4 sm:space-y-5">
           {/* Top Athlete Header Banner */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-black via-zinc-950 to-neutral-900 border border-amber-500/30 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 shadow-xl relative overflow-hidden">
-            <div className="flex items-center gap-4">
+          <div className="p-3.5 sm:p-5 rounded-2xl bg-gradient-to-r from-black via-zinc-950 to-neutral-900 border border-amber-500/30 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 shadow-xl relative overflow-hidden">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3 sm:gap-4 w-full sm:w-auto">
               <div className="relative group shrink-0">
                 {details.avatar ? (
                   <img
                     src={details.avatar}
                     alt={details.name}
-                    className="w-20 h-20 rounded-full object-cover ring-2 ring-amber-500/60 shadow-lg"
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-2 ring-amber-500/60 shadow-lg"
                   />
                 ) : (
-                  <div className="w-20 h-20 rounded-full bg-zinc-900 ring-2 ring-amber-500/40 flex items-center justify-center text-zinc-300 font-black text-2xl shadow-lg">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-zinc-900 ring-2 ring-amber-500/40 flex items-center justify-center text-zinc-300 font-black text-xl sm:text-2xl shadow-lg">
                     {details.name ? details.name[0].toUpperCase() : 'A'}
                   </div>
                 )}
@@ -281,8 +281,8 @@ export default function StudentProfileModal({
                 onChange={handleAvatarSelect}
               />
 
-              <div>
-                <div className="flex items-center gap-2 mb-1">
+              <div className="w-full sm:w-auto">
+                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
                   <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${
                     details.role === 'professor'
                       ? 'bg-amber-950/80 text-amber-300 border border-amber-700/60'
@@ -290,14 +290,14 @@ export default function StudentProfileModal({
                   }`}>
                     {details.role === 'professor' ? 'Professor Faixa Preta' : 'Atleta Cadastrado'}
                   </span>
-                  <span className="text-[11px] text-zinc-500">• Arte Suave BJJ</span>
+                  <span className="text-[11px] text-zinc-500 hidden xs:inline">• Arte Suave BJJ</span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h3 className="text-lg sm:text-2xl font-black text-white tracking-tight">
                   {details.name}
                 </h3>
 
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-xs text-zinc-400">
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1 mt-1 text-xs text-zinc-400">
                   <span className="flex items-center gap-1">
                     <Mail className="w-3.5 h-3.5 text-zinc-500" /> {details.email}
                   </span>
@@ -309,7 +309,7 @@ export default function StudentProfileModal({
                 </div>
 
                 {canEdit && (
-                  <div className="flex items-center gap-2 mt-2.5">
+                  <div className="flex items-center justify-center sm:justify-start gap-2 mt-2.5">
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
@@ -335,7 +335,7 @@ export default function StudentProfileModal({
               </div>
             </div>
 
-            <div className="text-center sm:text-right shrink-0 bg-black/60 p-3 rounded-xl border border-zinc-800/80">
+            <div className="w-full sm:w-auto text-center sm:text-right shrink-0 bg-black/60 p-3 rounded-xl border border-zinc-800/80 flex flex-col items-center sm:items-end">
               <span className="text-[10px] text-zinc-500 uppercase font-semibold block mb-1">Graduação</span>
               <BeltBadge belt={details.belt} degrees={details.degrees} size="md" showLabel={true} />
               <p className="text-[11px] text-amber-400/90 font-bold mt-1">
@@ -345,7 +345,7 @@ export default function StudentProfileModal({
           </div>
 
           {/* Navigation Tabs - Specially Highlighting Curiosidades */}
-          <div className="flex items-center gap-1.5 border-b border-zinc-800 pb-2 overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-1.5 border-b border-zinc-800 pb-2 overflow-x-auto scrollbar-none touch-pan-x -mx-1 px-1">
             <button
               type="button"
               onClick={() => {

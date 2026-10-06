@@ -156,7 +156,7 @@ export default function Students() {
         {isProfessor && (
           <button
             onClick={() => setIsAddOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold text-xs shadow-md transition whitespace-nowrap"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-black text-xs shadow-md transition whitespace-nowrap"
           >
             <Plus className="w-4 h-4" />
             Matricular Novo Aluno
@@ -165,7 +165,7 @@ export default function Students() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-3">
+      <div className="p-3 sm:p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-3">
         <form onSubmit={handleSearchSubmit} className="flex gap-2">
           <div className="relative flex-1">
             <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
@@ -174,26 +174,26 @@ export default function Students() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Buscar por nome ou e-mail do aluno..."
-              className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+              className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
             />
           </div>
           <button
             type="submit"
-            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-zinc-200 text-xs font-bold rounded-lg transition"
+            className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 text-amber-300 border border-amber-500/30 text-xs font-bold rounded-lg transition"
           >
             Buscar
           </button>
         </form>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
-          <span className="text-xs text-zinc-500 font-semibold mr-1">Filtrar Faixa:</span>
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          <span className="text-xs text-zinc-500 font-semibold mr-1 shrink-0">Filtrar Faixa:</span>
           {BELTS.map((b) => (
             <button
               key={b}
               onClick={() => setBeltFilter(b)}
               className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
                 beltFilter === b
-                  ? 'bg-blue-600 text-white shadow-xs'
+                  ? 'bg-amber-500 text-black font-bold shadow-xs'
                   : 'bg-black text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800'
               }`}
             >
@@ -206,15 +206,15 @@ export default function Students() {
       {/* Students List Cards */}
       {loading ? (
         <div className="flex items-center justify-center py-16">
-          <div className="w-8 h-8 border-4 border-amber-500/30 border-t-blue-500 rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin" />
         </div>
       ) : students.length === 0 ? (
         <div className="p-12 text-center rounded-2xl bg-zinc-950 border border-zinc-800 text-zinc-400">
-          <Users className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+          <Users className="w-12 h-12 text-zinc-600 mx-auto mb-3" />
           <h4 className="text-base font-bold text-zinc-200">Nenhum aluno encontrado</h4>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {students.map((student) => (
             <div
               key={student.id}

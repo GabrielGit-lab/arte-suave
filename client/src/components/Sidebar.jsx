@@ -11,12 +11,14 @@ import {
   ShieldCheck,
   FileText,
   Trophy,
-  GitFork
+  GitFork,
+  X,
+  RefreshCw
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobileOpen }) {
-  const { user } = useAuth();
+  const { user, login } = useAuth();
   const isProfessor = user?.role === 'professor';
 
   const menuItems = [
@@ -102,21 +104,74 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
       {/* Mobile backdrop */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/80 md:hidden backdrop-blur-xs"
+          className="fixed inset-0 z-50 bg-black/85 md:hidden backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
       <aside className={`
-        fixed md:sticky top-16 left-0 z-40
-        w-64 h-[calc(100vh-4rem)]
+        fixed md:sticky top-0 md:top-16 left-0 z-50 md:z-40
+        w-72 max-w-[85vw] md:w-64 h-full md:h-[calc(100vh-4rem)]
         bg-[#09090b] border-r border-amber-500/20
         transition-transform duration-300 ease-in-out
-        ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        ${mobileOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'}
         flex flex-col justify-between p-3 overflow-y-auto
       `}>
         <div className="space-y-1">
-          <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-zinc-500">
+          {/* Mobile drawer header */}
+          <div className="flex md:hidden items-center justify-between px-3 py-2 border-b border-zinc-800 mb-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xl">🥋</span>
+              <span className="font-black text-amber-300 text-sm uppercase tracking-wider">Arte Suave</span>
+            </div>
+            <button
+              onClick={() => setMobileOpen(false)}
+              className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-900 border border-transparent hover:border-amber-500/30 transition"
+              aria-label="Fechar menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Quick Demo Switcher on mobile inside sidebar */}
+          <div className="lg:hidden p-2.5 rounded-xl bg-black border border-amber-500/25 mb-3 text-xs">
+            <div className="flex items-center gap-1.5 text-zinc-400 font-semibold mb-2 text-[11px]">
+              <RefreshCw className="w-3 h-3 text-amber-400" />
+              <span>Alternar perfil de teste:</span>
+            </div>
+            <div className="grid grid-cols-2 gap-1.5">
+              <button
+                type="button"
+                onClick={() => {
+                  login('professor@artesuave.com', 'senha123');
+                  setMobileOpen(false);
+                }}
+                className={`px-2 py-1.5 rounded-lg text-[10px] font-bold transition text-center ${
+                  user?.role === 'professor'
+                    ? 'bg-amber-500 text-black shadow'
+                    : 'bg-zinc-900 text-zinc-300 hover:bg-zinc-800'
+                }`}
+              >
+                Professor
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  login('aluno@artesuave.com', 'senha123');
+                  setMobileOpen(false);
+                }}
+                className={`px-2 py-1.5 rounded-lg text-[10px] font-bold transition text-center ${
+                  user?.role === 'student'
+                    ? 'bg-red-700 text-white shadow'
+                    : 'bg-zinc-900 text-zinc-300 hover:bg-zinc-800'
+                }`}
+              >
+                Aluno
+              </button>
+            </div>
+          </div>
+
+          <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-zinc-500">
             Navegação Principal
           </div>
 

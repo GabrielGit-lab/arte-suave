@@ -68,14 +68,14 @@ export default function Dashboard({ onNavigate }) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-black via-zinc-950 to-neutral-900 border border-amber-500/30 p-6 sm:p-8 shadow-2xl">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-black via-zinc-950 to-neutral-900 border border-amber-500/30 p-4 sm:p-8 shadow-2xl">
         <div className="absolute top-0 right-0 w-80 h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/10 via-red-950/20 to-transparent pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
         
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative z-10">
-          <div className="flex items-start sm:items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 sm:gap-6 relative z-10 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3.5 sm:gap-4">
             {/* Interactive Profile Photo */}
             <div className="relative group shrink-0">
               {user?.avatar ? (
@@ -101,13 +101,13 @@ export default function Dashboard({ onNavigate }) {
             </div>
 
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-red-950/80 text-red-400 border border-red-700/50">
+              <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                <span className="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold uppercase tracking-wider bg-red-950/80 text-red-400 border border-red-700/50">
                   {isProfessor ? 'Professor Responsável' : 'Área do Aluno'}
                 </span>
                 <span className="text-amber-400/80 text-xs font-semibold">• Arte Suave BJJ</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight">
                 Oss, {user?.name}!
               </h2>
               <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-xl">
@@ -115,7 +115,7 @@ export default function Dashboard({ onNavigate }) {
                   ? 'Monitore a frequência dos alunos, controle chamadas do dia e acompanhe a evolução de graduação de cada faixa.'
                   : 'Acompanhe seu ritmo de treinos, evolução física de peso e aprimore seu jogo com a biblioteca de posições.'}
               </p>
-              <div className="flex items-center gap-3 mt-2 flex-wrap">
+              <div className="flex items-center justify-center sm:justify-start gap-2 sm:gap-3 mt-2.5 flex-wrap">
                 <button
                   type="button"
                   onClick={() => setIsAvatarModalOpen(true)}
@@ -124,20 +124,20 @@ export default function Dashboard({ onNavigate }) {
                   <Camera className="w-3.5 h-3.5" />
                   {user?.avatar ? 'Alterar foto de perfil' : 'Adicionar foto de perfil'}
                 </button>
-                <span className="text-zinc-600">•</span>
+                <span className="text-zinc-600 hidden xs:inline">•</span>
                 <button
                   type="button"
                   onClick={() => setIsProfileModalOpen(true)}
                   className="text-[11px] text-red-400 hover:text-red-300 flex items-center gap-1 font-semibold"
                 >
                   <Crosshair className="w-3.5 h-3.5 text-amber-400" />
-                  Aba de Curiosidades no Perfil (Guardeiro / Passador)
+                  Aba de Curiosidades no Perfil
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="bg-black/90 p-4 rounded-xl border border-amber-500/30 flex flex-col items-center min-w-[200px] shrink-0 shadow-lg">
+          <div className="bg-black/90 p-3 sm:p-4 rounded-xl border border-amber-500/30 flex flex-col items-center w-full sm:w-auto min-w-[180px] shrink-0 shadow-lg">
             <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold mb-1">
               Graduação Atual
             </span>
@@ -281,94 +281,94 @@ export default function Dashboard({ onNavigate }) {
 
       {/* KPI Cards */}
       {isProfessor ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 hover:border-amber-500/40 transition flex items-center justify-between shadow-md">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+          <div className="p-3.5 sm:p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 hover:border-amber-500/40 transition flex items-center justify-between shadow-md">
             <div>
-              <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Alunos Ativos</p>
-              <h3 className="text-2xl font-black text-white mt-1">{stats?.summary?.total_students || 0}</h3>
-              <p className="text-[11px] text-emerald-400 mt-1">Matriculados no tatame</p>
+              <p className="text-[10px] sm:text-xs font-semibold text-zinc-400 uppercase tracking-wider">Alunos Ativos</p>
+              <h3 className="text-xl sm:text-2xl font-black text-white mt-1">{stats?.summary?.total_students || 0}</h3>
+              <p className="text-[10px] sm:text-[11px] text-emerald-400 mt-0.5">Matriculados</p>
             </div>
-            <div className="p-3 rounded-xl bg-red-950/40 text-red-400 border border-red-800/40">
-              <Users className="w-6 h-6" />
+            <div className="p-2 sm:p-3 rounded-xl bg-red-950/40 text-red-400 border border-red-800/40 shrink-0">
+              <Users className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
           </div>
 
-          <div className="p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 hover:border-amber-500/40 transition flex items-center justify-between shadow-md">
+          <div className="p-3.5 sm:p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 hover:border-amber-500/40 transition flex items-center justify-between shadow-md">
             <div>
-              <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Aulas Registradas</p>
-              <h3 className="text-2xl font-black text-white mt-1">{stats?.summary?.total_classes || 0}</h3>
-              <p className="text-[11px] text-zinc-400 mt-1">Histórico da academia</p>
+              <p className="text-[10px] sm:text-xs font-semibold text-zinc-400 uppercase tracking-wider">Aulas Registradas</p>
+              <h3 className="text-xl sm:text-2xl font-black text-white mt-1">{stats?.summary?.total_classes || 0}</h3>
+              <p className="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5">Histórico</p>
             </div>
-            <div className="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/25">
-              <Calendar className="w-6 h-6" />
+            <div className="p-2 sm:p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/25 shrink-0">
+              <Calendar className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
           </div>
 
-          <div className="p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 hover:border-amber-500/40 transition flex items-center justify-between shadow-md">
+          <div className="p-3.5 sm:p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 hover:border-amber-500/40 transition flex items-center justify-between shadow-md">
             <div>
-              <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Presenças Assinadas</p>
-              <h3 className="text-2xl font-black text-white mt-1">{stats?.summary?.total_attendances || 0}</h3>
-              <p className="text-[11px] text-emerald-400 mt-1">Chamadas confirmadas</p>
+              <p className="text-[10px] sm:text-xs font-semibold text-zinc-400 uppercase tracking-wider">Presenças Assinadas</p>
+              <h3 className="text-xl sm:text-2xl font-black text-white mt-1">{stats?.summary?.total_attendances || 0}</h3>
+              <p className="text-[10px] sm:text-[11px] text-emerald-400 mt-0.5">Chamadas</p>
             </div>
-            <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
-              <CheckCircle className="w-6 h-6" />
+            <div className="p-2 sm:p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 shrink-0">
+              <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
           </div>
 
-          <div className="p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 hover:border-amber-500/40 transition flex items-center justify-between shadow-md">
+          <div className="p-3.5 sm:p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 hover:border-amber-500/40 transition flex items-center justify-between shadow-md">
             <div>
-              <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Prontos p/ Graduação</p>
-              <h3 className="text-2xl font-black text-amber-400 mt-1">{stats?.summary?.eligible_count || 0}</h3>
-              <p className="text-[11px] text-amber-300 mt-1">Atingiram critérios CBJJ</p>
+              <p className="text-[10px] sm:text-xs font-semibold text-zinc-400 uppercase tracking-wider">P/ Graduação</p>
+              <h3 className="text-xl sm:text-2xl font-black text-amber-400 mt-1">{stats?.summary?.eligible_count || 0}</h3>
+              <p className="text-[10px] sm:text-[11px] text-amber-300 mt-0.5">Atingiram critérios</p>
             </div>
-            <div className="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/25">
-              <Award className="w-6 h-6" />
+            <div className="p-2 sm:p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/25 shrink-0">
+              <Award className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
           </div>
         </div>
       ) : (
         /* Student KPI Cards */
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 shadow-md">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-zinc-400 uppercase">Treinos Concluídos</span>
-              <CheckCircle className="w-5 h-5 text-emerald-400" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+          <div className="p-3.5 sm:p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 shadow-md">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[10px] sm:text-xs font-semibold text-zinc-400 uppercase">Treinos Concluídos</span>
+              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
             </div>
-            <h3 className="text-3xl font-black text-white">{user?.total_attendances || 0}</h3>
-            <p className="text-[11px] text-zinc-400 mt-1">Presenças computadas no tatame</p>
+            <h3 className="text-2xl sm:text-3xl font-black text-white">{user?.total_attendances || 0}</h3>
+            <p className="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5">Presenças computadas</p>
           </div>
 
-          <div className="p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 shadow-md">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-zinc-400 uppercase">Peso Atual</span>
-              <Scale className="w-5 h-5 text-amber-400" />
+          <div className="p-3.5 sm:p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 shadow-md">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[10px] sm:text-xs font-semibold text-zinc-400 uppercase">Peso Atual</span>
+              <Scale className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
             </div>
-            <h3 className="text-3xl font-black text-white">
+            <h3 className="text-2xl sm:text-3xl font-black text-white">
               {user?.physical?.weight ? `${user.physical.weight} kg` : 'Sem registro'}
             </h3>
-            <p className="text-[11px] text-amber-400 mt-1">
-              {user?.physical?.height ? `Altura: ${user.physical.height} cm` : 'Cadastre suas medidas'}
+            <p className="text-[10px] sm:text-[11px] text-amber-400 mt-0.5 truncate">
+              {user?.physical?.height ? `Altura: ${user.physical.height} cm` : 'Cadastre medidas'}
             </p>
           </div>
 
-          <div className="p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 shadow-md">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-zinc-400 uppercase">Técnicas Praticadas</span>
-              <BookOpen className="w-5 h-5 text-red-400" />
+          <div className="p-3.5 sm:p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 shadow-md">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[10px] sm:text-xs font-semibold text-zinc-400 uppercase">Técnicas</span>
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
             </div>
-            <h3 className="text-3xl font-black text-white">
+            <h3 className="text-2xl sm:text-3xl font-black text-white">
               {stats?.student_stats?.practiced_techniques || 0}
             </h3>
-            <p className="text-[11px] text-red-400 mt-1">Posições marcadas nos tutoriais</p>
+            <p className="text-[10px] sm:text-[11px] text-red-400 mt-0.5">Tutoriais estudados</p>
           </div>
 
-          <div className="p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 shadow-md">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-zinc-400 uppercase">Status no Tatame</span>
-              <Flame className="w-5 h-5 text-amber-500" />
+          <div className="p-3.5 sm:p-5 rounded-xl bg-gradient-to-b from-zinc-950 to-black border border-amber-500/20 shadow-md">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[10px] sm:text-xs font-semibold text-zinc-400 uppercase">Status Tatame</span>
+              <Flame className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
             </div>
-            <h3 className="text-xl font-black text-emerald-400">Ativo & Focado</h3>
-            <p className="text-[11px] text-zinc-400 mt-1">Disciplina gera mestria</p>
+            <h3 className="text-lg sm:text-xl font-black text-emerald-400">Ativo & Focado</h3>
+            <p className="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5">Disciplina diária</p>
           </div>
         </div>
       )}
