@@ -28,6 +28,11 @@ function initDatabase() {
       academy_join_date TEXT,
       avatar TEXT,
       emergency_contact TEXT,
+      game_style TEXT DEFAULT 'Equilibrado',
+      favorite_position TEXT DEFAULT '',
+      favorite_submission TEXT DEFAULT '',
+      idol TEXT DEFAULT '',
+      bjj_motto TEXT DEFAULT '',
       created_at TEXT DEFAULT (datetime('now'))
     );
 

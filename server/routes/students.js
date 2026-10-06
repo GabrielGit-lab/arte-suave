@@ -10,6 +10,7 @@ router.get('/', authenticateToken, (req, res) => {
   let query = `
     SELECT 
       u.id, u.name, u.email, u.phone, u.birthdate, u.belt, u.degrees, u.academy_join_date, u.avatar, u.emergency_contact,
+      u.game_style, u.favorite_position, u.favorite_submission, u.idol, u.bjj_motto,
       (SELECT COUNT(*) FROM attendances a WHERE a.student_id = u.id AND a.status = 'present') as total_attendances,
       (SELECT p.weight FROM physical_records p WHERE p.student_id = u.id ORDER BY p.recorded_at DESC, p.id DESC LIMIT 1) as current_weight,
       (SELECT p.height FROM physical_records p WHERE p.student_id = u.id ORDER BY p.recorded_at DESC, p.id DESC LIMIT 1) as current_height,
@@ -35,9 +36,6 @@ router.get('/', authenticateToken, (req, res) => {
 
   // Compute graduation eligibility score
   const enriched = students.map(s => {
-    // CBJJ approx requirements per belt:
-    // Branca -> 30-40 treinos por grau (total ~120-150 para Azul)
-    // Azul -> min 2 anos (ou ~100 treinos por grau)
     let requiredForNext = 35;
     if (s.belt === 'Azul') requiredForNext = 60;
     if (s.belt === 'Roxa') requiredForNext = 80;
@@ -66,7 +64,8 @@ router.get('/:id', authenticateToken, (req, res) => {
   }
 
   const student = db.prepare(`
-    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact, created_at
+    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact,
+           game_style, favorite_position, favorite_submission, idol, bjj_motto, created_at
     FROM users WHERE id = ?
   `).get(studentId);
 
@@ -124,7 +123,20 @@ router.put('/:id', authenticateToken, (req, res) => {
     return res.status(403).json({ error: 'Permissão negada' });
   }
 
-  const { name, phone, birthdate, avatar, emergency_contact, belt, degrees } = req.body;
+  const {
+    name,
+    phone,
+    birthdate,
+    avatar,
+    emergency_contact,
+    belt,
+    degrees,
+    game_style,
+    favorite_position,
+    favorite_submission,
+    idol,
+    bjj_motto
+  } = req.body;
 
   // Only professors can alter belt and degrees directly here (or through graduations route)
   const isProf = req.user.role === 'professor';
@@ -139,7 +151,8 @@ router.put('/:id', authenticateToken, (req, res) => {
 
   db.prepare(`
     UPDATE users
-    SET name = ?, phone = ?, birthdate = ?, avatar = ?, emergency_contact = ?, belt = ?, degrees = ?
+    SET name = ?, phone = ?, birthdate = ?, avatar = ?, emergency_contact = ?, belt = ?, degrees = ?,
+        game_style = ?, favorite_position = ?, favorite_submission = ?, idol = ?, bjj_motto = ?
     WHERE id = ?
   `).run(
     name || current.name,
@@ -149,10 +162,19 @@ router.put('/:id', authenticateToken, (req, res) => {
     emergency_contact !== undefined ? emergency_contact : current.emergency_contact,
     newBelt,
     newDegrees,
+    game_style !== undefined ? game_style : current.game_style,
+    favorite_position !== undefined ? favorite_position : current.favorite_position,
+    favorite_submission !== undefined ? favorite_submission : current.favorite_submission,
+    idol !== undefined ? idol : current.idol,
+    bjj_motto !== undefined ? bjj_motto : current.bjj_motto,
     studentId
   );
 
-  const updated = db.prepare('SELECT id, name, email, role, phone, birthdate, belt, degrees, avatar, emergency_contact FROM users WHERE id = ?').get(studentId);
+  const updated = db.prepare(`
+    SELECT id, name, email, role, phone, birthdate, belt, degrees, avatar, emergency_contact,
+           game_style, favorite_position, favorite_submission, idol, bjj_motto
+    FROM users WHERE id = ?
+  `).get(studentId);
   res.json(updated);
 });
 

@@ -17,9 +17,13 @@ import {
   Edit3, 
   AlertCircle,
   FileText,
-  UserCheck,
   Camera,
-  Upload
+  Upload,
+  Crosshair,
+  Zap,
+  Flame,
+  Quote,
+  Sparkles
 } from 'lucide-react';
 
 const BELTS = ['Todas', 'Branca', 'Azul', 'Roxa', 'Marrom', 'Preta'];
@@ -319,13 +323,27 @@ export default function Students() {
 
                 <div className="grid grid-cols-2 gap-2 mt-3 p-2.5 rounded-lg bg-black border border-zinc-800 text-xs">
                   <div>
+                    <span className="text-zinc-500 text-[10px] block">Estilo no Tatame:</span>
+                    <span className={`inline-block px-1.5 py-0.2 rounded text-[10px] font-black uppercase border ${
+                      student.game_style === 'Passador'
+                        ? 'bg-amber-950/80 text-amber-300 border-amber-600/50'
+                        : student.game_style === 'Guardeiro'
+                        ? 'bg-red-950/80 text-red-300 border-red-700/50'
+                        : 'bg-zinc-900 text-zinc-400 border-zinc-800'
+                    }`}>
+                      {student.game_style || 'Guardeiro'}
+                    </span>
+                  </div>
+                  <div>
                     <span className="text-zinc-500 text-[10px] block">Presenças:</span>
                     <span className="font-bold text-emerald-400">{student.total_attendances || 0} treinos</span>
                   </div>
-                  <div>
-                    <span className="text-zinc-500 text-[10px] block">Peso Atual:</span>
-                    <span className="font-bold text-zinc-200">{student.current_weight ? `${student.current_weight} kg` : 'N/A'}</span>
-                  </div>
+                  {student.favorite_position && (
+                    <div className="col-span-2 pt-1 border-t border-zinc-900 flex items-center justify-between text-[11px]">
+                      <span className="text-zinc-500 text-[10px]">Posição:</span>
+                      <span className="text-amber-400 font-semibold truncate max-w-[150px]">{student.favorite_position}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -450,6 +468,63 @@ export default function Students() {
                 <div className="col-span-2 sm:col-span-1">
                   <span className="text-zinc-500 text-[10px] block">Contato de Emergência:</span>
                   <span className="text-zinc-300 font-medium">{studentDetails.emergency_contact || 'Nenhum'}</span>
+                </div>
+              </div>
+
+              {/* DNA de Luta & Curiosidades (Guardeiro/Passador, Posições) */}
+              <div className="p-4 rounded-xl bg-gradient-to-r from-zinc-950 via-black to-zinc-950 border border-amber-500/30 space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                    <Crosshair className="w-4 h-4" />
+                    DNA de Tatame & Curiosidades do Aluno
+                  </h4>
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border ${
+                    studentDetails.game_style === 'Passador'
+                      ? 'bg-amber-950/80 text-amber-300 border-amber-600/60'
+                      : studentDetails.game_style === 'Guardeiro'
+                      ? 'bg-red-950/80 text-red-300 border-red-700/60'
+                      : 'bg-zinc-900 text-zinc-300 border-zinc-700'
+                  }`}>
+                    {studentDetails.game_style || 'Equilibrado'}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div className="p-2.5 rounded-lg bg-black/80 border border-zinc-800">
+                    <span className="text-[10px] text-zinc-500 uppercase font-semibold flex items-center gap-1">
+                      <Flame className="w-3.5 h-3.5 text-amber-400" /> Posição Favorita:
+                    </span>
+                    <span className="text-zinc-200 font-bold block mt-0.5">
+                      {studentDetails.favorite_position || 'Não informada ainda'}
+                    </span>
+                  </div>
+
+                  <div className="p-2.5 rounded-lg bg-black/80 border border-zinc-800">
+                    <span className="text-[10px] text-zinc-500 uppercase font-semibold flex items-center gap-1">
+                      <Zap className="w-3.5 h-3.5 text-red-400" /> Finalização Predileta:
+                    </span>
+                    <span className="text-red-300 font-bold block mt-0.5">
+                      {studentDetails.favorite_submission || 'Não informada ainda'}
+                    </span>
+                  </div>
+
+                  <div className="p-2.5 rounded-lg bg-black/80 border border-zinc-800">
+                    <span className="text-[10px] text-zinc-500 uppercase font-semibold flex items-center gap-1">
+                      <Award className="w-3.5 h-3.5 text-amber-400" /> Ídolo / Referência:
+                    </span>
+                    <span className="text-amber-300 font-bold block mt-0.5">
+                      {studentDetails.idol || 'Lendas do Jiu-Jitsu'}
+                    </span>
+                  </div>
+
+                  <div className="p-2.5 rounded-lg bg-black/80 border border-zinc-800">
+                    <span className="text-[10px] text-zinc-500 uppercase font-semibold flex items-center gap-1">
+                      <Quote className="w-3.5 h-3.5 text-red-400" /> Lema Pessoal:
+                    </span>
+                    <span className="text-zinc-300 italic block mt-0.5 text-[11px]">
+                      {studentDetails.bjj_motto ? `"${studentDetails.bjj_motto}"` : 'Foco e disciplina no tatame.'}
+                    </span>
+                  </div>
                 </div>
               </div>
 

@@ -114,7 +114,8 @@ router.post('/register', (req, res) => {
 // GET /api/auth/me
 router.get('/me', authenticateToken, (req, res) => {
   const user = db.prepare(`
-    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact, created_at
+    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact,
+           game_style, favorite_position, favorite_submission, idol, bjj_motto, created_at
     FROM users WHERE id = ?
   `).get(req.user.id);
 
@@ -143,6 +144,36 @@ router.get('/me', authenticateToken, (req, res) => {
   });
 });
 
+// PUT /api/auth/profile-curiosities - Update curiosity info (guardeiro/passador, posições favoritas, ídolo, lema)
+router.put('/profile-curiosities', authenticateToken, (req, res) => {
+  const { game_style, favorite_position, favorite_submission, idol, bjj_motto } = req.body;
+
+  db.prepare(`
+    UPDATE users
+    SET game_style = ?, favorite_position = ?, favorite_submission = ?, idol = ?, bjj_motto = ?
+    WHERE id = ?
+  `).run(
+    game_style !== undefined ? game_style : 'Equilibrado',
+    favorite_position !== undefined ? favorite_position : '',
+    favorite_submission !== undefined ? favorite_submission : '',
+    idol !== undefined ? idol : '',
+    bjj_motto !== undefined ? bjj_motto : '',
+    req.user.id
+  );
+
+  const updatedUser = db.prepare(`
+    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact,
+           game_style, favorite_position, favorite_submission, idol, bjj_motto, created_at
+    FROM users WHERE id = ?
+  `).get(req.user.id);
+
+  res.json({
+    success: true,
+    message: 'Curiosidades de Jiu-Jitsu salvas com sucesso!',
+    user: updatedUser
+  });
+});
+
 // PUT /api/auth/avatar - Update avatar (base64 or URL)
 router.put('/avatar', authenticateToken, (req, res) => {
   const { avatar } = req.body;
@@ -154,7 +185,8 @@ router.put('/avatar', authenticateToken, (req, res) => {
   db.prepare('UPDATE users SET avatar = ? WHERE id = ?').run(avatar || null, req.user.id);
 
   const updatedUser = db.prepare(`
-    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact, created_at
+    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact,
+           game_style, favorite_position, favorite_submission, idol, bjj_motto, created_at
     FROM users WHERE id = ?
   `).get(req.user.id);
 
@@ -170,7 +202,8 @@ router.delete('/avatar', authenticateToken, (req, res) => {
   db.prepare('UPDATE users SET avatar = NULL WHERE id = ?').run(req.user.id);
 
   const updatedUser = db.prepare(`
-    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact, created_at
+    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact,
+           game_style, favorite_position, favorite_submission, idol, bjj_motto, created_at
     FROM users WHERE id = ?
   `).get(req.user.id);
 

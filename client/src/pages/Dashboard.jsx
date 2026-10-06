@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { api } from '../utils/api';
 import BeltBadge from '../components/BeltBadge';
 import AvatarUploadModal from '../components/AvatarUploadModal';
+import ProfileCuriositiesModal from '../components/ProfileCuriositiesModal';
 import { 
   Users, 
   Calendar, 
@@ -16,7 +17,12 @@ import {
   Flame,
   AlertCircle,
   Camera,
-  GitFork
+  GitFork,
+  Crosshair,
+  Zap,
+  Sparkles,
+  Quote,
+  Edit3
 } from 'lucide-react';
 
 export default function Dashboard({ onNavigate }) {
@@ -27,6 +33,7 @@ export default function Dashboard({ onNavigate }) {
   const [loading, setLoading] = useState(true);
   const [classesToday, setClassesToday] = useState([]);
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  const [isCuriositiesModalOpen, setIsCuriositiesModalOpen] = useState(false);
 
   useEffect(() => {
     fetchDashboardData();
@@ -106,14 +113,25 @@ export default function Dashboard({ onNavigate }) {
                   ? 'Monitore a frequência dos alunos, controle chamadas do dia e acompanhe a evolução de graduação de cada faixa.'
                   : 'Acompanhe seu ritmo de treinos, evolução física de peso e aprimore seu jogo com a biblioteca de posições.'}
               </p>
-              <button
-                type="button"
-                onClick={() => setIsAvatarModalOpen(true)}
-                className="mt-2 text-[11px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold"
-              >
-                <Camera className="w-3.5 h-3.5" />
-                {user?.avatar ? 'Alterar / Remover foto de perfil' : 'Adicionar foto de perfil'}
-              </button>
+              <div className="flex items-center gap-3 mt-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => setIsAvatarModalOpen(true)}
+                  className="text-[11px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold"
+                >
+                  <Camera className="w-3.5 h-3.5" />
+                  {user?.avatar ? 'Alterar foto de perfil' : 'Adicionar foto de perfil'}
+                </button>
+                <span className="text-zinc-600">•</span>
+                <button
+                  type="button"
+                  onClick={() => setIsCuriositiesModalOpen(true)}
+                  className="text-[11px] text-red-400 hover:text-red-300 flex items-center gap-1 font-semibold"
+                >
+                  <Edit3 className="w-3.5 h-3.5" />
+                  Editar Curiosidades (Guardeiro/Passador)
+                </button>
+              </div>
             </div>
           </div>
 
@@ -136,6 +154,116 @@ export default function Dashboard({ onNavigate }) {
           onClose={() => setIsAvatarModalOpen(false)}
         />
       )}
+
+      {/* Curiosities Modal */}
+      {isCuriositiesModalOpen && (
+        <ProfileCuriositiesModal
+          isOpen={isCuriositiesModalOpen}
+          onClose={() => setIsCuriositiesModalOpen(false)}
+        />
+      )}
+
+      {/* Athlete Curiosities & Game Style Spotlight Card */}
+      <div className="p-5 rounded-2xl bg-gradient-to-r from-zinc-950 via-black to-neutral-950 border border-amber-500/30 shadow-xl">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-zinc-800">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400">
+              <Crosshair className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
+                Ficha Técnica & Curiosidades de Tatame
+                <span className="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-red-950 text-red-300 border border-red-700/50">
+                  {user?.game_style || 'Guardeiro'}
+                </span>
+              </h3>
+              <p className="text-xs text-zinc-400">
+                Seu DNA marcial: preferências de jogo, posições de controle e golpes de assinatura.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setIsCuriositiesModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-amber-500/30 text-amber-300 text-xs font-bold transition shadow-xs whitespace-nowrap"
+          >
+            <Edit3 className="w-3.5 h-3.5 text-amber-400" />
+            Personalizar Meu Jogo
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          {/* Style */}
+          <div className="p-3.5 rounded-xl bg-black border border-zinc-800 flex flex-col justify-between">
+            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
+              <Crosshair className="w-3.5 h-3.5 text-amber-400" /> Estilo de Luta
+            </span>
+            <div className="mt-1.5">
+              <span className={`inline-block px-2 py-0.5 rounded text-xs font-black uppercase border ${
+                user?.game_style === 'Passador'
+                  ? 'bg-amber-950/80 text-amber-300 border-amber-600/60'
+                  : user?.game_style === 'Guardeiro'
+                  ? 'bg-red-950/80 text-red-300 border-red-700/60'
+                  : 'bg-zinc-900 text-zinc-300 border-zinc-700'
+              }`}>
+                {user?.game_style || 'Guardeiro'}
+              </span>
+              <p className="text-[11px] text-zinc-400 mt-1">
+                {user?.game_style === 'Passador'
+                  ? 'Pressão por cima, passagens e montada.'
+                  : user?.game_style === 'Guardeiro'
+                  ? 'Raspagens, triângulos e jogo por baixo.'
+                  : 'Atua tanto por cima quanto por baixo.'}
+              </p>
+            </div>
+          </div>
+
+          {/* Favorite Position */}
+          <div className="p-3.5 rounded-xl bg-black border border-zinc-800 flex flex-col justify-between">
+            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
+              <Flame className="w-3.5 h-3.5 text-amber-400" /> Posição Favorita
+            </span>
+            <div className="mt-1.5">
+              <h5 className="text-xs font-black text-zinc-100">
+                {user?.favorite_position || 'Não informada'}
+              </h5>
+              <p className="text-[11px] text-zinc-500 mt-0.5">
+                Área de maior conforto no combate.
+              </p>
+            </div>
+          </div>
+
+          {/* Signature Submission */}
+          <div className="p-3.5 rounded-xl bg-black border border-zinc-800 flex flex-col justify-between">
+            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
+              <Zap className="w-3.5 h-3.5 text-red-400" /> Finalização de Assinatura
+            </span>
+            <div className="mt-1.5">
+              <h5 className="text-xs font-black text-red-300">
+                {user?.favorite_submission || 'Não informada'}
+              </h5>
+              <p className="text-[11px] text-zinc-500 mt-0.5">
+                Golpe fatal mais treinado.
+              </p>
+            </div>
+          </div>
+
+          {/* Idol / Reference */}
+          <div className="p-3.5 rounded-xl bg-black border border-zinc-800 flex flex-col justify-between">
+            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
+              <Award className="w-3.5 h-3.5 text-amber-400" /> Ídolo / Inspiração
+            </span>
+            <div className="mt-1.5">
+              <h5 className="text-xs font-black text-amber-300 line-clamp-1">
+                {user?.idol || 'Mestres do BJJ'}
+              </h5>
+              <p className="text-[11px] text-zinc-500 mt-0.5 line-clamp-1">
+                {user?.bjj_motto ? `"${user.bjj_motto}"` : 'Referência no tatame'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* KPI Cards */}
       {isProfessor ? (
