@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const compression = require('compression');
 const { initDatabase } = require('./db');
 
@@ -66,26 +67,49 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Serve frontend build in production with aggressive caching for hashed assets
+// Serve frontend build in production with dynamic Open Graph tags
 const clientBuildPath = path.join(__dirname, '../client/dist');
+
+function sendEnrichedIndexHtml(req, res) {
+  const indexPath = path.join(clientBuildPath, 'index.html');
+  fs.readFile(indexPath, 'utf8', (err, html) => {
+    if (err) {
+      return res.status(200).send('🥋 Arte Suave API running. Inicie o cliente Vite.');
+    }
+    const host = req.get('x-forwarded-host') || req.get('host') || 'localhost:5000';
+    const proto = req.get('x-forwarded-proto') || req.protocol || 'https';
+    const fullUrl = `${proto}://${host}${req.originalUrl || '/'}`;
+    const fullImageUrl = `${proto}://${host}/kimono-preview.jpg`;
+
+    const enrichedHtml = html
+      .replace(/__OG_IMAGE_URL__/g, fullImageUrl)
+      .replace(/__OG_PAGE_URL__/g, fullUrl);
+
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.send(enrichedHtml);
+  });
+}
+
+// Intercept root and direct index requests for dynamic Open Graph
+app.get('/', (req, res) => sendEnrichedIndexHtml(req, res));
+app.get('/index.html', (req, res) => sendEnrichedIndexHtml(req, res));
+
+// Serve frontend assets (CSS, JS, images)
 app.use(express.static(clientBuildPath, {
   maxAge: '1y',
+  index: false,
   setHeaders: (res, filePath) => {
-    if (filePath.endsWith('index.html')) {
-      res.setHeader('Cache-Control', 'no-cache');
+    if (filePath.endsWith('.jpg') || filePath.endsWith('.png') || filePath.endsWith('.svg') || filePath.endsWith('.webp')) {
+      res.setHeader('Cache-Control', 'public, max-age=86400');
     }
   }
 }));
 
-// Fallback for SPA
+// Fallback for SPA routing
 app.use((req, res, next) => {
-  if (req.method === 'GET' && !req.path.startsWith('/api')) {
-    const indexPath = path.join(clientBuildPath, 'index.html');
-    return res.sendFile(indexPath, (err) => {
-      if (err) {
-        res.status(200).send('🥋 Arte Suave API running. Start the Vite client for frontend.');
-      }
-    });
+  if (req.method === 'GET' && !req.path.startsWith('/api') && !req.path.includes('.')) {
+    return sendEnrichedIndexHtml(req, res);
   }
   next();
 });

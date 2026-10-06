@@ -40,9 +40,8 @@ export default function Navbar({ onMobileMenuToggle }) {
           </button>
 
           <div className="flex items-center gap-2.5">
-            <div className="relative group">
-              <span className="text-2xl filter drop-shadow inline-block animate-float">🥋</span>
-              <div className="absolute -inset-1 rounded-full bg-amber-500/20 blur-xs -z-10 group-hover:bg-amber-500/40 transition" />
+            <div className="relative group w-9 h-9 rounded-xl overflow-hidden border border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.25)] shrink-0">
+              <img src="/kimono-preview.jpg" alt="Logo Kimono 3D" className="w-full h-full object-cover group-hover:scale-110 transition duration-300" />
             </div>
             <div>
               <div className="flex items-center gap-2">

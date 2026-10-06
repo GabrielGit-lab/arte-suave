@@ -164,9 +164,13 @@ export default function Login() {
       <div className="w-full max-w-md z-10">
         {/* Header Branding */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 via-black to-red-950/40 border border-amber-500/50 mb-3 shadow-[0_0_20px_rgba(245,158,11,0.25)] relative group animate-float">
-            <span className="text-3xl filter drop-shadow">🥋</span>
-            <span className="absolute -bottom-1 -right-1 text-[8px] font-black px-1 rounded bg-black border border-amber-500/50 text-amber-400 font-mono">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500/20 via-black to-red-950/40 border border-amber-500/60 mb-3 shadow-[0_0_25px_rgba(245,158,11,0.35)] relative group animate-float overflow-hidden">
+            <img 
+              src="/kimono-preview.jpg" 
+              alt="Kimono 3D Arte Suave" 
+              className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+            />
+            <span className="absolute bottom-1 right-1 text-[8px] font-black px-1 rounded bg-black/80 border border-amber-500/60 text-amber-400 font-mono shadow">
               柔術
             </span>
           </div>
