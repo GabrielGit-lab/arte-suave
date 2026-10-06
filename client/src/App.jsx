@@ -12,6 +12,7 @@ import PhysicalMetrics from './pages/PhysicalMetrics';
 import Reports from './pages/Reports';
 import RulesCBJJ from './pages/RulesCBJJ';
 import Tournaments from './pages/Tournaments';
+import LineageBJJ from './pages/LineageBJJ';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -20,10 +21,10 @@ function AppContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
-          <span className="text-sm font-semibold text-slate-400">Carregando tatame...</span>
+          <span className="text-sm font-semibold text-zinc-400">Carregando tatame...</span>
         </div>
       </div>
     );
@@ -34,7 +35,7 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-amber-500 selection:text-slate-950">
+    <div className="min-h-screen bg-[#08080a] text-zinc-100 flex flex-col selection:bg-amber-500 selection:text-black">
       <Navbar onMobileMenuToggle={() => setMobileOpen(!mobileOpen)} />
 
       <div className="flex-1 flex max-w-7xl w-full mx-auto">
@@ -54,6 +55,7 @@ function AppContent() {
           {activeTab === 'physical' && <PhysicalMetrics />}
           {activeTab === 'reports' && <Reports />}
           {activeTab === 'tournaments' && <Tournaments />}
+          {activeTab === 'lineage' && <LineageBJJ />}
           {activeTab === 'rules' && <RulesCBJJ />}
         </main>
       </div>

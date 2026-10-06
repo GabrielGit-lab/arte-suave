@@ -10,7 +10,8 @@ import {
   UserCheck,
   ShieldCheck,
   FileText,
-  Trophy
+  Trophy,
+  GitFork
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -25,6 +26,13 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
       icon: LayoutDashboard,
       badge: null,
       desc: 'Visão geral e métricas'
+    },
+    {
+      id: 'lineage',
+      label: 'Árvore Genealógica',
+      icon: GitFork,
+      badge: 'Linhagens',
+      desc: 'Origens e grandes mestres'
     },
     {
       id: 'tutorials',
@@ -94,7 +102,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
       {/* Mobile backdrop */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/70 md:hidden backdrop-blur-xs"
+          className="fixed inset-0 z-40 bg-black/80 md:hidden backdrop-blur-xs"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -102,13 +110,13 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
       <aside className={`
         fixed md:sticky top-16 left-0 z-40
         w-64 h-[calc(100vh-4rem)]
-        bg-slate-950 border-r border-slate-800
+        bg-[#09090b] border-r border-amber-500/20
         transition-transform duration-300 ease-in-out
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         flex flex-col justify-between p-3 overflow-y-auto
       `}>
         <div className="space-y-1">
-          <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+          <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-zinc-500">
             Navegação Principal
           </div>
 
@@ -122,19 +130,21 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
                 className={`
                   w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-sm font-semibold transition-all group
                   ${isActive 
-                    ? 'bg-gradient-to-r from-amber-500/20 to-amber-500/5 text-amber-300 border border-amber-500/30 shadow-xs' 
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent'}
+                    ? 'bg-gradient-to-r from-amber-500/20 via-black to-red-950/20 text-amber-300 border border-amber-500/40 shadow-sm' 
+                    : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/70 border border-transparent'}
                 `}
               >
                 <div className="flex items-center gap-3">
                   <div className={`p-1.5 rounded-lg transition-colors ${
-                    isActive ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-900 text-slate-400 group-hover:text-slate-200 group-hover:bg-slate-800'
+                    isActive 
+                      ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
+                      : 'bg-zinc-900 text-zinc-400 group-hover:text-zinc-200 group-hover:bg-zinc-800'
                   }`}>
                     <Icon className="w-4 h-4" />
                   </div>
                   <div>
                     <div className="leading-tight">{item.label}</div>
-                    <div className="text-[10px] font-normal text-slate-500 group-hover:text-slate-400">
+                    <div className="text-[10px] font-normal text-zinc-500 group-hover:text-zinc-400">
                       {item.desc}
                     </div>
                   </div>
@@ -142,7 +152,9 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
 
                 {item.badge && (
                   <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold uppercase ${
-                    isActive ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-400'
+                    isActive 
+                      ? 'bg-red-950/80 text-red-300 border border-red-700/40' 
+                      : 'bg-zinc-900 text-zinc-400 border border-zinc-800'
                   }`}>
                     {item.badge}
                   </span>
@@ -153,17 +165,17 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
         </div>
 
         {/* Bottom Academy badge */}
-        <div className="p-3 bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl border border-slate-800/80 mt-4">
+        <div className="p-3 bg-gradient-to-br from-black to-zinc-950 rounded-xl border border-amber-500/25 mt-4 shadow-md">
           <div className="flex items-center gap-2 mb-1.5">
             <ShieldCheck className="w-4 h-4 text-amber-400" />
-            <span className="text-xs font-bold text-slate-200">
+            <span className="text-xs font-bold text-zinc-200">
               {isProfessor ? 'Modo Instrutor / Mestre' : 'Modo Aluno Ativo'}
             </span>
           </div>
-          <p className="text-[11px] text-slate-400 leading-relaxed">
+          <p className="text-[11px] text-zinc-400 leading-relaxed">
             {isProfessor
               ? 'Acesso administrativo a chamadas, graduações de alunos e métricas.'
-              : 'Acompanhe seus treinos, peso, progresso de graus e estude posições.'}
+              : 'Acesso do aluno a treinos, frequência, peso e evolução.'}
           </p>
         </div>
       </aside>
