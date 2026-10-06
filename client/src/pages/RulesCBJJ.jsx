@@ -181,13 +181,13 @@ export default function RulesCBJJ() {
             <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
               Regulamento Oficial 2026
             </span>
-            <span className="text-slate-500 text-xs">• CBJJ & IBJJF Rulebook</span>
+            <span className="text-zinc-500 text-xs">• CBJJ & IBJJF Rulebook</span>
           </div>
           <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
             <FileText className="w-6 h-6 text-amber-400" />
             Livro de Regras da CBJJ (Atualizado 2026)
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-zinc-400 mt-1">
             Manual completo de arbitragem, pontuações, faltas, uniformes e golpes permitidos por faixa.
           </p>
         </div>
@@ -196,7 +196,7 @@ export default function RulesCBJJ() {
           href="https://cbjj.com.br/regras"
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-amber-400 hover:text-amber-300 text-xs font-bold transition shadow-sm"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-amber-400 hover:text-amber-300 text-xs font-bold transition shadow-sm"
         >
           <span>Portal Oficial CBJJ</span>
           <ExternalLink className="w-3.5 h-3.5" />
@@ -204,15 +204,15 @@ export default function RulesCBJJ() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+      <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-3">
         <div className="relative">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+          <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar por regra (ex: botinha, bate estaca, 4 pontos, heel hook, tempo, kimono...)"
-            className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+            className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
           />
         </div>
 
@@ -225,7 +225,7 @@ export default function RulesCBJJ() {
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
                 selectedSection === cat.id
                   ? 'bg-amber-500 text-slate-950 shadow-xs'
-                  : 'bg-slate-950 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
+                  : 'bg-black text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800'
               }`}
             >
               {cat.label}
@@ -258,7 +258,7 @@ export default function RulesCBJJ() {
                   4 PONTOS
                 </span>
               </div>
-              <ul className="text-xs text-slate-300 space-y-2">
+              <ul className="text-xs text-zinc-300 space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                   <div>
@@ -286,18 +286,18 @@ export default function RulesCBJJ() {
                 <span className="text-xs font-bold text-blue-300 uppercase tracking-wider">
                   Superação de Guarda
                 </span>
-                <span className="text-2xl font-black text-blue-400 bg-blue-500/10 px-2.5 py-0.5 rounded-lg border border-blue-500/30">
+                <span className="text-2xl font-black text-amber-400 bg-blue-500/10 px-2.5 py-0.5 rounded-lg border border-blue-500/30">
                   3 PONTOS
                 </span>
               </div>
-              <ul className="text-xs text-slate-300 space-y-2">
+              <ul className="text-xs text-zinc-300 space-y-2">
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                   <div>
                     <strong>Passagem de Guarda:</strong> O atleta que está por cima supera as pernas do atleta que faz guarda e estabiliza em posição lateral ou 100kg por 3 segundos.
                   </div>
                 </li>
-                <li className="flex items-start gap-2 text-slate-400 text-[11px]">
+                <li className="flex items-start gap-2 text-zinc-400 text-[11px]">
                   <span>ℹ️ Se o atleta passar a guarda mas o oponente virar de quatro apoios imediatamente, considera-se Vantagem ao invés de pontos.</span>
                 </li>
               </ul>
@@ -313,7 +313,7 @@ export default function RulesCBJJ() {
                   2 PONTOS
                 </span>
               </div>
-              <ul className="text-xs text-slate-300 space-y-2">
+              <ul className="text-xs text-zinc-300 space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <div>
@@ -337,22 +337,22 @@ export default function RulesCBJJ() {
           </div>
 
           {/* Vantagens & Critério de Desempate */}
-          <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div className="space-y-1">
               <h4 className="font-bold text-amber-300 flex items-center gap-1.5 uppercase">
                 <Flame className="w-4 h-4 text-amber-400" />
                 Critério de Vantagens (Advantages)
               </h4>
-              <p className="text-slate-400 leading-relaxed">
+              <p className="text-zinc-400 leading-relaxed">
                 Concedida quando o atleta quase conclui um golpe de pontuação ou encaixa uma finalização que coloca o adversário em risco real de desistência, mas este consegue defender no limite.
               </p>
             </div>
             <div className="space-y-1">
-              <h4 className="font-bold text-slate-200 flex items-center gap-1.5 uppercase">
-                <Scale className="w-4 h-4 text-blue-400" />
+              <h4 className="font-bold text-zinc-200 flex items-center gap-1.5 uppercase">
+                <Scale className="w-4 h-4 text-amber-400" />
                 Ordem de Desempate da Luta
               </h4>
-              <p className="text-slate-400 leading-relaxed">
+              <p className="text-zinc-400 leading-relaxed">
                 1º Maior número de Pontos → 2º Maior número de Vantagens → 3º Menor número de Punições → 4º Decisão do Árbitro Central (baseada em ofensividade e combatividade).
               </p>
             </div>
@@ -369,43 +369,43 @@ export default function RulesCBJJ() {
                 <ShieldAlert className="w-5 h-5 text-amber-400" />
                 Tabela de Golpes Permitidos e Proibidos por Faixa
               </h3>
-              <p className="text-xs text-slate-400">Classificação conforme a idade adulta da CBJJ</p>
+              <p className="text-xs text-zinc-400">Classificação conforme a idade adulta da CBJJ</p>
             </div>
 
             {/* Sub-filter by Belt */}
-            <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
+            <div className="flex items-center gap-1 bg-black p-1 rounded-lg border border-zinc-800 text-xs">
               <button
                 onClick={() => setSelectedBeltTech('todas')}
-                className={`px-2.5 py-1 rounded transition ${selectedBeltTech === 'todas' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded transition ${selectedBeltTech === 'todas' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-zinc-400 hover:text-white'}`}
               >
                 Todas
               </button>
               <button
                 onClick={() => setSelectedBeltTech('branca')}
-                className={`px-2.5 py-1 rounded transition ${selectedBeltTech === 'branca' ? 'bg-slate-200 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded transition ${selectedBeltTech === 'branca' ? 'bg-slate-200 text-slate-950 font-bold' : 'text-zinc-400 hover:text-white'}`}
               >
                 Branca
               </button>
               <button
                 onClick={() => setSelectedBeltTech('azul_roxa')}
-                className={`px-2.5 py-1 rounded transition ${selectedBeltTech === 'azul_roxa' ? 'bg-blue-600 text-white font-bold' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded transition ${selectedBeltTech === 'azul_roxa' ? 'bg-blue-600 text-white font-bold' : 'text-zinc-400 hover:text-white'}`}
               >
                 Azul & Roxa
               </button>
               <button
                 onClick={() => setSelectedBeltTech('marrom_preta')}
-                className={`px-2.5 py-1 rounded transition ${selectedBeltTech === 'marrom_preta' ? 'bg-amber-900 text-white font-bold' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-1 rounded transition ${selectedBeltTech === 'marrom_preta' ? 'bg-amber-900 text-white font-bold' : 'text-zinc-400 hover:text-white'}`}
               >
                 Marrom & Preta
               </button>
             </div>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+          <div className="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="bg-slate-950 border-b border-slate-800 text-slate-400 uppercase font-semibold">
+                  <tr className="bg-black border-b border-zinc-800 text-zinc-400 uppercase font-semibold">
                     <th className="p-3.5">Golpe / Chave Articular</th>
                     <th className="p-3.5 text-center">Branca</th>
                     <th className="p-3.5 text-center">Azul</th>
@@ -420,7 +420,7 @@ export default function RulesCBJJ() {
                     <tr key={idx} className="hover:bg-slate-850 transition">
                       <td className="p-3.5">
                         <div className="font-bold text-white">{tech.name}</div>
-                        <div className="text-[11px] text-slate-400 mt-0.5">{tech.desc}</div>
+                        <div className="text-[11px] text-zinc-400 mt-0.5">{tech.desc}</div>
                       </td>
                       <td className="p-3.5 text-center">
                         {tech.branca ? (
@@ -463,7 +463,7 @@ export default function RulesCBJJ() {
                             ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                             : tech.nogi_extra.includes('PROIBIDO')
                             ? 'bg-red-500/20 text-red-300 border border-red-500/30'
-                            : 'bg-slate-800 text-slate-300'
+                            : 'bg-slate-800 text-zinc-300'
                         }`}>
                           {tech.nogi_extra}
                         </span>
@@ -486,37 +486,37 @@ export default function RulesCBJJ() {
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
                 1ª Punição
               </span>
               <h4 className="text-sm font-bold text-amber-400">Advertência Verbal</h4>
-              <p className="text-slate-400 mt-1 leading-relaxed">
+              <p className="text-zinc-400 mt-1 leading-relaxed">
                 O árbitro interrompe a luta, sinaliza o gesto de falta de combatividade e adverte o atleta.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
                 2ª Punição
               </span>
               <h4 className="text-sm font-bold text-amber-400">+1 Vantagem ao Oponente</h4>
-              <p className="text-slate-400 mt-1 leading-relaxed">
+              <p className="text-zinc-400 mt-1 leading-relaxed">
                 O adversário recebe 1 vantagem no placar eletrônico oficial.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
                 3ª Punição
               </span>
               <h4 className="text-sm font-bold text-amber-400">+2 Pontos ao Oponente</h4>
-              <p className="text-slate-400 mt-1 leading-relaxed">
+              <p className="text-zinc-400 mt-1 leading-relaxed">
                 O adversário recebe 2 pontos válidos na contagem geral.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-red-800/80 bg-red-950/20">
+            <div className="p-4 rounded-xl bg-zinc-950 border border-red-800/80 bg-red-950/20">
               <span className="text-[10px] font-bold text-red-400 uppercase tracking-wider block mb-1">
                 4ª Punição
               </span>
@@ -532,7 +532,7 @@ export default function RulesCBJJ() {
               <XCircle className="w-4 h-4 text-red-400" />
               Faltas Gravíssimas (Desclassificação Imediata no 1º Segundo)
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-slate-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-zinc-300">
               <div>• Aplicar Bate-Estaca (Slam)</div>
               <div>• Fugir deliberadamente da área de luta para escapar de finalização encaixada</div>
               <div>• Morder, puxar cabelo, enfiar dedos nos olhos ou genitália</div>
@@ -553,39 +553,39 @@ export default function RulesCBJJ() {
           </h3>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs">
-            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-center">
+            <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800 text-center">
               <BeltBadge belt="Branca" degrees={0} size="sm" showLabel={false} />
-              <div className="text-xs font-bold text-slate-300 mt-1">Branca Adulto</div>
+              <div className="text-xs font-bold text-zinc-300 mt-1">Branca Adulto</div>
               <div className="text-xl font-black text-amber-400 mt-1">5 MIN</div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-center">
+            <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800 text-center">
               <BeltBadge belt="Azul" degrees={0} size="sm" showLabel={false} />
-              <div className="text-xs font-bold text-slate-300 mt-1">Azul Adulto</div>
-              <div className="text-xl font-black text-blue-400 mt-1">6 MIN</div>
+              <div className="text-xs font-bold text-zinc-300 mt-1">Azul Adulto</div>
+              <div className="text-xl font-black text-amber-400 mt-1">6 MIN</div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-center">
+            <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800 text-center">
               <BeltBadge belt="Roxa" degrees={0} size="sm" showLabel={false} />
-              <div className="text-xs font-bold text-slate-300 mt-1">Roxa Adulto</div>
+              <div className="text-xs font-bold text-zinc-300 mt-1">Roxa Adulto</div>
               <div className="text-xl font-black text-purple-400 mt-1">7 MIN</div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-center">
+            <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800 text-center">
               <BeltBadge belt="Marrom" degrees={0} size="sm" showLabel={false} />
-              <div className="text-xs font-bold text-slate-300 mt-1">Marrom Adulto</div>
+              <div className="text-xs font-bold text-zinc-300 mt-1">Marrom Adulto</div>
               <div className="text-xl font-black text-amber-600 mt-1">8 MIN</div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-center">
+            <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800 text-center">
               <BeltBadge belt="Preta" degrees={0} size="sm" showLabel={false} />
-              <div className="text-xs font-bold text-slate-300 mt-1">Preta Adulto</div>
+              <div className="text-xs font-bold text-zinc-300 mt-1">Preta Adulto</div>
               <div className="text-xl font-black text-red-500 mt-1">10 MIN</div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-center">
-              <span className="text-[10px] font-bold uppercase text-slate-400">Masters 1 a 7</span>
-              <div className="text-xs font-bold text-slate-300 mt-1">Todas as Faixas</div>
+            <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800 text-center">
+              <span className="text-[10px] font-bold uppercase text-zinc-400">Masters 1 a 7</span>
+              <div className="text-xs font-bold text-zinc-300 mt-1">Todas as Faixas</div>
               <div className="text-xl font-black text-emerald-400 mt-1">5 MIN</div>
             </div>
           </div>
@@ -601,11 +601,11 @@ export default function RulesCBJJ() {
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2">
               <h4 className="font-bold text-amber-300 uppercase tracking-wider">
                 Regulamento do Kimono (Gi)
               </h4>
-              <ul className="text-slate-300 space-y-1.5 list-disc list-inside">
+              <ul className="text-zinc-300 space-y-1.5 list-disc list-inside">
                 <li><strong>Cores autorizadas:</strong> Branco, Azul Royal ou Preto homogêneo (proibido mesclar casaco branco com calça azul).</li>
                 <li><strong>Comprimento da manga:</strong> Não pode ultrapassar 5 cm de distância da articulação do punho quando os braços estiverem estendidos à frente.</li>
                 <li><strong>Largura da manga:</strong> Folga mínima de 7 cm em toda a extensão do braço.</li>
@@ -614,11 +614,11 @@ export default function RulesCBJJ() {
               </ul>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2">
               <h4 className="font-bold text-blue-300 uppercase tracking-wider">
                 Regulamento Sem Kimono (No-Gi)
               </h4>
-              <ul className="text-slate-300 space-y-1.5 list-disc list-inside">
+              <ul className="text-zinc-300 space-y-1.5 list-disc list-inside">
                 <li><strong>Rashguard (Camisa de Lycra):</strong> Deve conter pelo menos 10% da cor da sua faixa atual (ex: rashguard com detalhes azuis para faixa azul).</li>
                 <li><strong>Bermuda / Short de Luta:</strong> Cores preta, branca ou da sua faixa. Sem bolsos, botões, zíperes ou ilhoses de metal que possam machucar os dedos.</li>
                 <li><strong>Comprimento da bermuda:</strong> No mínimo até metade da coxa e no máximo até a linha superior do joelho. Calça legging por baixo é permitida desde que justa.</li>
@@ -637,28 +637,28 @@ export default function RulesCBJJ() {
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-1">
               <BeltBadge belt="Branca" degrees={4} size="sm" showLabel={false} />
               <h4 className="font-bold text-white text-sm">Faixa Branca</h4>
-              <p className="text-slate-400">Sem tempo mínimo fixado pela CBJJ. Critério do professor da academia.</p>
+              <p className="text-zinc-400">Sem tempo mínimo fixado pela CBJJ. Critério do professor da academia.</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-1">
               <BeltBadge belt="Azul" degrees={4} size="sm" showLabel={false} />
-              <h4 className="font-bold text-blue-400 text-sm">Faixa Azul</h4>
-              <p className="text-slate-400">Idade mínima: <strong>16 anos</strong>.<br />Tempo mínimo: <strong>2 anos</strong> de permanência.</p>
+              <h4 className="font-bold text-amber-400 text-sm">Faixa Azul</h4>
+              <p className="text-zinc-400">Idade mínima: <strong>16 anos</strong>.<br />Tempo mínimo: <strong>2 anos</strong> de permanência.</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-1">
               <BeltBadge belt="Roxa" degrees={4} size="sm" showLabel={false} />
               <h4 className="font-bold text-purple-400 text-sm">Faixa Roxa</h4>
-              <p className="text-slate-400">Idade mínima: <strong>18 anos</strong>.<br />Tempo mínimo: <strong>1 ano e meio (18 meses)</strong>.</p>
+              <p className="text-zinc-400">Idade mínima: <strong>18 anos</strong>.<br />Tempo mínimo: <strong>1 ano e meio (18 meses)</strong>.</p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+            <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-1">
               <BeltBadge belt="Marrom" degrees={4} size="sm" showLabel={false} />
               <h4 className="font-bold text-amber-600 text-sm">Faixa Marrom</h4>
-              <p className="text-slate-400">Idade mínima: <strong>19 anos</strong>.<br />Tempo mínimo: <strong>1 ano</strong> de permanência.</p>
+              <p className="text-zinc-400">Idade mínima: <strong>19 anos</strong>.<br />Tempo mínimo: <strong>1 ano</strong> de permanência.</p>
             </div>
           </div>
         </div>

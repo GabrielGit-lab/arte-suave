@@ -317,13 +317,13 @@ export default function Tournaments() {
             <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
               Chaveamento Oficial
             </span>
-            <span className="text-slate-500 text-xs">• Brackets Gi, No-Gi & Absoluto</span>
+            <span className="text-zinc-500 text-xs">• Brackets Gi, No-Gi & Absoluto</span>
           </div>
           <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
             <Trophy className="w-6 h-6 text-amber-400" />
             Sistema de Chaves e Torneios de Jiu-Jitsu
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-zinc-400 mt-1">
             Gerador de chaves de eliminação simples, categorias por peso ou absoluto livre, mistas e por faixa.
           </p>
         </div>
@@ -340,15 +340,15 @@ export default function Tournaments() {
       </div>
 
       {/* Belt Categories Tabs (Chaveamentos por Faixa) */}
-      <div className="bg-slate-900/80 p-2 rounded-2xl border border-slate-800 shadow-sm">
+      <div className="bg-zinc-950/80 p-2 rounded-2xl border border-zinc-800 shadow-sm">
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
           {[
-            { id: 'Todas', label: 'Todas as Faixas', icon: '🥋', color: 'bg-slate-800 text-slate-200 border-slate-700' },
+            { id: 'Todas', label: 'Todas as Faixas', icon: '🥋', color: 'bg-slate-800 text-zinc-200 border-zinc-700' },
             { id: 'Branca', label: 'Faixa Branca', icon: '⚪', color: 'bg-slate-100 text-slate-900 border-slate-300 font-black' },
             { id: 'Azul', label: 'Faixa Azul', icon: '🔵', color: 'bg-blue-600 text-white border-blue-400 font-black' },
             { id: 'Roxa', label: 'Faixa Roxa', icon: '🟣', color: 'bg-purple-600 text-white border-purple-400 font-black' },
             { id: 'Marrom', label: 'Faixa Marrom', icon: '🟤', color: 'bg-amber-900 text-amber-100 border-amber-700 font-black' },
-            { id: 'Preta', label: 'Faixa Preta', icon: '⚫', color: 'bg-slate-950 text-red-400 border-red-600 font-black ring-1 ring-red-500/40' },
+            { id: 'Preta', label: 'Faixa Preta', icon: '⚫', color: 'bg-black text-red-400 border-red-600 font-black ring-1 ring-red-500/40' },
             { id: 'Absoluto', label: 'Absoluto / Open Class', icon: '🏆', color: 'bg-amber-500 text-slate-950 border-amber-300 font-black' },
           ].map((tab) => {
             const isActive = filterBelt === tab.id;
@@ -359,7 +359,7 @@ export default function Tournaments() {
                 className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
                   isActive
                     ? `${tab.color} shadow-md scale-102 ring-2 ring-amber-400/50`
-                    : 'bg-slate-950/70 text-slate-400 border-slate-800 hover:text-white hover:bg-slate-800/60'
+                    : 'bg-black/80 text-zinc-400 border-zinc-800 hover:text-white hover:bg-zinc-800/60'
                 }`}
               >
                 <span>{tab.icon}</span>
@@ -371,16 +371,16 @@ export default function Tournaments() {
       </div>
 
       {/* Filter Bar */}
-      <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800 flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-slate-500 font-semibold flex items-center gap-1">
+          <span className="text-zinc-500 font-semibold flex items-center gap-1">
             <Filter className="w-3.5 h-3.5 text-amber-400" /> Filtros extras:
           </span>
 
           <select
             value={filterGi}
             onChange={(e) => setFilterGi(e.target.value)}
-            className="px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 focus:outline-none focus:border-amber-500"
+            className="px-2.5 py-1.5 bg-black border border-zinc-800 rounded-lg text-zinc-200 focus:outline-none focus:border-amber-500"
           >
             <option value="Todos">Modalidade: Todas</option>
             <option value="Gi">Com Kimono (Gi)</option>
@@ -390,7 +390,7 @@ export default function Tournaments() {
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 focus:outline-none focus:border-amber-500"
+            className="px-2.5 py-1.5 bg-black border border-zinc-800 rounded-lg text-zinc-200 focus:outline-none focus:border-amber-500"
           >
             <option value="Todos">Divisão: Todas</option>
             <option value="Absoluto">Absoluto (Open Class)</option>
@@ -400,7 +400,7 @@ export default function Tournaments() {
           <select
             value={filterGender}
             onChange={(e) => setFilterGender(e.target.value)}
-            className="px-2.5 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 focus:outline-none focus:border-amber-500"
+            className="px-2.5 py-1.5 bg-black border border-zinc-800 rounded-lg text-zinc-200 focus:outline-none focus:border-amber-500"
           >
             <option value="Todos">Gênero: Todos</option>
             <option value="Misto">Misto</option>
@@ -430,7 +430,7 @@ export default function Tournaments() {
 
           <div className="space-y-2.5 max-h-[620px] overflow-y-auto pr-1">
             {tournaments.length === 0 ? (
-              <div className="p-6 text-center rounded-xl bg-slate-900 border border-slate-800 text-slate-500 text-xs">
+              <div className="p-6 text-center rounded-xl bg-zinc-950 border border-zinc-800 text-zinc-500 text-xs">
                 Nenhum campeonato cadastrado com esses filtros.
               </div>
             ) : (
@@ -442,8 +442,8 @@ export default function Tournaments() {
                     onClick={() => handleSelectTournament(t.id)}
                     className={`p-3.5 rounded-xl cursor-pointer border transition-all flex flex-col justify-between ${
                       isSelected
-                        ? 'bg-slate-900 border-amber-500/70 shadow-lg ring-1 ring-amber-500/30'
-                        : 'bg-slate-950 hover:bg-slate-900/60 border-slate-800'
+                        ? 'bg-zinc-950 border-amber-500/70 shadow-lg ring-1 ring-amber-500/30'
+                        : 'bg-black hover:bg-zinc-950/60 border-zinc-800'
                     }`}
                   >
                     <div>
@@ -457,7 +457,7 @@ export default function Tournaments() {
                           <span className="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30">
                             {t.category_type}
                           </span>
-                          <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-slate-800 text-slate-300">
+                          <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-slate-800 text-zinc-300">
                             {t.gender}
                           </span>
                         </div>
@@ -466,7 +466,7 @@ export default function Tournaments() {
                           <button
                             onClick={(e) => handleDeleteTournament(t.id, e)}
                             title="Excluir Campeonato"
-                            className="p-1 text-slate-500 hover:text-red-400 rounded transition"
+                            className="p-1 text-zinc-500 hover:text-red-400 rounded transition"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -479,7 +479,7 @@ export default function Tournaments() {
                       </p>
                     </div>
 
-                    <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] text-slate-500">
+                    <div className="mt-3 pt-2 border-t border-zinc-800 flex items-center justify-between text-[10px] text-zinc-500">
                       <span>{t.date}</span>
                       <span className="font-bold text-emerald-400">
                         {t.athletes_count} atletas • {t.matches_count} lutas
@@ -495,29 +495,29 @@ export default function Tournaments() {
         {/* Right Column: Bracket Viewer */}
         <div className="lg:col-span-2 space-y-4">
           {detailLoading || !currentTour ? (
-            <div className="p-12 text-center rounded-2xl bg-slate-900 border border-slate-800 text-slate-400 flex flex-col items-center justify-center">
+            <div className="p-12 text-center rounded-2xl bg-zinc-950 border border-zinc-800 text-zinc-400 flex flex-col items-center justify-center">
               <Swords className="w-10 h-10 text-slate-600 animate-pulse mb-2" />
               <p className="text-xs">Carregando chaveamento...</p>
             </div>
           ) : (
             <>
               {/* Tournament Banner Card */}
-              <div className="p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/40 border border-slate-800 space-y-3">
+              <div className="p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/40 border border-zinc-800 space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2 flex-wrap mb-1">
                       <span className="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-amber-500 text-slate-950">
                         {currentTour.gi_type} • {currentTour.category_type}
                       </span>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-800 text-slate-300">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-800 text-zinc-300">
                         Formato: {currentTour.gender}
                       </span>
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-zinc-400">
                         {currentTour.date}
                       </span>
                     </div>
                     <h3 className="text-lg font-black text-white">{currentTour.title}</h3>
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-zinc-400 mt-0.5">
                       Graduação: <strong className="text-amber-300">{currentTour.belt_category}</strong> • {currentTour.location}
                     </p>
                   </div>
@@ -527,7 +527,7 @@ export default function Tournaments() {
                     <div className="flex items-center gap-2 flex-wrap">
                       <button
                         onClick={() => setIsAddAthOpen(true)}
-                        className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition flex items-center gap-1.5"
+                        className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-zinc-200 text-xs font-bold transition flex items-center gap-1.5"
                       >
                         <Plus className="w-3.5 h-3.5" /> Atleta
                       </button>
@@ -560,8 +560,8 @@ export default function Tournaments() {
               </div>
 
               {/* Tournament Athletes Horizontal Bar */}
-              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs space-y-1.5">
-                <div className="flex items-center justify-between font-bold text-slate-400 text-[11px] uppercase tracking-wider">
+              <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 text-xs space-y-1.5">
+                <div className="flex items-center justify-between font-bold text-zinc-400 text-[11px] uppercase tracking-wider">
                   <span>Atletas Inscritos na Categoria ({athletes.length})</span>
                   <span className="text-amber-400 font-normal lowercase">{currentTour.weight_division}</span>
                 </div>
@@ -569,10 +569,10 @@ export default function Tournaments() {
                   {athletes.map((ath, idx) => (
                     <div
                       key={ath.id}
-                      className="px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 flex items-center gap-2 whitespace-nowrap text-xs"
+                      className="px-2.5 py-1.5 rounded-lg bg-black border border-zinc-800 flex items-center gap-2 whitespace-nowrap text-xs"
                     >
-                      <span className="font-bold text-slate-400 text-[10px]">#{idx + 1}</span>
-                      <span className="font-semibold text-slate-200">{ath.athlete_name}</span>
+                      <span className="font-bold text-zinc-400 text-[10px]">#{idx + 1}</span>
+                      <span className="font-semibold text-zinc-200">{ath.athlete_name}</span>
                       <BeltBadge belt={ath.belt} degrees={0} size="sm" showLabel={false} />
                     </div>
                   ))}
@@ -581,20 +581,20 @@ export default function Tournaments() {
 
               {/* Tournament Bracket Columns (Visualizer) */}
               <div className="space-y-2">
-                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                <h4 className="text-xs font-bold text-zinc-300 uppercase tracking-wider flex items-center gap-1.5">
                   <Swords className="w-4 h-4 text-amber-400" />
                   Árvore de Chaveamento da Categoria
                 </h4>
 
                 {rounds.length === 0 ? (
-                  <div className="p-8 text-center rounded-xl bg-slate-900 border border-slate-800 text-slate-500 text-xs">
+                  <div className="p-8 text-center rounded-xl bg-zinc-950 border border-zinc-800 text-zinc-500 text-xs">
                     Nenhuma chave gerada ainda. Adicione atletas e clique em "Sortear Chave".
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 overflow-x-auto pb-2">
                     {rounds.map((round) => (
                       <div key={round.round_number} className="space-y-3 min-w-[240px]">
-                        <div className="p-2 rounded-lg bg-slate-950 border border-slate-800 text-center text-xs font-bold text-amber-400 uppercase tracking-wider">
+                        <div className="p-2 rounded-lg bg-black border border-zinc-800 text-center text-xs font-bold text-amber-400 uppercase tracking-wider">
                           {round.round_name}
                         </div>
 
@@ -608,11 +608,11 @@ export default function Tournaments() {
                                 key={match.id}
                                 className={`p-3.5 rounded-xl border transition-all text-xs space-y-2 relative ${
                                   isDone
-                                    ? 'bg-slate-900 border-emerald-500/40 shadow-sm'
-                                    : 'bg-slate-950 border-slate-800'
+                                    ? 'bg-zinc-950 border-emerald-500/40 shadow-sm'
+                                    : 'bg-black border-zinc-800'
                                 }`}
                               >
-                                <div className="flex items-center justify-between text-[10px] text-slate-500 pb-1 border-b border-slate-800/80">
+                                <div className="flex items-center justify-between text-[10px] text-zinc-500 pb-1 border-b border-zinc-800">
                                   <span>Luta #{match.match_number}</span>
                                   {isDone ? (
                                     <span className="text-emerald-400 font-bold flex items-center gap-1">
@@ -625,7 +625,7 @@ export default function Tournaments() {
 
                                 {/* Athlete 1 */}
                                 <div className={`flex items-center justify-between p-1.5 rounded-lg transition ${
-                                  winner === match.athlete1_name ? 'bg-emerald-500/15 font-bold text-emerald-300' : 'text-slate-200'
+                                  winner === match.athlete1_name ? 'bg-emerald-500/15 font-bold text-emerald-300' : 'text-zinc-200'
                                 }`}>
                                   <div className="flex items-center gap-1.5 truncate">
                                     <span className="truncate">{match.athlete1_name || 'A definir'}</span>
@@ -640,7 +640,7 @@ export default function Tournaments() {
 
                                 {/* Athlete 2 */}
                                 <div className={`flex items-center justify-between p-1.5 rounded-lg transition ${
-                                  winner === match.athlete2_name ? 'bg-emerald-500/15 font-bold text-emerald-300' : 'text-slate-200'
+                                  winner === match.athlete2_name ? 'bg-emerald-500/15 font-bold text-emerald-300' : 'text-zinc-200'
                                 }`}>
                                   <div className="flex items-center gap-1.5 truncate">
                                     <span className="truncate">{match.athlete2_name || 'A definir'}</span>
@@ -655,7 +655,7 @@ export default function Tournaments() {
 
                                 {/* Result Details */}
                                 {isDone && match.win_type && (
-                                  <div className="text-[10px] text-amber-300/90 font-medium pt-1 border-t border-slate-800">
+                                  <div className="text-[10px] text-amber-300/90 font-medium pt-1 border-t border-zinc-800">
                                     Vitória: <strong>{match.winner_name}</strong> por {match.win_type}
                                   </div>
                                 )}
@@ -692,8 +692,8 @@ export default function Tournaments() {
           maxWidth="max-w-lg"
         >
           <form onSubmit={handleSaveScore} className="space-y-4">
-            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-center">
-              <span className="text-[11px] text-slate-400 uppercase font-semibold">Confronto no Tatame</span>
+            <div className="p-3 rounded-xl bg-black border border-zinc-800 text-center">
+              <span className="text-[11px] text-zinc-400 uppercase font-semibold">Confronto no Tatame</span>
               <div className="flex items-center justify-center gap-3 text-sm font-black text-white mt-1">
                 <span>{activeMatch.athlete1_name}</span>
                 <span className="text-amber-400">VS</span>
@@ -703,7 +703,7 @@ export default function Tournaments() {
 
             {/* Select Winner */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
                 Atleta Vencedor da Luta *
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -713,7 +713,7 @@ export default function Tournaments() {
                   className={`p-2.5 rounded-xl border text-xs font-bold transition flex items-center justify-center gap-1.5 ${
                     winnerName === activeMatch.athlete1_name
                       ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md'
-                      : 'bg-slate-950 text-slate-300 border-slate-800 hover:bg-slate-900'
+                      : 'bg-black text-zinc-300 border-zinc-800 hover:bg-zinc-950'
                   }`}
                 >
                   <Award className="w-4 h-4" />
@@ -725,7 +725,7 @@ export default function Tournaments() {
                   className={`p-2.5 rounded-xl border text-xs font-bold transition flex items-center justify-center gap-1.5 ${
                     winnerName === activeMatch.athlete2_name
                       ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md'
-                      : 'bg-slate-950 text-slate-300 border-slate-800 hover:bg-slate-900'
+                      : 'bg-black text-zinc-300 border-zinc-800 hover:bg-zinc-950'
                   }`}
                 >
                   <Award className="w-4 h-4" />
@@ -736,13 +736,13 @@ export default function Tournaments() {
 
             {/* Win Type */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
                 Método de Vitória (Finalização, Pontos ou Decisão)
               </label>
               <select
                 value={winType}
                 onChange={(e) => setWinType(e.target.value)}
-                className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                className="w-full p-2.5 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
               >
                 {SUBMISSIONS_LIST.map((sub) => (
                   <option key={sub} value={sub}>{sub}</option>
@@ -751,80 +751,80 @@ export default function Tournaments() {
             </div>
 
             {/* Points & Penalties Inputs */}
-            <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+            <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-black border border-zinc-800 text-xs">
               {/* Athlete 1 score */}
               <div className="space-y-2">
-                <h5 className="font-bold text-slate-300 truncate">{activeMatch.athlete1_name}</h5>
+                <h5 className="font-bold text-zinc-300 truncate">{activeMatch.athlete1_name}</h5>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Pontos:</span>
+                  <span className="text-zinc-400">Pontos:</span>
                   <input
                     type="number"
                     min="0"
                     value={score1}
                     onChange={(e) => setScore1(e.target.value)}
-                    className="w-16 p-1 bg-slate-900 border border-slate-800 rounded text-center font-bold text-white"
+                    className="w-16 p-1 bg-zinc-950 border border-zinc-800 rounded text-center font-bold text-white"
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Vantagens:</span>
+                  <span className="text-zinc-400">Vantagens:</span>
                   <input
                     type="number"
                     min="0"
                     value={adv1}
                     onChange={(e) => setAdv1(e.target.value)}
-                    className="w-16 p-1 bg-slate-900 border border-slate-800 rounded text-center text-amber-300"
+                    className="w-16 p-1 bg-zinc-950 border border-zinc-800 rounded text-center text-amber-300"
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Punições:</span>
+                  <span className="text-zinc-400">Punições:</span>
                   <input
                     type="number"
                     min="0"
                     value={pen1}
                     onChange={(e) => setPen1(e.target.value)}
-                    className="w-16 p-1 bg-slate-900 border border-slate-800 rounded text-center text-red-400"
+                    className="w-16 p-1 bg-zinc-950 border border-zinc-800 rounded text-center text-red-400"
                   />
                 </div>
               </div>
 
               {/* Athlete 2 score */}
               <div className="space-y-2">
-                <h5 className="font-bold text-slate-300 truncate">{activeMatch.athlete2_name}</h5>
+                <h5 className="font-bold text-zinc-300 truncate">{activeMatch.athlete2_name}</h5>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Pontos:</span>
+                  <span className="text-zinc-400">Pontos:</span>
                   <input
                     type="number"
                     min="0"
                     value={score2}
                     onChange={(e) => setScore2(e.target.value)}
-                    className="w-16 p-1 bg-slate-900 border border-slate-800 rounded text-center font-bold text-white"
+                    className="w-16 p-1 bg-zinc-950 border border-zinc-800 rounded text-center font-bold text-white"
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Vantagens:</span>
+                  <span className="text-zinc-400">Vantagens:</span>
                   <input
                     type="number"
                     min="0"
                     value={adv2}
                     onChange={(e) => setAdv2(e.target.value)}
-                    className="w-16 p-1 bg-slate-900 border border-slate-800 rounded text-center text-amber-300"
+                    className="w-16 p-1 bg-zinc-950 border border-zinc-800 rounded text-center text-amber-300"
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Punições:</span>
+                  <span className="text-zinc-400">Punições:</span>
                   <input
                     type="number"
                     min="0"
                     value={pen2}
                     onChange={(e) => setPen2(e.target.value)}
-                    className="w-16 p-1 bg-slate-900 border border-slate-800 rounded text-center text-red-400"
+                    className="w-16 p-1 bg-zinc-950 border border-zinc-800 rounded text-center text-red-400"
                   />
                 </div>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
                 Anotações do Árbitro / Súmula
               </label>
               <input
@@ -832,15 +832,15 @@ export default function Tournaments() {
                 value={matchNotes}
                 onChange={(e) => setMatchNotes(e.target.value)}
                 placeholder="Ex: Pegada pelas costas e finalização aos 4:15"
-                className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
               />
             </div>
 
-            <div className="flex justify-end gap-2 pt-2 border-t border-slate-800">
+            <div className="flex justify-end gap-2 pt-2 border-t border-zinc-800">
               <button
                 type="button"
                 onClick={() => setActiveMatch(null)}
-                className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold"
+                className="px-4 py-2 rounded-lg bg-slate-800 text-zinc-300 text-xs font-semibold"
               >
                 Cancelar
               </button>
@@ -866,7 +866,7 @@ export default function Tournaments() {
         >
           <form onSubmit={handleAddAthlete} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
                 Nome do Atleta
               </label>
               <input
@@ -875,19 +875,19 @@ export default function Tournaments() {
                 value={athName}
                 onChange={(e) => setAthName(e.target.value)}
                 placeholder="Ex: Leandro Lo"
-                className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                className="w-full p-2.5 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Faixa
                 </label>
                 <select
                   value={athBelt}
                   onChange={(e) => setAthBelt(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
                 >
                   <option value="Branca">Branca</option>
                   <option value="Azul">Azul</option>
@@ -898,7 +898,7 @@ export default function Tournaments() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Peso (kg)
                 </label>
                 <input
@@ -907,28 +907,28 @@ export default function Tournaments() {
                   value={athWeight}
                   onChange={(e) => setAthWeight(e.target.value)}
                   placeholder="Ex: 77.5"
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
                 Equipe / Dojô
               </label>
               <input
                 type="text"
                 value={athTeam}
                 onChange={(e) => setAthTeam(e.target.value)}
-                className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
               />
             </div>
 
-            <div className="flex justify-end gap-2 pt-2 border-t border-slate-800">
+            <div className="flex justify-end gap-2 pt-2 border-t border-zinc-800">
               <button
                 type="button"
                 onClick={() => setIsAddAthOpen(false)}
-                className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold"
+                className="px-4 py-2 rounded-lg bg-slate-800 text-zinc-300 text-xs font-semibold"
               >
                 Cancelar
               </button>
@@ -953,7 +953,7 @@ export default function Tournaments() {
         >
           <form onSubmit={handleCreateTournament} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
                 Nome do Campeonato / Torneio *
               </label>
               <input
@@ -962,13 +962,13 @@ export default function Tournaments() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Ex: Copa Arte Suave — Absoluto Gi 2026"
-                className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                className="w-full p-2.5 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Data do Evento
                 </label>
                 <input
@@ -976,32 +976,32 @@ export default function Tournaments() {
                   required
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Local / Tatame
                 </label>
                 <input
                   type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Modalidade
                 </label>
                 <select
                   value={giType}
                   onChange={(e) => setGiType(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
                 >
                   <option value="Gi">Com Kimono (Gi)</option>
                   <option value="No-Gi">Sem Kimono (No-Gi)</option>
@@ -1009,13 +1009,13 @@ export default function Tournaments() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Tipo de Categoria
                 </label>
                 <select
                   value={categoryType}
                   onChange={(e) => setCategoryType(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
                 >
                   <option value="Absoluto">Absoluto (Open Class)</option>
                   <option value="Peso">Por Peso</option>
@@ -1023,13 +1023,13 @@ export default function Tournaments() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Gênero / Formato
                 </label>
                 <select
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
                 >
                   <option value="Misto">Misto</option>
                   <option value="Masculino">Masculino</option>
@@ -1040,13 +1040,13 @@ export default function Tournaments() {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Graduação de Faixa
                 </label>
                 <select
                   value={beltCategory}
                   onChange={(e) => setBeltCategory(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
                 >
                   {BELT_CATEGORIES.map((b) => (
                     <option key={b} value={b}>{b}</option>
@@ -1055,13 +1055,13 @@ export default function Tournaments() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Divisão de Peso
                 </label>
                 <select
                   value={weightDivision}
                   onChange={(e) => setWeightDivision(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-amber-500"
                 >
                   {WEIGHT_DIVISIONS.map((w) => (
                     <option key={w} value={w}>{w}</option>
@@ -1072,17 +1072,17 @@ export default function Tournaments() {
 
             {/* Quick Athlete Selection from Academy */}
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
                 Inscrever Alunos da Academia Imediatamente ({selectedStudentIds.length} selecionados):
               </label>
-              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 max-h-36 overflow-y-auto space-y-1.5">
+              <div className="p-2.5 rounded-xl bg-black border border-zinc-800 max-h-36 overflow-y-auto space-y-1.5">
                 {academyStudents.map((s) => {
                   const isChecked = selectedStudentIds.includes(s.id);
                   return (
                     <label
                       key={s.id}
                       className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition text-xs ${
-                        isChecked ? 'bg-amber-500/20 text-white' : 'hover:bg-slate-900 text-slate-300'
+                        isChecked ? 'bg-amber-500/20 text-white' : 'hover:bg-zinc-950 text-zinc-300'
                       }`}
                     >
                       <div className="flex items-center gap-2">
@@ -1105,11 +1105,11 @@ export default function Tournaments() {
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 pt-2 border-t border-slate-800">
+            <div className="flex justify-end gap-2 pt-2 border-t border-zinc-800">
               <button
                 type="button"
                 onClick={() => setIsCreateOpen(false)}
-                className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold"
+                className="px-4 py-2 rounded-lg bg-slate-800 text-zinc-300 text-xs font-semibold"
               >
                 Cancelar
               </button>

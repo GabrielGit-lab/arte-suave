@@ -19,19 +19,22 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fade-in">
       <div 
-        className={`relative w-full ${maxWidth} bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]`}
+        className={`relative w-full ${maxWidth} bg-gradient-to-b from-zinc-950 to-black border border-amber-500/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]`}
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Golden top decorative bar */}
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-amber-500/60 to-transparent" />
+
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950/60">
-          <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800 bg-black/70">
+          <h3 className="text-lg font-black text-white flex items-center gap-2">
             {title}
           </h3>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="p-1.5 rounded-lg text-zinc-400 hover:text-amber-400 hover:bg-zinc-900 border border-transparent hover:border-amber-500/30 transition"
             aria-label="Fechar"
           >
             <X className="w-5 h-5" />

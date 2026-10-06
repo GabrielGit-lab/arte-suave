@@ -156,28 +156,28 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden">
+    <div className="min-h-screen bg-black flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden">
       {/* Background ambient glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 left-10 w-72 h-72 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-72 h-72 bg-red-900/15 rounded-full blur-3xl pointer-events-none" />
 
       <div className="w-full max-w-md z-10">
         {/* Header Branding */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-900/30 border border-amber-500/30 mb-3 shadow-lg">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-red-950/40 border border-amber-500/40 mb-3 shadow-lg">
             <span className="text-3xl">🥋</span>
           </div>
           <h1 className="text-3xl font-black uppercase tracking-wider bg-gradient-to-r from-amber-300 via-amber-100 to-amber-400 bg-clip-text text-transparent">
             Arte Suave
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+          <p className="text-xs sm:text-sm text-zinc-400 mt-0.5">
             Plataforma de Gestão, Graduação e Treinos de Jiu-Jitsu
           </p>
         </div>
 
         {/* Demo Accounts Quick-Access */}
-        <div className="mb-5 p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 shadow-md">
-          <div className="text-xs font-bold text-slate-300 mb-2 flex items-center gap-1.5 uppercase tracking-wide">
+        <div className="mb-5 p-3.5 rounded-xl bg-zinc-950/90 border border-amber-500/30 shadow-md">
+          <div className="text-xs font-bold text-zinc-300 mb-2 flex items-center gap-1.5 uppercase tracking-wide">
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
             Entrar com 1 clique (Demonstração):
           </div>
@@ -185,7 +185,7 @@ export default function Login() {
             <button
               type="button"
               onClick={() => handleQuickLogin('professor@artesuave.com', 'senha123')}
-              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-bold transition shadow-xs"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold transition shadow-xs"
             >
               <ShieldCheck className="w-3.5 h-3.5" />
               Mestre Carlos (Prof)
@@ -193,7 +193,7 @@ export default function Login() {
             <button
               type="button"
               onClick={() => handleQuickLogin('aluno@artesuave.com', 'senha123')}
-              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/30 text-blue-300 text-xs font-bold transition shadow-xs"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-red-950/60 hover:bg-red-900/60 border border-red-700/50 text-red-300 text-xs font-bold transition shadow-xs"
             >
               <UserCheck className="w-3.5 h-3.5" />
               Gabriel Rocha (Aluno)
@@ -202,15 +202,15 @@ export default function Login() {
         </div>
 
         {/* Main Card with Tabs */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden">
+        <div className="bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl backdrop-blur-sm overflow-hidden">
           {/* Top Tabs */}
-          <div className="grid grid-cols-3 border-b border-slate-800 bg-slate-950/70 text-xs font-bold">
+          <div className="grid grid-cols-3 border-b border-zinc-800 bg-black/80 text-xs font-bold">
             <button
               onClick={() => { setMode('login'); setError(''); setSuccess(''); }}
               className={`py-3 text-center transition ${
                 mode === 'login'
-                  ? 'text-amber-400 border-b-2 border-amber-500 bg-slate-900'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'text-amber-400 border-b-2 border-amber-500 bg-zinc-950'
+                  : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
               Entrar
@@ -219,8 +219,8 @@ export default function Login() {
               onClick={() => { setMode('register'); setError(''); setSuccess(''); }}
               className={`py-3 text-center transition ${
                 mode === 'register'
-                  ? 'text-amber-400 border-b-2 border-amber-500 bg-slate-900'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'text-amber-400 border-b-2 border-amber-500 bg-zinc-950'
+                  : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
               Cadastrar
@@ -229,8 +229,8 @@ export default function Login() {
               onClick={() => { setMode('forgot'); setError(''); setSuccess(''); }}
               className={`py-3 text-center transition flex items-center justify-center gap-1 ${
                 mode === 'forgot'
-                  ? 'text-amber-400 border-b-2 border-amber-500 bg-slate-900'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'text-amber-400 border-b-2 border-amber-500 bg-zinc-950'
+                  : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
               <KeyRound className="w-3 h-3" />
@@ -260,7 +260,7 @@ export default function Login() {
                     <KeyRound className="w-4 h-4 text-amber-400" />
                     Recuperação de Acesso
                   </h3>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-zinc-400 mt-1">
                     {stepForgot === 1 
                       ? 'Informe seu e-mail cadastrado para gerar seu código de redefinição.'
                       : 'Digite o código de verificação e escolha sua nova senha.'}
@@ -270,18 +270,18 @@ export default function Login() {
                 {stepForgot === 1 ? (
                   <form onSubmit={handleRequestCode} className="space-y-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">
+                      <label className="block text-xs font-semibold text-zinc-300 mb-1">
                         Seu E-mail Cadastrado
                       </label>
                       <div className="relative">
-                        <Mail className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                        <Mail className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
                         <input
                           type="email"
                           required
                           value={forgotEmail}
                           onChange={(e) => setForgotEmail(e.target.value)}
                           placeholder="aluno@artesuave.com"
-                          className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                          className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         />
                       </div>
                     </div>
@@ -298,7 +298,7 @@ export default function Login() {
                   <form onSubmit={handleResetPassword} className="space-y-3.5">
                     {generatedCode && (
                       <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-center">
-                        <span className="text-[10px] uppercase font-bold text-slate-400 block">
+                        <span className="text-[10px] uppercase font-bold text-zinc-400 block">
                           Código de Verificação Gerado:
                         </span>
                         <span className="text-xl font-black text-amber-400 tracking-widest mt-0.5 block">
@@ -308,7 +308,7 @@ export default function Login() {
                     )}
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">
+                      <label className="block text-xs font-semibold text-zinc-300 mb-1">
                         Código de Verificação (6 dígitos)
                       </label>
                       <input
@@ -317,40 +317,40 @@ export default function Login() {
                         value={recoveryCode}
                         onChange={(e) => setRecoveryCode(e.target.value)}
                         placeholder="Ex: 123456"
-                        className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white text-center font-mono font-bold tracking-wider focus:outline-none focus:border-amber-500"
+                        className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-sm text-white text-center font-mono font-bold tracking-wider focus:outline-none focus:border-amber-500"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">
+                      <label className="block text-xs font-semibold text-zinc-300 mb-1">
                         Nova Senha
                       </label>
                       <div className="relative">
-                        <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                        <Lock className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
                         <input
                           type="password"
                           required
                           value={newPassword}
                           onChange={(e) => setNewPassword(e.target.value)}
                           placeholder="Mínimo 6 caracteres"
-                          className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                          className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">
+                      <label className="block text-xs font-semibold text-zinc-300 mb-1">
                         Confirmar Nova Senha
                       </label>
                       <div className="relative">
-                        <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                        <Lock className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
                         <input
                           type="password"
                           required
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           placeholder="Digite novamente"
-                          className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                          className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         />
                       </div>
                     </div>
@@ -359,7 +359,7 @@ export default function Login() {
                       <button
                         type="button"
                         onClick={() => setStepForgot(1)}
-                        className="w-1/3 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition"
+                        className="w-1/3 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-zinc-300 font-semibold text-xs transition"
                       >
                         Voltar
                       </button>
@@ -374,7 +374,7 @@ export default function Login() {
                   </form>
                 )}
 
-                <div className="pt-3 border-t border-slate-800 text-center">
+                <div className="pt-3 border-t border-zinc-800 text-center">
                   <button
                     type="button"
                     onClick={() => { setMode('login'); setError(''); setSuccess(''); }}
@@ -390,44 +390,44 @@ export default function Login() {
                 {mode === 'register' && (
                   <>
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">
+                      <label className="block text-xs font-semibold text-zinc-300 mb-1">
                         Nome Completo
                       </label>
                       <div className="relative">
-                        <User className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                        <User className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
                         <input
                           type="text"
                           required
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           placeholder="Ex: Royce Gracie"
-                          className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                          className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        <label className="block text-xs font-semibold text-zinc-300 mb-1">
                           Tipo de Conta
                         </label>
                         <select
                           value={role}
                           onChange={(e) => setRole(e.target.value)}
-                          className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                          className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         >
                           <option value="student">Aluno</option>
                           <option value="professor">Professor / Mestre</option>
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        <label className="block text-xs font-semibold text-zinc-300 mb-1">
                           Faixa Atual
                         </label>
                         <select
                           value={belt}
                           onChange={(e) => setBelt(e.target.value)}
-                          className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                          className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         >
                           {BELT_OPTIONS.map((b) => (
                             <option key={b} value={b}>{b}</option>
@@ -438,7 +438,7 @@ export default function Login() {
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        <label className="block text-xs font-semibold text-zinc-300 mb-1">
                           Graus na Faixa (0 a 4)
                         </label>
                         <input
@@ -447,11 +447,11 @@ export default function Login() {
                           max="4"
                           value={degrees}
                           onChange={(e) => setDegrees(e.target.value)}
-                          className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                          className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        <label className="block text-xs font-semibold text-zinc-300 mb-1">
                           Peso Atual (kg)
                         </label>
                         <input
@@ -460,14 +460,14 @@ export default function Login() {
                           value={weight}
                           onChange={(e) => setWeight(e.target.value)}
                           placeholder="Ex: 77.5"
-                          className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                          className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        <label className="block text-xs font-semibold text-zinc-300 mb-1">
                           Altura (cm)
                         </label>
                         <input
@@ -475,11 +475,11 @@ export default function Login() {
                           value={height}
                           onChange={(e) => setHeight(e.target.value)}
                           placeholder="Ex: 178"
-                          className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                          className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        <label className="block text-xs font-semibold text-zinc-300 mb-1">
                           Telefone / WhatsApp
                         </label>
                         <input
@@ -487,7 +487,7 @@ export default function Login() {
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
                           placeholder="(11) 99999-9999"
-                          className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                          className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         />
                       </div>
                     </div>
@@ -495,25 +495,25 @@ export default function Login() {
                 )}
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  <label className="block text-xs font-semibold text-zinc-300 mb-1">
                     E-mail
                   </label>
                   <div className="relative">
-                    <Mail className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                    <Mail className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
                     <input
                       type="email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="seuemail@exemplo.com"
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                      className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                     />
                   </div>
                 </div>
 
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <label className="text-xs font-semibold text-slate-300">
+                    <label className="text-xs font-semibold text-zinc-300">
                       Senha
                     </label>
                     {mode === 'login' && (
@@ -527,14 +527,14 @@ export default function Login() {
                     )}
                   </div>
                   <div className="relative">
-                    <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                    <Lock className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
                     <input
                       type="password"
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                      className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                     />
                   </div>
                 </div>
@@ -550,7 +550,7 @@ export default function Login() {
             )}
 
             {mode !== 'forgot' && (
-              <div className="mt-6 text-center border-t border-slate-800 pt-4">
+              <div className="mt-6 text-center border-t border-zinc-800 pt-4">
                 <button
                   type="button"
                   onClick={() => {

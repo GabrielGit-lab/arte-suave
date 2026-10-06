@@ -62,13 +62,13 @@ export default function Reports() {
             <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
               Estatísticas & Análise
             </span>
-            <span className="text-slate-500 text-xs">• Desempenho e Frequência</span>
+            <span className="text-zinc-500 text-xs">• Desempenho e Frequência</span>
           </div>
           <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
             <BarChart3 className="w-6 h-6 text-amber-400" />
             Relatórios de Desempenho da Academia
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-zinc-400 mt-1">
             Indicadores de assiduidade, adesão aos treinos e distribuição de faixas no tatame.
           </p>
         </div>
@@ -76,26 +76,26 @@ export default function Reports() {
 
       {/* Highlights Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
-          <span className="text-xs font-semibold text-slate-400 uppercase">Total de Atletas</span>
+        <div className="p-5 rounded-xl bg-zinc-950 border border-zinc-800">
+          <span className="text-xs font-semibold text-zinc-400 uppercase">Total de Atletas</span>
           <h3 className="text-3xl font-black text-white mt-1">{stats?.summary?.total_students}</h3>
-          <p className="text-[11px] text-blue-400 mt-1">Alunos cadastrados no sistema</p>
+          <p className="text-[11px] text-amber-400 mt-1">Alunos cadastrados no sistema</p>
         </div>
 
-        <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
-          <span className="text-xs font-semibold text-slate-400 uppercase">Treinos Ministrados</span>
+        <div className="p-5 rounded-xl bg-zinc-950 border border-zinc-800">
+          <span className="text-xs font-semibold text-zinc-400 uppercase">Treinos Ministrados</span>
           <h3 className="text-3xl font-black text-amber-400 mt-1">{stats?.summary?.total_classes}</h3>
-          <p className="text-[11px] text-slate-400 mt-1">Sessões completas de aula</p>
+          <p className="text-[11px] text-zinc-400 mt-1">Sessões completas de aula</p>
         </div>
 
-        <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
-          <span className="text-xs font-semibold text-slate-400 uppercase">Presenças Computadas</span>
+        <div className="p-5 rounded-xl bg-zinc-950 border border-zinc-800">
+          <span className="text-xs font-semibold text-zinc-400 uppercase">Presenças Computadas</span>
           <h3 className="text-3xl font-black text-emerald-400 mt-1">{stats?.summary?.total_attendances}</h3>
           <p className="text-[11px] text-emerald-400 mt-1">Assinaturas do professor</p>
         </div>
 
-        <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
-          <span className="text-xs font-semibold text-slate-400 uppercase">Prontos p/ Exame de Faixa</span>
+        <div className="p-5 rounded-xl bg-zinc-950 border border-zinc-800">
+          <span className="text-xs font-semibold text-zinc-400 uppercase">Prontos p/ Exame de Faixa</span>
           <h3 className="text-3xl font-black text-amber-300 mt-1">{stats?.summary?.eligible_count}</h3>
           <p className="text-[11px] text-amber-300 mt-1">Meta de aulas CBJJ batida</p>
         </div>
@@ -104,20 +104,20 @@ export default function Reports() {
       {/* Main Charts & Rankings Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Attendance Trend Bar Chart */}
-        <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+        <div className="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-emerald-400" />
                 Frequência nas Últimas Aulas
               </h3>
-              <p className="text-xs text-slate-500">Número de alunos presentes por aula</p>
+              <p className="text-xs text-zinc-500">Número de alunos presentes por aula</p>
             </div>
           </div>
 
           <div className="space-y-3 pt-2">
             {trend.length === 0 ? (
-              <p className="text-xs text-slate-500 py-6 text-center">Nenhum treino recente registrado.</p>
+              <p className="text-xs text-zinc-500 py-6 text-center">Nenhum treino recente registrado.</p>
             ) : (
               trend.map((item, idx) => {
                 const count = item.present_count || 0;
@@ -126,12 +126,12 @@ export default function Reports() {
                 return (
                   <div key={idx} className="space-y-1">
                     <div className="flex justify-between text-xs">
-                      <span className="text-slate-300 font-medium truncate max-w-[220px]">
-                        {item.title} <span className="text-slate-500 text-[10px]">({item.date})</span>
+                      <span className="text-zinc-300 font-medium truncate max-w-[220px]">
+                        {item.title} <span className="text-zinc-500 text-[10px]">({item.date})</span>
                       </span>
                       <span className="font-black text-emerald-400">{count} presentes</span>
                     </div>
-                    <div className="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                    <div className="w-full h-2.5 bg-black rounded-full overflow-hidden border border-zinc-800">
                       <div
                         className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-500"
                         style={{ width: `${percent}%` }}
@@ -145,13 +145,13 @@ export default function Reports() {
         </div>
 
         {/* Belts Distribution */}
-        <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+        <div className="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-4">
           <div>
             <h3 className="text-sm font-bold text-white flex items-center gap-2">
               <PieChart className="w-4 h-4 text-amber-400" />
               Distribuição de Faixas da Academia
             </h3>
-            <p className="text-xs text-slate-500">Divisão dos atletas por graduação</p>
+            <p className="text-xs text-zinc-500">Divisão dos atletas por graduação</p>
           </div>
 
           <div className="space-y-3 pt-2">
@@ -161,11 +161,11 @@ export default function Reports() {
                 <div key={item.belt} className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
                     <BeltBadge belt={item.belt} degrees={0} size="sm" showLabel={true} />
-                    <span className="font-bold text-slate-200">
+                    <span className="font-bold text-zinc-200">
                       {item.count} atletas ({percentage}%)
                     </span>
                   </div>
-                  <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                  <div className="w-full h-2 bg-black rounded-full overflow-hidden border border-zinc-800">
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${
                         item.belt === 'Branca' ? 'bg-slate-300' :
@@ -184,14 +184,14 @@ export default function Reports() {
       </div>
 
       {/* Top Attendance Warriors Ranking */}
-      <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+      <div className="p-5 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-4">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Award className="w-5 h-5 text-amber-400" />
               Hall da Fama & Ranking Geral de Disciplina
             </h3>
-            <p className="text-xs text-slate-400">Atletas que mais pisaram no tatame neste ciclo</p>
+            <p className="text-xs text-zinc-400">Atletas que mais pisaram no tatame neste ciclo</p>
           </div>
         </div>
 
@@ -199,13 +199,13 @@ export default function Reports() {
           {topAttendees.map((att, index) => (
             <div
               key={att.id}
-              className="p-4 rounded-xl bg-slate-950 border border-slate-800/80 flex items-center justify-between gap-3"
+              className="p-4 rounded-xl bg-black border border-zinc-800 flex items-center justify-between gap-3"
             >
               <div className="flex items-center gap-3">
                 <span className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm shrink-0 ${
                   index === 0 ? 'bg-amber-400 text-slate-950 shadow-md ring-2 ring-amber-400/30' :
                   index === 1 ? 'bg-slate-300 text-slate-950' :
-                  index === 2 ? 'bg-amber-700 text-white' : 'bg-slate-800 text-slate-400'
+                  index === 2 ? 'bg-amber-700 text-white' : 'bg-slate-800 text-zinc-400'
                 }`}>
                   {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`}
                 </span>
@@ -220,7 +220,7 @@ export default function Reports() {
 
               <div className="text-right">
                 <span className="text-sm font-black text-amber-400">{att.attendances_count}</span>
-                <span className="text-[10px] text-slate-500 block">treinos</span>
+                <span className="text-[10px] text-zinc-500 block">treinos</span>
               </div>
             </div>
           ))}

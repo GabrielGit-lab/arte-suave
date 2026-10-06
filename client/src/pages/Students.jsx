@@ -199,16 +199,16 @@ export default function Students() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            <span className="px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-red-950/80 text-red-400 border border-red-700/50">
               Quadro de Alunos
             </span>
-            <span className="text-slate-500 text-xs">• Perfis, Histórico e Contatos</span>
+            <span className="text-zinc-500 text-xs">• Perfis, Histórico e Contatos</span>
           </div>
           <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-            <Users className="w-6 h-6 text-blue-400" />
+            <Users className="w-6 h-6 text-amber-400" />
             Cadastro e Perfis dos Alunos
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-zinc-400 mt-1">
             Consulte peso, altura, faixa atual, histórico de treinos e graduações de cada atleta.
           </p>
         </div>
@@ -225,28 +225,28 @@ export default function Students() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+      <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-3">
         <form onSubmit={handleSearchSubmit} className="flex gap-2">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+            <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Buscar por nome ou e-mail do aluno..."
-              className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+              className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
             />
           </div>
           <button
             type="submit"
-            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition"
+            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-zinc-200 text-xs font-bold rounded-lg transition"
           >
             Buscar
           </button>
         </form>
 
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
-          <span className="text-xs text-slate-500 font-semibold mr-1">Filtrar Faixa:</span>
+          <span className="text-xs text-zinc-500 font-semibold mr-1">Filtrar Faixa:</span>
           {BELTS.map((b) => (
             <button
               key={b}
@@ -254,7 +254,7 @@ export default function Students() {
               className={`px-3 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
                 beltFilter === b
                   ? 'bg-blue-600 text-white shadow-xs'
-                  : 'bg-slate-950 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
+                  : 'bg-black text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800'
               }`}
             >
               {b}
@@ -266,12 +266,12 @@ export default function Students() {
       {/* Students List Cards */}
       {loading ? (
         <div className="flex items-center justify-center py-16">
-          <div className="w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-amber-500/30 border-t-blue-500 rounded-full animate-spin" />
         </div>
       ) : students.length === 0 ? (
-        <div className="p-12 text-center rounded-2xl bg-slate-900 border border-slate-800 text-slate-400">
+        <div className="p-12 text-center rounded-2xl bg-zinc-950 border border-zinc-800 text-zinc-400">
           <Users className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-          <h4 className="text-base font-bold text-slate-200">Nenhum aluno encontrado</h4>
+          <h4 className="text-base font-bold text-zinc-200">Nenhum aluno encontrado</h4>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -279,7 +279,7 @@ export default function Students() {
             <div
               key={student.id}
               onClick={() => openStudentProfile(student)}
-              className="p-4 rounded-xl bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-blue-500/40 transition cursor-pointer shadow-sm flex flex-col justify-between"
+              className="p-4 rounded-xl bg-zinc-950 hover:bg-slate-850 border border-zinc-800 hover:border-blue-500/40 transition cursor-pointer shadow-sm flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-start justify-between gap-3 mb-3">
@@ -291,7 +291,7 @@ export default function Students() {
                     />
                     <div>
                       <h4 className="text-sm font-bold text-white">{student.name}</h4>
-                      <p className="text-[11px] text-slate-400">{student.email}</p>
+                      <p className="text-[11px] text-zinc-400">{student.email}</p>
                     </div>
                   </div>
 
@@ -299,7 +299,7 @@ export default function Students() {
                     <button
                       onClick={(e) => handleDeleteStudent(student.id, student.name, e)}
                       title="Excluir Aluno"
-                      className="p-1.5 text-slate-500 hover:text-red-400 rounded-lg hover:bg-red-950/30 transition"
+                      className="p-1.5 text-zinc-500 hover:text-red-400 rounded-lg hover:bg-red-950/30 transition"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -317,21 +317,21 @@ export default function Students() {
                   </div>
                 )}
 
-                <div className="grid grid-cols-2 gap-2 mt-3 p-2.5 rounded-lg bg-slate-950 border border-slate-800/80 text-xs">
+                <div className="grid grid-cols-2 gap-2 mt-3 p-2.5 rounded-lg bg-black border border-zinc-800 text-xs">
                   <div>
-                    <span className="text-slate-500 text-[10px] block">Presenças:</span>
+                    <span className="text-zinc-500 text-[10px] block">Presenças:</span>
                     <span className="font-bold text-emerald-400">{student.total_attendances || 0} treinos</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 text-[10px] block">Peso Atual:</span>
-                    <span className="font-bold text-slate-200">{student.current_weight ? `${student.current_weight} kg` : 'N/A'}</span>
+                    <span className="text-zinc-500 text-[10px] block">Peso Atual:</span>
+                    <span className="font-bold text-zinc-200">{student.current_weight ? `${student.current_weight} kg` : 'N/A'}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-3 pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+              <div className="mt-3 pt-2 border-t border-zinc-800 flex items-center justify-between text-[11px] text-zinc-500">
                 <span>Início: {student.academy_join_date || '2025'}</span>
-                <span className="text-blue-400 font-bold hover:underline">Ver Dossiê Completo →</span>
+                <span className="text-amber-400 font-bold hover:underline">Ver Dossiê Completo →</span>
               </div>
             </div>
           ))}
@@ -351,12 +351,12 @@ export default function Students() {
         >
           {detailsLoading || !studentDetails ? (
             <div className="flex items-center justify-center py-12">
-              <div className="w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
+              <div className="w-8 h-8 border-4 border-amber-500/30 border-t-blue-500 rounded-full animate-spin" />
             </div>
           ) : (
             <div className="space-y-6">
               {/* Header profile info */}
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
+              <div className="p-4 rounded-xl bg-black border border-zinc-800 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <div className="relative group shrink-0">
                     {studentDetails.avatar ? (
@@ -366,7 +366,7 @@ export default function Students() {
                         className="w-16 h-16 rounded-full object-cover ring-2 ring-blue-500/40 shadow"
                       />
                     ) : (
-                      <div className="w-16 h-16 rounded-full bg-slate-800 ring-2 ring-slate-700 flex items-center justify-center text-slate-300 font-bold text-2xl shadow">
+                      <div className="w-16 h-16 rounded-full bg-slate-800 ring-2 ring-slate-700 flex items-center justify-center text-zinc-300 font-bold text-2xl shadow">
                         {studentDetails.name ? studentDetails.name[0].toUpperCase() : 'A'}
                       </div>
                     )}
@@ -395,10 +395,10 @@ export default function Students() {
 
                   <div>
                     <h3 className="text-lg font-black text-white">{studentDetails.name}</h3>
-                    <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+                    <p className="text-xs text-zinc-400 flex items-center gap-1 mt-0.5">
                       <Mail className="w-3.5 h-3.5" /> {studentDetails.email}
                     </p>
-                    <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+                    <p className="text-xs text-zinc-400 flex items-center gap-1 mt-0.5">
                       <Phone className="w-3.5 h-3.5" /> {studentDetails.phone || 'Não informado'}
                     </p>
 
@@ -438,40 +438,40 @@ export default function Students() {
               </div>
 
               {/* Personal & Emergency Details */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-3.5 rounded-xl bg-black border border-zinc-800 text-xs">
                 <div>
-                  <span className="text-slate-500 text-[10px] block">Nascimento:</span>
-                  <span className="text-slate-300 font-medium">{studentDetails.birthdate || 'Não informado'}</span>
+                  <span className="text-zinc-500 text-[10px] block">Nascimento:</span>
+                  <span className="text-zinc-300 font-medium">{studentDetails.birthdate || 'Não informado'}</span>
                 </div>
                 <div>
-                  <span className="text-slate-500 text-[10px] block">Matrícula:</span>
-                  <span className="text-slate-300 font-medium">{studentDetails.academy_join_date || '2025'}</span>
+                  <span className="text-zinc-500 text-[10px] block">Matrícula:</span>
+                  <span className="text-zinc-300 font-medium">{studentDetails.academy_join_date || '2025'}</span>
                 </div>
                 <div className="col-span-2 sm:col-span-1">
-                  <span className="text-slate-500 text-[10px] block">Contato de Emergência:</span>
-                  <span className="text-slate-300 font-medium">{studentDetails.emergency_contact || 'Nenhum'}</span>
+                  <span className="text-zinc-500 text-[10px] block">Contato de Emergência:</span>
+                  <span className="text-zinc-300 font-medium">{studentDetails.emergency_contact || 'Nenhum'}</span>
                 </div>
               </div>
 
               {/* Graduation Timeline */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2 flex items-center gap-1.5">
                   <Award className="w-4 h-4 text-amber-400" />
                   Histórico de Graduações & Graus
                 </h4>
                 <div className="space-y-2">
                   {studentDetails.graduation_history?.length === 0 ? (
-                    <p className="text-xs text-slate-500">Nenhuma graduação registrada.</p>
+                    <p className="text-xs text-zinc-500">Nenhuma graduação registrada.</p>
                   ) : (
                     studentDetails.graduation_history?.map((grad) => (
-                      <div key={grad.id} className="p-3 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
+                      <div key={grad.id} className="p-3 rounded-lg bg-black border border-zinc-800 flex items-center justify-between text-xs">
                         <div className="flex items-center gap-3">
                           <BeltBadge belt={grad.belt} degrees={grad.degrees} size="sm" showLabel={true} />
-                          <span className="text-slate-400 text-[11px]">{grad.notes}</span>
+                          <span className="text-zinc-400 text-[11px]">{grad.notes}</span>
                         </div>
                         <div className="text-right">
-                          <span className="text-slate-300 font-semibold">{grad.awarded_date}</span>
-                          <span className="text-[10px] text-slate-500 block">por {grad.awarded_by_name || 'Mestre Carlos'}</span>
+                          <span className="text-zinc-300 font-semibold">{grad.awarded_date}</span>
+                          <span className="text-[10px] text-zinc-500 block">por {grad.awarded_by_name || 'Mestre Carlos'}</span>
                         </div>
                       </div>
                     ))
@@ -481,23 +481,23 @@ export default function Students() {
 
               {/* Physical Weighing History */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2 flex items-center gap-1.5">
                   <Scale className="w-4 h-4 text-amber-400" />
                   Histórico de Pesagens & Medidas
                 </h4>
                 <div className="space-y-2">
                   {studentDetails.physical_history?.length === 0 ? (
-                    <p className="text-xs text-slate-500">Nenhum registro físico ainda.</p>
+                    <p className="text-xs text-zinc-500">Nenhum registro físico ainda.</p>
                   ) : (
                     studentDetails.physical_history?.map((phy) => (
-                      <div key={phy.id} className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
+                      <div key={phy.id} className="p-2.5 rounded-lg bg-black border border-zinc-800 flex items-center justify-between text-xs">
                         <div className="flex items-center gap-3">
                           <span className="font-black text-amber-400">{phy.weight} kg</span>
-                          {phy.height && <span className="text-slate-400">{phy.height} cm</span>}
-                          {phy.wingspan && <span className="text-slate-400">Envergadura: {phy.wingspan} cm</span>}
-                          {phy.notes && <span className="text-slate-500 italic text-[11px]">"{phy.notes}"</span>}
+                          {phy.height && <span className="text-zinc-400">{phy.height} cm</span>}
+                          {phy.wingspan && <span className="text-zinc-400">Envergadura: {phy.wingspan} cm</span>}
+                          {phy.notes && <span className="text-zinc-500 italic text-[11px]">"{phy.notes}"</span>}
                         </div>
-                        <span className="text-slate-400 text-[11px]">{phy.recorded_at}</span>
+                        <span className="text-zinc-400 text-[11px]">{phy.recorded_at}</span>
                       </div>
                     ))
                   )}
@@ -506,16 +506,16 @@ export default function Students() {
 
               {/* Recent Attendances */}
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2 flex items-center gap-1.5">
                   <Clock className="w-4 h-4 text-emerald-400" />
                   Treinos Recentes ({studentDetails.recent_attendances?.length || 0})
                 </h4>
                 <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
                   {studentDetails.recent_attendances?.map((att) => (
-                    <div key={att.id} className="p-2 rounded bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
+                    <div key={att.id} className="p-2 rounded bg-black border border-zinc-800 flex items-center justify-between text-xs">
                       <div>
-                        <span className="font-semibold text-slate-200">{att.class_title}</span>
-                        <span className="text-[10px] text-slate-500 block">{att.class_type} • Tatame 1</span>
+                        <span className="font-semibold text-zinc-200">{att.class_title}</span>
+                        <span className="text-[10px] text-zinc-500 block">{att.class_type} • Tatame 1</span>
                       </div>
                       <span className="text-emerald-400 font-semibold text-[11px]">{att.class_date}</span>
                     </div>
@@ -537,7 +537,7 @@ export default function Students() {
         >
           <form onSubmit={handleCreateStudent} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
                 Nome Completo do Aluno
               </label>
               <input
@@ -546,13 +546,13 @@ export default function Students() {
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 placeholder="Ex: Leandro Lo da Silva"
-                className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                className="w-full p-2.5 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   E-mail
                 </label>
                 <input
@@ -561,12 +561,12 @@ export default function Students() {
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
                   placeholder="aluno@artesuave.com"
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Senha Provisória
                 </label>
                 <input
@@ -574,20 +574,20 @@ export default function Students() {
                   required
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Faixa Inicial
                 </label>
                 <select
                   value={newBelt}
                   onChange={(e) => setNewBelt(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
                 >
                   {BELTS.filter((b) => b !== 'Todas').map((b) => (
                     <option key={b} value={b}>{b}</option>
@@ -596,7 +596,7 @@ export default function Students() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Graus (0 a 4)
                 </label>
                 <input
@@ -605,14 +605,14 @@ export default function Students() {
                   max="4"
                   value={newDegrees}
                   onChange={(e) => setNewDegrees(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Peso Inicial (kg)
                 </label>
                 <input
@@ -621,12 +621,12 @@ export default function Students() {
                   value={newWeight}
                   onChange={(e) => setNewWeight(e.target.value)}
                   placeholder="Ex: 77.5"
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Altura (cm)
                 </label>
                 <input
@@ -634,14 +634,14 @@ export default function Students() {
                   value={newHeight}
                   onChange={(e) => setNewHeight(e.target.value)}
                   placeholder="Ex: 178"
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Telefone / WhatsApp
                 </label>
                 <input
@@ -649,25 +649,25 @@ export default function Students() {
                   value={newPhone}
                   onChange={(e) => setNewPhone(e.target.value)}
                   placeholder="(11) 98888-7777"
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-zinc-300 mb-1">
                   Data de Nascimento
                 </label>
                 <input
                   type="date"
                   value={newBirthdate}
                   onChange={(e) => setNewBirthdate(e.target.value)}
-                  className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
                 Contato de Emergência
               </label>
               <input
@@ -675,15 +675,15 @@ export default function Students() {
                 value={newEmergency}
                 onChange={(e) => setNewEmergency(e.target.value)}
                 placeholder="Ex: Esposa: Ana (11) 99999-0000"
-                className="w-full p-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
+                className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-xs text-white focus:outline-none focus:border-blue-500"
               />
             </div>
 
-            <div className="flex justify-end gap-2 pt-3 border-t border-slate-800">
+            <div className="flex justify-end gap-2 pt-3 border-t border-zinc-800">
               <button
                 type="button"
                 onClick={() => setIsAddOpen(false)}
-                className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold"
+                className="px-4 py-2 rounded-lg bg-slate-800 text-zinc-300 text-xs font-semibold"
               >
                 Cancelar
               </button>
