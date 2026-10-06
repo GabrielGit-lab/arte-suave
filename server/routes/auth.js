@@ -4,9 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { db } = require('../db');
 const { JWT_SECRET, authenticateToken } = require('../middleware/auth');
+const { rateLimitLogin } = require('../middleware/rateLimiter');
 
 // POST /api/auth/login
-router.post('/login', (req, res) => {
+router.post('/login', rateLimitLogin, (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
