@@ -24,7 +24,8 @@ import {
   FileText,
   UserCheck,
   Shield,
-  Activity
+  Activity,
+  AlertCircle
 } from 'lucide-react';
 
 const GAME_STYLES = [
@@ -95,6 +96,7 @@ export default function StudentProfileModal({
   const [activeTab, setActiveTab] = useState(initialTab);
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [isEditingCuriosities, setIsEditingCuriosities] = useState(false);
   const [savingCuriosities, setSavingCuriosities] = useState(false);
   const [curiosityMsg, setCuriosityMsg] = useState({ text: '', type: '' });
@@ -117,11 +119,14 @@ export default function StudentProfileModal({
   }, [isOpen, studentId]);
 
   useEffect(() => {
-    setActiveTab(initialTab);
-  }, [initialTab]);
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab, isOpen]);
 
   const loadProfileData = async () => {
     setLoading(true);
+    setLoadError('');
     try {
       const data = await api.get(`/students/${studentId}`);
       setDetails(data);
@@ -132,6 +137,7 @@ export default function StudentProfileModal({
       setBjjMotto(data.bjj_motto || '');
     } catch (err) {
       console.error('Erro ao carregar perfil do aluno:', err);
+      setLoadError(err.message || 'Falha ao carregar dossiê do perfil.');
     } finally {
       setLoading(false);
     }
@@ -236,11 +242,25 @@ export default function StudentProfileModal({
       title={details ? `Perfil do Atleta: ${details.name}` : 'Perfil do Atleta'}
       maxWidth="max-w-3xl"
     >
-      {loading || !details ? (
+      {loading ? (
         <div className="flex flex-col items-center justify-center py-16 gap-3">
-          <div className="w-10 h-10 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin shadow-[0_0_15px_#f59e0b]" />
           <span className="text-xs text-zinc-400 font-medium">Carregando dossiê marcial...</span>
         </div>
+      ) : loadError ? (
+        <div className="flex flex-col items-center justify-center py-12 gap-3 text-center">
+          <AlertCircle className="w-8 h-8 text-red-500" />
+          <span className="text-sm text-red-400 font-bold">{loadError}</span>
+          <button
+            type="button"
+            onClick={loadProfileData}
+            className="px-4 py-2 rounded-xl bg-zinc-900 border border-amber-500/40 text-xs font-bold text-amber-400 hover:bg-zinc-800 transition cursor-pointer"
+          >
+            Tentar novamente
+          </button>
+        </div>
+      ) : !details ? (
+        <div className="py-12 text-center text-xs text-zinc-500">Nenhum dado encontrado para este atleta.</div>
       ) : (
         <div className="space-y-4 sm:space-y-5">
           {/* Top Athlete Header Banner */}

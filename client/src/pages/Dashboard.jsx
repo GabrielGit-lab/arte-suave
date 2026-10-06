@@ -76,27 +76,43 @@ export default function Dashboard({ onNavigate }) {
         
         <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 sm:gap-6 relative z-10 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3.5 sm:gap-4">
-            {/* Interactive Profile Photo */}
-            <div className="relative group shrink-0">
-              {user?.avatar ? (
-                <img
-                  src={user.avatar}
-                  alt={user.name}
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-4 ring-amber-500/50 shadow-xl"
-                />
-              ) : (
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-zinc-900 ring-4 ring-amber-500/40 flex items-center justify-center text-zinc-300 font-black text-2xl sm:text-3xl shadow-xl">
-                  {user?.name ? user.name[0].toUpperCase() : 'U'}
-                </div>
-              )}
+            {/* Interactive Profile Photo - Click opens full Profile & Curiosities */}
+            <div className="relative shrink-0">
               <button
                 type="button"
-                onClick={() => setIsAvatarModalOpen(true)}
-                title="Alterar ou remover foto de perfil"
-                className="absolute inset-0 rounded-full bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white cursor-pointer"
+                onClick={() => setIsProfileModalOpen(true)}
+                title="Clique para abrir seu perfil completo & curiosidades"
+                className="relative rounded-full focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer block group touch-manipulation"
               >
-                <Camera className="w-5 h-5 text-amber-400" />
-                <span className="text-[9px] font-bold mt-0.5">Editar</span>
+                {user?.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt={user.name}
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-4 ring-amber-500/50 group-hover:ring-amber-400 group-hover:scale-105 shadow-xl transition-all duration-200"
+                  />
+                ) : (
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-zinc-900 ring-4 ring-amber-500/40 group-hover:ring-amber-400 group-hover:scale-105 flex items-center justify-center text-zinc-300 font-black text-2xl sm:text-3xl shadow-xl transition-all duration-200">
+                    {user?.name ? user.name[0].toUpperCase() : 'U'}
+                  </div>
+                )}
+                {/* Visual affordance on hover/tap */}
+                <div className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white">
+                  <Crosshair className="w-4 h-4 text-amber-400" />
+                  <span className="text-[9px] font-bold mt-0.5 text-amber-200">Ver Perfil</span>
+                </div>
+              </button>
+
+              {/* Dedicated photo change camera badge */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsAvatarModalOpen(true);
+                }}
+                title="Alterar ou remover foto de perfil"
+                className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-black/90 text-amber-400 hover:text-white hover:bg-amber-600 border border-amber-500/60 shadow-lg cursor-pointer transition touch-manipulation z-10"
+              >
+                <Camera className="w-3.5 h-3.5" />
               </button>
             </div>
 

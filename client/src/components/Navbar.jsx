@@ -6,7 +6,7 @@ import StudentProfileModal from './StudentProfileModal';
 import { LogOut, ShieldAlert, Award, User, RefreshCw, Camera, Crosshair } from 'lucide-react';
 
 export default function Navbar({ onMobileMenuToggle }) {
-  const { user, logout, login } = useAuth();
+  const { user, logout, login, refreshUser } = useAuth();
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
@@ -179,6 +179,7 @@ export default function Navbar({ onMobileMenuToggle }) {
           studentId={user.id}
           initialTab="curiosities"
           onClose={() => setIsProfileModalOpen(false)}
+          onUpdated={refreshUser}
         />
       )}
     </header>
