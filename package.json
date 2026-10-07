@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
-    "server": "node server/server.js",
+    "start": "node --no-warnings server/server.js",
+    "server": "node --no-warnings server/server.js",
     "client": "npm --prefix client run dev",
     "build": "npm --prefix client install && npm --prefix client run build",
     "online": "npx cloudflared tunnel --url http://localhost:5000",
