@@ -54,6 +54,21 @@ function AppContent() {
       <CyberOrientalBackground />
       <Navbar onMobileMenuToggle={() => setMobileOpen(!mobileOpen)} />
 
+      {/* Demo Mode Notice Banner */}
+      {(user?.is_demo || user?.email === 'professor@artesuave.com' || user?.email === 'aluno@artesuave.com') && (
+        <div className="bg-amber-950/60 border-b border-amber-500/30 px-3 py-1.5 text-center text-xs text-amber-300 flex items-center justify-center gap-2 backdrop-blur-sm z-30">
+          <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-mono text-[10px] font-bold uppercase border border-amber-500/40">
+            Modo Demonstração
+          </span>
+          <span className="text-zinc-300 hidden sm:inline">
+            Todas as abas e relatórios estão liberados para navegação. Alterações e exclusões de dados reais estão bloqueadas para proteção da academia.
+          </span>
+          <span className="text-zinc-300 sm:hidden text-[11px]">
+            Navegação liberada • Dados protegidos contra alterações.
+          </span>
+        </div>
+      )}
+
       <div className="flex-1 flex max-w-7xl w-full mx-auto">
         <Sidebar
           activeTab={activeTab}

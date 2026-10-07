@@ -203,10 +203,16 @@ export default function Login() {
 
         {/* Demo Accounts Quick-Access */}
         <div className="mb-5 p-3.5 rounded-xl bg-zinc-950/90 border border-amber-500/35 shadow-lg cyber-card">
-          <div className="text-xs font-bold text-zinc-300 mb-2 flex items-center gap-1.5 uppercase tracking-wide">
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-            <span>Acesso Rápido com 1 Clique:</span>
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-xs font-bold text-zinc-300 flex items-center gap-1.5 uppercase tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+              <span>Acesso Rápido de Demonstração:</span>
+            </div>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/40 font-mono">
+              Somente Leitura
+            </span>
           </div>
+
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
@@ -225,6 +231,9 @@ export default function Login() {
               Gabriel Rocha (Aluno)
             </button>
           </div>
+          <p className="text-[10px] text-zinc-500 mt-2 text-center flex items-center justify-center gap-1">
+            <span>🔒 Navegação 100% liberada • Dados reais protegidos contra alterações</span>
+          </p>
         </div>
 
         {/* Main Card with Tabs */}

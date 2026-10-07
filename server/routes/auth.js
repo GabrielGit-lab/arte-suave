@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { db } = require('../db');
-const { JWT_SECRET, authenticateToken } = require('../middleware/auth');
+const { JWT_SECRET, authenticateToken, isDemoAccount } = require('../middleware/auth');
 const { rateLimitLogin } = require('../middleware/rateLimiter');
 
 // POST /api/auth/login
@@ -24,14 +24,15 @@ router.post('/login', rateLimitLogin, (req, res) => {
     return res.status(401).json({ error: 'E-mail ou senha incorretos' });
   }
 
+  const isDemo = isDemoAccount(user.email);
   const token = jwt.sign(
-    { id: user.id, email: user.email, role: user.role, name: user.name },
+    { id: user.id, email: user.email, role: user.role, name: user.name, is_demo: isDemo },
     JWT_SECRET,
     { expiresIn: '7d' }
   );
 
   const { password_hash, ...userWithoutPassword } = user;
-  res.json({ token, user: userWithoutPassword });
+  res.json({ token, user: { ...userWithoutPassword, is_demo: isDemo } });
 });
 
 // POST /api/auth/register
@@ -226,7 +227,12 @@ router.post('/forgot-password', (req, res) => {
     return res.status(400).json({ error: 'Informe o e-mail cadastrado' });
   }
 
-  const user = db.prepare('SELECT id, name, email FROM users WHERE email = ?').get(email.trim().toLowerCase());
+  const normalizedEmail = email.trim().toLowerCase();
+  if (isDemoAccount(normalizedEmail)) {
+    return res.status(403).json({ error: '⚠️ As contas de demonstração possuem credenciais fixas e não podem ser alteradas.' });
+  }
+
+  const user = db.prepare('SELECT id, name, email FROM users WHERE email = ?').get(normalizedEmail);
   if (!user) {
     return res.status(404).json({ error: 'Nenhum atleta ou professor encontrado com este e-mail' });
   }
@@ -260,6 +266,10 @@ router.post('/reset-password', (req, res) => {
   }
 
   const normalizedEmail = email.trim().toLowerCase();
+  if (isDemoAccount(normalizedEmail)) {
+    return res.status(403).json({ error: '⚠️ As contas de demonstração possuem credenciais fixas e não podem ser alteradas.' });
+  }
+
   const stored = resetTokens.get(normalizedEmail);
 
   if (!stored) {
