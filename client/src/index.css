@@ -111,20 +111,51 @@
   user-select: none;
 }
 
-/* Rotating Kimono Logo Animations */
-@keyframes spinKimono {
+/* 360-Degree 3D Turntable Rotation */
+@keyframes rotate360Y {
   0% {
-    transform: rotate(0deg);
+    transform: rotateY(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: rotateY(360deg);
   }
 }
 
-.animate-spin-kimono {
-  animation: spinKimono 6s linear infinite;
-  display: inline-block;
-  transform-origin: center;
+.kimono-360-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotate360Y 6s linear infinite;
+  border-radius: 1rem;
+}
+
+.kimono-360-card:hover {
+  animation-duration: 3s;
+}
+
+.kimono-360-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(245, 158, 11, 0.55);
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
+}
+
+.kimono-360-front {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), #09090c 50%, rgba(239, 68, 68, 0.35));
+  transform: rotateY(0deg);
+}
+
+.kimono-360-back {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.35), #09090c 50%, rgba(245, 158, 11, 0.25));
+  transform: rotateY(180deg);
 }
 
 @keyframes spinOrbit {

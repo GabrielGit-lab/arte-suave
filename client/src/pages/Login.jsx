@@ -164,17 +164,32 @@ export default function Login() {
       <div className="w-full max-w-md z-10">
         {/* Header Branding */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500/20 via-black to-red-950/40 border border-amber-500/50 mb-3 shadow-[0_0_25px_rgba(245,158,11,0.3)] relative group">
+          <div className="inline-flex items-center justify-center w-20 h-20 mb-3 relative group [perspective:1000px]">
             {/* Spinning cyber orbit ring */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-transparent border-t-amber-400 border-b-red-500 animate-spin-orbit pointer-events-none opacity-80" />
+            <div className="absolute -inset-1 rounded-2xl border-2 border-transparent border-t-amber-400 border-b-red-500 animate-spin-orbit pointer-events-none opacity-80" />
 
-            {/* Rotating Kimono Logo */}
-            <span className="text-4xl filter drop-shadow inline-block animate-spin-kimono select-none">
-              🥋
-            </span>
-            <span className="absolute -bottom-1 -right-1 text-[8px] font-black px-1.5 py-0.5 rounded bg-black/90 border border-amber-500/50 text-amber-400 font-mono shadow">
-              柔術
-            </span>
+            {/* 360-Degree 3D Rotating Emblem */}
+            <div className="kimono-360-card">
+              {/* Front Face: Kimono */}
+              <div className="kimono-360-face kimono-360-front">
+                <span className="text-4xl filter drop-shadow select-none">🥋</span>
+                <span className="absolute bottom-1 right-1 text-[8px] font-black px-1.5 py-0.5 rounded bg-black/90 border border-amber-500/60 text-amber-400 font-mono shadow">
+                  柔術
+                </span>
+              </div>
+
+              {/* Back Face: Cyber Dojo Kanji Seal */}
+              <div className="kimono-360-face kimono-360-back">
+                <div className="flex flex-col items-center justify-center select-none">
+                  <span className="text-2xl font-black text-amber-400 font-mono tracking-widest drop-shadow-[0_0_8px_#f59e0b]">
+                    柔術
+                  </span>
+                  <span className="text-[7px] font-bold text-red-400 tracking-wider uppercase font-mono mt-0.5">
+                    CYBER BJJ
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
           <h1 className="text-3xl font-black uppercase tracking-wider bg-gradient-to-r from-amber-300 via-amber-100 to-amber-400 bg-clip-text text-transparent">
             Arte Suave
