@@ -79,14 +79,16 @@ function sendEnrichedIndexHtml(req, res) {
     const host = req.get('x-forwarded-host') || req.get('host') || 'localhost:5000';
     const proto = req.get('x-forwarded-proto') || req.protocol || 'https';
     const fullUrl = `${proto}://${host}${req.originalUrl || '/'}`;
-    const fullImageUrl = `${proto}://${host}/kimono-preview.jpg`;
+    const fullImageUrl = `${proto}://${host}/artesuave-preview-v2.jpg?v=2`;
+    const currentTime = Math.floor(Date.now() / 1000).toString();
 
     const enrichedHtml = html
       .replace(/__OG_IMAGE_URL__/g, fullImageUrl)
-      .replace(/__OG_PAGE_URL__/g, fullUrl);
+      .replace(/__OG_PAGE_URL__/g, fullUrl)
+      .replace(/__OG_UPDATED_TIME__/g, currentTime);
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.send(enrichedHtml);
   });
 }
