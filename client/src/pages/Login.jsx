@@ -164,9 +164,15 @@ export default function Login() {
       <div className="w-full max-w-md z-10">
         {/* Header Branding */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 via-black to-red-950/40 border border-amber-500/50 mb-3 shadow-[0_0_20px_rgba(245,158,11,0.25)] relative group animate-float">
-            <span className="text-3xl filter drop-shadow">🥋</span>
-            <span className="absolute -bottom-1 -right-1 text-[8px] font-black px-1 rounded bg-black border border-amber-500/50 text-amber-400 font-mono">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500/20 via-black to-red-950/40 border border-amber-500/50 mb-3 shadow-[0_0_25px_rgba(245,158,11,0.3)] relative group">
+            {/* Spinning cyber orbit ring */}
+            <div className="absolute inset-0 rounded-2xl border-2 border-transparent border-t-amber-400 border-b-red-500 animate-spin-orbit pointer-events-none opacity-80" />
+
+            {/* Rotating Kimono Logo */}
+            <span className="text-4xl filter drop-shadow inline-block animate-spin-kimono select-none">
+              🥋
+            </span>
+            <span className="absolute -bottom-1 -right-1 text-[8px] font-black px-1.5 py-0.5 rounded bg-black/90 border border-amber-500/50 text-amber-400 font-mono shadow">
               柔術
             </span>
           </div>

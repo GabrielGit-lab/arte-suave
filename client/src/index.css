@@ -110,3 +110,32 @@
   letter-spacing: 0.15em;
   user-select: none;
 }
+
+/* Rotating Kimono Logo Animations */
+@keyframes spinKimono {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-kimono {
+  animation: spinKimono 6s linear infinite;
+  display: inline-block;
+  transform-origin: center;
+}
+
+@keyframes spinOrbit {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-orbit {
+  animation: spinOrbit 4s linear infinite;
+}
