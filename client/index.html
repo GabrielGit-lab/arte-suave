@@ -28,8 +28,11 @@
     <meta name="twitter:url" content="__OG_PAGE_URL__" />
     <meta name="twitter:title" content="Arte Suave Digital • Jiu-Jitsu Academy" />
     <meta name="twitter:description" content="🥋 Plataforma de Gestão, Tutoriais e Graduação de Jiu-Jitsu Brasileiro" />
-    <meta name="twitter:image" content="__OG_IMAGE_URL__" />
-    <meta name="twitter:image:alt" content="Arte Suave Digital - Kimono Pixel Art" />
+    <!-- Google Fonts for Retro Pixel Art Aesthetic (Press Start 2P & Silkscreen) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
     <style>
       /* Zero-latency instant paint critical styles */
       *, *::before, *::after { box-sizing: border-box; }
@@ -79,12 +82,11 @@
         font-size: 24px;
       }
       .shell-logo-text {
-        font-size: 18px;
-        font-weight: 900;
+        font-family: 'Silkscreen', monospace;
+        font-size: 14px;
+        font-weight: 700;
         letter-spacing: 0.05em;
-        background: linear-gradient(90deg, #fbbf24, #fef08a, #d97706);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #fef08a;
         text-transform: uppercase;
       }
       .shell-badge {
@@ -92,15 +94,15 @@
         align-items: center;
         gap: 4px;
         padding: 2px 6px;
+        font-family: 'Silkscreen', monospace;
         font-size: 9px;
-        font-weight: 900;
-        background: linear-gradient(90deg, #450a0a, #09090b);
+        background: #000000;
         color: #fca5a5;
-        border: 1px solid rgba(185, 28, 28, 0.6);
+        border: 1px solid rgba(245, 158, 11, 0.6);
         border-radius: 2px;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.06em;
       }
-      .shell-badge-kanji { color: #f59e0b; }
+      .shell-badge-kanji { color: #f59e0b; font-family: serif; }
       .shell-body {
         flex: 1;
         display: flex;
@@ -110,12 +112,12 @@
       }
       .shell-sidebar {
         width: 256px;
-        background: #0a0a0f;
-        border-right: 1px solid #1f1f23;
+        background: #09090d;
+        border-right: 2px solid #1f1f28;
         padding: 16px 12px;
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 8px;
       }
       @media (max-width: 768px) {
         .shell-sidebar {
@@ -127,31 +129,31 @@
         align-items: center;
         gap: 10px;
         padding: 10px 12px;
-        border-radius: 8px;
-        background: rgba(24, 24, 27, 0.4);
-        border: 1px solid rgba(39, 39, 42, 0.5);
+        border-radius: 4px;
+        background: #0e0e13;
+        border: 1px solid #1f1f28;
         color: #a1a1aa;
-        font-size: 13px;
-        font-weight: 500;
+        font-family: 'Silkscreen', monospace;
+        font-size: 11px;
       }
       .shell-menu-item.active {
-        background: rgba(245, 158, 11, 0.1);
-        border-color: rgba(245, 158, 11, 0.4);
-        color: #fde68a;
-        box-shadow: 0 0 15px rgba(245, 158, 11, 0.1);
+        background: #111015;
+        border: 1px solid #f59e0b;
+        color: #fef08a;
+        box-shadow: 2px 2px 0px #78350f, 3px 3px 0px #000000;
       }
       .shell-kanji-box {
-        width: 24px;
-        height: 24px;
-        border-radius: 4px;
+        width: 22px;
+        height: 22px;
+        border-radius: 2px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 11px;
         font-weight: bold;
-        background: #18181b;
+        background: #000000;
         color: #fbbf24;
-        border: 1px solid rgba(245, 158, 11, 0.3);
+        border: 1px solid rgba(245, 158, 11, 0.4);
       }
       .shell-main {
         flex: 1;
