@@ -12,7 +12,8 @@ import {
   CheckCircle2, 
   ArrowLeft,
   Sparkles,
-  HelpCircle
+  HelpCircle,
+  Building2
 } from 'lucide-react';
 import CyberOrientalBackground from '../components/CyberOrientalBackground';
 
@@ -39,6 +40,21 @@ export default function Login() {
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [emergencyContact, setEmergencyContact] = useState('');
+  const [teamName, setTeamName] = useState('');
+  const [teamCode, setTeamCode] = useState('');
+
+  // Detect invite link with ?team=CODE
+  React.useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const teamParam = params.get('team');
+      if (teamParam) {
+        setTeamCode(teamParam.toUpperCase());
+        setMode('register');
+        setSuccess(`Código de equipe ${teamParam.toUpperCase()} detectado! Preencha seus dados para ingressar.`);
+      }
+    } catch {}
+  }, []);
 
   // Forgot Password state
   const [forgotEmail, setForgotEmail] = useState('');
@@ -68,6 +84,8 @@ export default function Login() {
           weight: weight ? parseFloat(weight) : null,
           height: height ? parseFloat(height) : null,
           emergency_contact: emergencyContact,
+          team_name: teamName,
+          team_code: teamCode
         });
       } else {
         await login(email, password);
@@ -525,6 +543,49 @@ export default function Login() {
                           className="w-full p-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
                         />
                       </div>
+                    </div>
+
+                    {/* Team Affiliation / Registration */}
+                    <div>
+                      {role === 'professor' ? (
+                        <div>
+                          <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                            Nome da sua Equipe / CT (Opcional)
+                          </label>
+                          <div className="relative">
+                            <Building2 className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
+                            <input
+                              type="text"
+                              value={teamName}
+                              onChange={(e) => setTeamName(e.target.value)}
+                              placeholder="Ex: Arte Suave BJJ Matriz"
+                              className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                            />
+                          </div>
+                          <span className="text-[10px] text-zinc-500 mt-1 block">
+                            Você também poderá cadastrar ou editar sua equipe pelo menu do painel.
+                          </span>
+                        </div>
+                      ) : (
+                        <div>
+                          <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                            Código da Equipe do Professor (Opcional)
+                          </label>
+                          <div className="relative">
+                            <Building2 className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
+                            <input
+                              type="text"
+                              value={teamCode}
+                              onChange={(e) => setTeamCode(e.target.value.toUpperCase())}
+                              placeholder="Ex: ARTE-01"
+                              className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-amber-300 font-mono tracking-wider focus:outline-none focus:border-amber-500 uppercase"
+                            />
+                          </div>
+                          <span className="text-[10px] text-zinc-500 mt-1 block">
+                            Insira o código do seu professor para ingressar na equipe dele.
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </>
                 )}

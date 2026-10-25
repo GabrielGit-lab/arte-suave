@@ -16,6 +16,7 @@ const Reports = lazy(() => import('./pages/Reports'));
 const Tournaments = lazy(() => import('./pages/Tournaments'));
 const LineageBJJ = lazy(() => import('./pages/LineageBJJ'));
 const RulesCBJJ = lazy(() => import('./pages/RulesCBJJ'));
+const TeamManagement = lazy(() => import('./pages/TeamManagement'));
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -94,6 +95,7 @@ function AppContent() {
             {activeTab === 'tournaments' && <Tournaments />}
             {activeTab === 'lineage' && <LineageBJJ />}
             {activeTab === 'rules' && <RulesCBJJ />}
+            {activeTab === 'team' && <TeamManagement onNavigate={setActiveTab} />}
           </Suspense>
         </main>
       </div>

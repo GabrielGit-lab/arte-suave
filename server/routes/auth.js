@@ -14,7 +14,12 @@ router.post('/login', rateLimitLogin, (req, res) => {
     return res.status(400).json({ error: 'Email e senha são obrigatórios' });
   }
 
-  const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email.trim().toLowerCase());
+  const user = db.prepare(`
+    SELECT u.*, t.name as team_name, t.code as team_code, t.logo as team_logo, t.city as team_city, t.state as team_state
+    FROM users u
+    LEFT JOIN teams t ON u.team_id = t.id
+    WHERE u.email = ?
+  `).get(email.trim().toLowerCase());
   if (!user) {
     return res.status(401).json({ error: 'E-mail ou senha incorretos' });
   }
@@ -49,7 +54,9 @@ router.post('/register', (req, res) => {
     weight = null,
     height = null,
     wingspan = null,
-    emergency_contact = ''
+    emergency_contact = '',
+    team_name = '',
+    team_code = ''
   } = req.body;
 
   if (!name || !email || !password) {
@@ -65,11 +72,22 @@ router.post('/register', (req, res) => {
   const password_hash = bcrypt.hashSync(password, salt);
 
   const insert = db.prepare(`
-    INSERT INTO users (name, email, password_hash, role, belt, degrees, phone, birthdate, academy_join_date, emergency_contact)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, date('now'), ?)
+    INSERT INTO users (name, email, password_hash, role, belt, degrees, phone, birthdate, academy_join_date, emergency_contact, team_id, team_role)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, date('now'), ?, ?, ?)
   `);
 
   try {
+    let assignedTeamId = null;
+    let assignedTeamRole = role === 'professor' ? 'instructor' : 'student';
+
+    // If a team code was supplied, look up the team
+    if (team_code && team_code.trim()) {
+      const foundTeam = db.prepare('SELECT id FROM teams WHERE code = ?').get(team_code.trim().toUpperCase());
+      if (foundTeam) {
+        assignedTeamId = foundTeam.id;
+      }
+    }
+
     const result = insert.run(
       name.trim(),
       email.trim().toLowerCase(),
@@ -79,10 +97,39 @@ router.post('/register', (req, res) => {
       parseInt(degrees, 10) || 0,
       phone,
       birthdate,
-      emergency_contact
+      emergency_contact,
+      assignedTeamId,
+      assignedTeamRole
     );
 
     const newUserId = result.lastInsertRowid;
+
+    // If professor registered and provided a team_name, create his team now
+    if (role === 'professor' && team_name && team_name.trim()) {
+      let codePrefix = team_name.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+      if (codePrefix.length < 3) codePrefix = 'ARTE';
+      else codePrefix = codePrefix.substring(0, 4);
+      const generatedCode = `${codePrefix}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+      const teamInsert = db.prepare(`
+        INSERT INTO teams (name, code, leader_id, description)
+        VALUES (?, ?, ?, ?)
+      `);
+      const teamRes = teamInsert.run(
+        team_name.trim(),
+        generatedCode,
+        newUserId,
+        `Dojô e equipe fundada por ${name.trim()}.`
+      );
+      assignedTeamId = teamRes.lastInsertRowid;
+
+      // Update user with this newly created team
+      db.prepare(`
+        UPDATE users
+        SET team_id = ?, team_role = 'leader'
+        WHERE id = ?
+      `).run(assignedTeamId, newUserId);
+    }
 
     // Record initial graduation
     db.prepare(`
@@ -98,7 +145,14 @@ router.post('/register', (req, res) => {
       `).run(newUserId, parseFloat(weight), height ? parseFloat(height) : null, wingspan ? parseFloat(wingspan) : null);
     }
 
-    const newUser = db.prepare('SELECT id, name, email, role, belt, degrees, phone, birthdate, emergency_contact, created_at FROM users WHERE id = ?').get(newUserId);
+    const newUser = db.prepare(`
+      SELECT u.id, u.name, u.email, u.role, u.belt, u.degrees, u.phone, u.birthdate, u.emergency_contact,
+             u.team_id, u.team_role, u.created_at,
+             t.name as team_name, t.code as team_code, t.logo as team_logo
+      FROM users u
+      LEFT JOIN teams t ON u.team_id = t.id
+      WHERE u.id = ?
+    `).get(newUserId);
 
     const token = jwt.sign(
       { id: newUser.id, email: newUser.email, role: newUser.role, name: newUser.name },
@@ -116,9 +170,12 @@ router.post('/register', (req, res) => {
 // GET /api/auth/me
 router.get('/me', authenticateToken, (req, res) => {
   const user = db.prepare(`
-    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact,
-           game_style, favorite_position, favorite_submission, idol, bjj_motto, created_at
-    FROM users WHERE id = ?
+    SELECT u.id, u.name, u.email, u.role, u.phone, u.birthdate, u.belt, u.degrees, u.academy_join_date, u.avatar, u.emergency_contact,
+           u.game_style, u.favorite_position, u.favorite_submission, u.idol, u.bjj_motto, u.team_id, u.team_role, u.created_at,
+           t.name as team_name, t.code as team_code, t.logo as team_logo, t.city as team_city, t.state as team_state
+    FROM users u
+    LEFT JOIN teams t ON u.team_id = t.id
+    WHERE u.id = ?
   `).get(req.user.id);
 
   if (!user) {

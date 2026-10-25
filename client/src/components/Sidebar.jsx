@@ -13,7 +13,8 @@ import {
   Trophy,
   GitFork,
   X,
-  RefreshCw
+  RefreshCw,
+  Building2
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -61,6 +62,14 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
       icon: Users,
       badge: null,
       desc: 'Perfis e históricos'
+    },
+    {
+      id: 'team',
+      label: isProfessor ? 'Gestão da Equipe / CT' : 'Minha Equipe',
+      kanji: '団',
+      icon: Building2,
+      badge: 'CT',
+      desc: isProfessor ? 'Liderança, código e filiais' : 'Dojô e filiação'
     },
     {
       id: 'graduations',

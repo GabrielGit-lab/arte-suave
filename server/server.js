@@ -14,6 +14,7 @@ const physicalRoutes = require('./routes/physical');
 const tutorialRoutes = require('./routes/tutorials');
 const reportRoutes = require('./routes/reports');
 const tournamentRoutes = require('./routes/tournaments');
+const teamRoutes = require('./routes/teams');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -56,6 +57,7 @@ app.use('/api/physical', physicalRoutes);
 app.use('/api/tutorials', tutorialRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/tournaments', tournamentRoutes);
+app.use('/api/teams', teamRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

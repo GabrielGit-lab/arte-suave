@@ -37,6 +37,21 @@ function initDatabase() {
       favorite_submission TEXT DEFAULT '',
       idol TEXT DEFAULT '',
       bjj_motto TEXT DEFAULT '',
+      team_id INTEGER,
+      team_role TEXT DEFAULT 'student',
+      created_at TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS teams (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      code TEXT UNIQUE NOT NULL,
+      leader_id INTEGER REFERENCES users(id),
+      logo TEXT,
+      city TEXT DEFAULT '',
+      state TEXT DEFAULT '',
+      lineage TEXT DEFAULT '',
+      description TEXT DEFAULT '',
       created_at TEXT DEFAULT (datetime('now'))
     );
 
@@ -200,8 +215,72 @@ function initDatabase() {
   `);
 
   seedData();
+  migrateTeams();
   seedTournaments();
   seedFederationTournaments();
+}
+
+function migrateTeams() {
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS teams (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      code TEXT UNIQUE NOT NULL,
+      leader_id INTEGER REFERENCES users(id),
+      logo TEXT,
+      city TEXT DEFAULT '',
+      state TEXT DEFAULT '',
+      lineage TEXT DEFAULT '',
+      description TEXT DEFAULT '',
+      created_at TEXT DEFAULT (datetime('now'))
+    );
+  `);
+
+  try {
+    const columns = db.prepare("PRAGMA table_info(users)").all().map(c => c.name);
+    if (!columns.includes('team_id')) {
+      db.exec("ALTER TABLE users ADD COLUMN team_id INTEGER REFERENCES teams(id);");
+    }
+    if (!columns.includes('team_role')) {
+      db.exec("ALTER TABLE users ADD COLUMN team_role TEXT DEFAULT 'student';");
+    }
+  } catch (e) {
+    console.error('Erro ao verificar colunas de equipe:', e.message);
+  }
+
+  // Seed default team if none exists
+  try {
+    const teamCount = db.prepare('SELECT COUNT(*) as count FROM teams').get().count;
+    if (teamCount === 0) {
+      const carlos = db.prepare("SELECT id FROM users WHERE email = 'professor@artesuave.com'").get();
+      const leaderId = carlos ? carlos.id : 1;
+
+      const teamInsert = db.prepare(`
+        INSERT INTO teams (name, code, leader_id, logo, city, state, lineage, description)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+
+      const res = teamInsert.run(
+        'Arte Suave BJJ - Matriz',
+        'ARTE-01',
+        leaderId,
+        'https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=300&auto=format&fit=crop&q=80',
+        'São Paulo',
+        'SP',
+        'Mitsuyo Maeda > Carlos Gracie > Carlson Gracie > Mestre Carlos',
+        'Centro de Treinamento e Dojô Principal da Arte Suave Jiu-Jitsu.'
+      );
+
+      const defaultTeamId = res.lastInsertRowid;
+
+      // Update professor
+      db.prepare("UPDATE users SET team_id = ?, team_role = 'leader' WHERE id = ?").run(defaultTeamId, leaderId);
+      // Link other users who do not have team yet
+      db.prepare("UPDATE users SET team_id = ?, team_role = CASE WHEN role = 'professor' THEN 'instructor' ELSE 'student' END WHERE team_id IS NULL").run(defaultTeamId);
+    }
+  } catch (err) {
+    console.error('Erro ao migrar/popular equipe padrão:', err.message);
+  }
 }
 
 function seedData() {
