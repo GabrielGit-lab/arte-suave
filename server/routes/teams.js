@@ -200,7 +200,7 @@ router.put('/my-team', authenticateToken, (req, res) => {
           city = COALESCE(?, city),
           state = COALESCE(?, state),
           lineage = COALESCE(?, lineage),
-          logo = COALESCE(?, logo),
+          logo = ?,
           description = COALESCE(?, description)
       WHERE id = ?
     `).run(
@@ -208,7 +208,7 @@ router.put('/my-team', authenticateToken, (req, res) => {
       city !== undefined ? city.trim() : team.city,
       state !== undefined ? state.trim().toUpperCase() : team.state,
       lineage !== undefined ? lineage.trim() : team.lineage,
-      logo !== undefined ? logo.trim() : team.logo,
+      logo !== undefined ? (logo ? logo.trim() : null) : team.logo,
       description !== undefined ? description.trim() : team.description,
       team.id
     );
@@ -223,6 +223,45 @@ router.put('/my-team', authenticateToken, (req, res) => {
   } catch (err) {
     console.error('Erro ao atualizar equipe:', err);
     res.status(500).json({ error: 'Erro ao atualizar dados da equipe' });
+  }
+});
+
+// PUT /api/teams/my-team/logo - Direct fast upload/update for team logo/photo
+router.put('/my-team/logo', authenticateToken, (req, res) => {
+  try {
+    const user = db.prepare('SELECT id, role, team_id, team_role FROM users WHERE id = ?').get(req.user.id);
+    if (!user || !user.team_id) {
+      return res.status(400).json({ error: 'Você não está vinculado a nenhuma equipe' });
+    }
+
+    const team = db.prepare('SELECT * FROM teams WHERE id = ?').get(user.team_id);
+    if (!team) {
+      return res.status(404).json({ error: 'Equipe não encontrada' });
+    }
+
+    if (user.role !== 'professor' && user.team_role !== 'leader') {
+      return res.status(403).json({ error: 'Apenas professores e líderes podem alterar a foto da equipe' });
+    }
+
+    const { logo } = req.body;
+    const cleanLogo = logo && typeof logo === 'string' && logo.trim().length > 0 ? logo.trim() : null;
+
+    db.prepare(`
+      UPDATE teams
+      SET logo = ?
+      WHERE id = ?
+    `).run(cleanLogo, team.id);
+
+    const updated = db.prepare('SELECT * FROM teams WHERE id = ?').get(team.id);
+
+    res.json({
+      success: true,
+      message: cleanLogo ? 'Foto da equipe atualizada com sucesso!' : 'Foto da equipe removida com sucesso!',
+      team: updated
+    });
+  } catch (err) {
+    console.error('Erro ao atualizar foto da equipe:', err);
+    res.status(500).json({ error: 'Erro ao salvar foto da equipe' });
   }
 });
 

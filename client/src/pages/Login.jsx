@@ -13,7 +13,10 @@ import {
   ArrowLeft,
   Sparkles,
   HelpCircle,
-  Building2
+  Building2,
+  Camera,
+  Image,
+  X
 } from 'lucide-react';
 import CyberOrientalBackground from '../components/CyberOrientalBackground';
 
@@ -42,6 +45,27 @@ export default function Login() {
   const [emergencyContact, setEmergencyContact] = useState('');
   const [teamName, setTeamName] = useState('');
   const [teamCode, setTeamCode] = useState('');
+  const [teamLogo, setTeamLogo] = useState('');
+  const teamLogoInputRef = React.useRef(null);
+
+  const handleTeamLogoFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setError('Por favor selecione um arquivo de imagem válido (PNG, JPG, WebP).');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setError('A foto da equipe deve ter no máximo 5MB.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setTeamLogo(event.target.result);
+      setError('');
+    };
+    reader.readAsDataURL(file);
+  };
 
   // Detect invite link with ?team=CODE
   React.useEffect(() => {
@@ -85,7 +109,8 @@ export default function Login() {
           height: height ? parseFloat(height) : null,
           emergency_contact: emergencyContact,
           team_name: teamName,
-          team_code: teamCode
+          team_code: teamCode,
+          team_logo: teamLogo
         });
       } else {
         await login(email, password);
@@ -548,22 +573,70 @@ export default function Login() {
                     {/* Team Affiliation / Registration */}
                     <div>
                       {role === 'professor' ? (
-                        <div>
-                          <label className="block text-xs font-semibold text-zinc-300 mb-1">
-                            Nome da sua Equipe / CT (Opcional)
-                          </label>
-                          <div className="relative">
-                            <Building2 className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
-                            <input
-                              type="text"
-                              value={teamName}
-                              onChange={(e) => setTeamName(e.target.value)}
-                              placeholder="Ex: Arte Suave BJJ Matriz"
-                              className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
-                            />
+                        <div className="space-y-3 p-3.5 rounded-xl bg-zinc-950/80 border border-amber-500/20">
+                          <div>
+                            <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                              Nome da sua Equipe / CT (Opcional)
+                            </label>
+                            <div className="relative">
+                              <Building2 className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
+                              <input
+                                type="text"
+                                value={teamName}
+                                onChange={(e) => setTeamName(e.target.value)}
+                                placeholder="Ex: Arte Suave BJJ Matriz"
+                                className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500"
+                              />
+                            </div>
                           </div>
-                          <span className="text-[10px] text-zinc-500 mt-1 block">
-                            Você também poderá cadastrar ou editar sua equipe pelo menu do painel.
+
+                          <div>
+                            <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                              Foto / Brasão da Equipe (Opcional)
+                            </label>
+                            <div className="flex items-center gap-3">
+                              <div className="w-12 h-12 rounded-xl bg-black border border-amber-500/30 overflow-hidden flex items-center justify-center shrink-0">
+                                {teamLogo ? (
+                                  <img src={teamLogo} alt="Brasão" className="w-full h-full object-cover" />
+                                ) : (
+                                  <span className="text-xl">🥋</span>
+                                )}
+                              </div>
+
+                              <input
+                                ref={teamLogoInputRef}
+                                type="file"
+                                accept="image/*"
+                                onChange={handleTeamLogoFileChange}
+                                className="hidden"
+                              />
+
+                              <div className="flex items-center gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => teamLogoInputRef.current?.click()}
+                                  className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-amber-500/30 text-amber-300 text-xs font-semibold flex items-center gap-1.5 transition"
+                                >
+                                  <Camera className="w-3.5 h-3.5" />
+                                  <span>{teamLogo ? 'Trocar Foto' : 'Escolher Foto'}</span>
+                                </button>
+
+                                {teamLogo && (
+                                  <button
+                                    type="button"
+                                    onClick={() => setTeamLogo('')}
+                                    className="p-1.5 rounded-lg bg-zinc-900 hover:bg-red-950 text-zinc-400 hover:text-red-400 border border-zinc-800 transition"
+                                    title="Remover foto"
+                                  >
+                                    <X className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          <span className="text-[10px] text-zinc-500 block">
+                            Você também poderá cadastrar ou alterar foto e dados da equipe depois pelo painel.
                           </span>
                         </div>
                       ) : (

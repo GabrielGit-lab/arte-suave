@@ -56,7 +56,8 @@ router.post('/register', (req, res) => {
     wingspan = null,
     emergency_contact = '',
     team_name = '',
-    team_code = ''
+    team_code = '',
+    team_logo = null
   } = req.body;
 
   if (!name || !email || !password) {
@@ -112,13 +113,14 @@ router.post('/register', (req, res) => {
       const generatedCode = `${codePrefix}-${Math.floor(1000 + Math.random() * 9000)}`;
 
       const teamInsert = db.prepare(`
-        INSERT INTO teams (name, code, leader_id, description)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO teams (name, code, leader_id, logo, description)
+        VALUES (?, ?, ?, ?, ?)
       `);
       const teamRes = teamInsert.run(
         team_name.trim(),
         generatedCode,
         newUserId,
+        team_logo ? team_logo.trim() : null,
         `Dojô e equipe fundada por ${name.trim()}.`
       );
       assignedTeamId = teamRes.lastInsertRowid;

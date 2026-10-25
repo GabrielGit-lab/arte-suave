@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../utils/api';
 import BeltBadge from '../components/BeltBadge';
@@ -21,7 +21,11 @@ import {
   MessageCircle,
   Crosshair,
   Calendar,
-  AlertCircle
+  AlertCircle,
+  Camera,
+  Image,
+  X,
+  Upload
 } from 'lucide-react';
 
 export default function TeamManagement({ onNavigate }) {
@@ -45,10 +49,67 @@ export default function TeamManagement({ onNavigate }) {
   const [formLogo, setFormLogo] = useState('');
   const [formDescription, setFormDescription] = useState('');
   const [joinCodeInput, setJoinCodeInput] = useState('');
+  const [logoUrlMode, setLogoUrlMode] = useState(false);
+
+  // File upload refs
+  const fileInputRef = useRef(null);
+  const editFileInputRef = useRef(null);
+  const bannerLogoInputRef = useRef(null);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
 
   // Messages
   const [statusMsg, setStatusMsg] = useState({ type: '', text: '' });
   const [saving, setSaving] = useState(false);
+
+  const handleLogoFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setStatusMsg({ type: 'error', text: 'Selecione um arquivo de imagem válido (PNG, JPG, WebP).' });
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setStatusMsg({ type: 'error', text: 'A imagem deve ter no máximo 5MB.' });
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setFormLogo(event.target.result);
+      setStatusMsg({ type: '', text: '' });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleBannerLogoSelect = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setStatusMsg({ type: 'error', text: 'Selecione um arquivo de imagem válido.' });
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setStatusMsg({ type: 'error', text: 'A imagem deve ter no máximo 5MB.' });
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const base64Data = event.target.result;
+      try {
+        setUploadingLogo(true);
+        const res = await api.put('/teams/my-team/logo', { logo: base64Data });
+        setStatusMsg({ type: 'success', text: res.message || 'Foto da equipe atualizada com sucesso!' });
+        setTeamData(prev => prev ? { ...prev, team: { ...prev.team, logo: base64Data } } : prev);
+        setFormLogo(base64Data);
+        if (refreshUser) refreshUser();
+      } catch (err) {
+        setStatusMsg({ type: 'error', text: err.message || 'Erro ao atualizar foto da equipe' });
+      } finally {
+        setUploadingLogo(false);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   useEffect(() => {
     fetchMyTeam();
@@ -320,17 +381,77 @@ export default function TeamManagement({ onNavigate }) {
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-zinc-300 uppercase mb-1">
-                URL do Brasão / Escudo (Opcional)
+            {/* Foto / Brasão da Equipe */}
+            <div className="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 space-y-3">
+              <label className="block text-xs font-bold text-zinc-300 uppercase">
+                Foto / Brasão da Equipe (Opcional)
               </label>
-              <input
-                type="url"
-                value={formLogo}
-                onChange={(e) => setFormLogo(e.target.value)}
-                placeholder="https://sua-imagem.com/logo.jpg"
-                className="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-amber-500 text-white text-sm outline-none transition"
-              />
+
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="w-20 h-20 rounded-2xl bg-black border-2 border-amber-500/40 overflow-hidden flex items-center justify-center shrink-0 shadow-lg relative group">
+                  {formLogo ? (
+                    <img src={formLogo} alt="Brasão da Equipe" className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-3xl filter drop-shadow">🥋</span>
+                  )}
+                </div>
+
+                <div className="flex-1 space-y-2 text-center sm:text-left w-full">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoFileSelect}
+                    className="hidden"
+                  />
+
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="px-4 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold transition flex items-center gap-2"
+                    >
+                      <Camera className="w-4 h-4" />
+                      <span>{formLogo ? 'Trocar Foto / Brasão' : 'Selecionar Foto do Computador'}</span>
+                    </button>
+
+                    {formLogo && (
+                      <button
+                        type="button"
+                        onClick={() => setFormLogo('')}
+                        className="px-3 py-2 rounded-xl bg-zinc-900 hover:bg-red-950 text-zinc-400 hover:text-red-300 border border-zinc-800 text-xs font-semibold transition flex items-center gap-1.5"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                        <span>Remover</span>
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => setLogoUrlMode(!logoUrlMode)}
+                      className="px-3 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-800 text-xs transition"
+                    >
+                      {logoUrlMode ? 'Ocultar URL' : 'Inserir Link URL'}
+                    </button>
+                  </div>
+
+                  <p className="text-[11px] text-zinc-500">
+                    Formatos: PNG, JPG, WebP (até 5MB).
+                  </p>
+                </div>
+              </div>
+
+              {logoUrlMode && (
+                <div className="pt-2 border-t border-zinc-800/80">
+                  <input
+                    type="url"
+                    value={formLogo}
+                    onChange={(e) => setFormLogo(e.target.value)}
+                    placeholder="Ou cole a URL direta da imagem (https://...)"
+                    className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-amber-500 text-white text-xs outline-none transition"
+                  />
+                </div>
+              )}
             </div>
 
             <div>
@@ -453,6 +574,30 @@ export default function TeamManagement({ onNavigate }) {
                 <img src={team.logo} alt={team.name} className="w-full h-full object-cover" />
               ) : (
                 <span className="text-4xl filter drop-shadow">🥋</span>
+              )}
+
+              {isLeader && (
+                <>
+                  <input
+                    ref={bannerLogoInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleBannerLogoSelect}
+                    className="hidden"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => bannerLogoInputRef.current?.click()}
+                    disabled={uploadingLogo}
+                    title="Alterar Foto / Brasão da Equipe"
+                    className="absolute inset-0 bg-black/75 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-amber-300 gap-1 cursor-pointer"
+                  >
+                    <Camera className="w-5 h-5 animate-pulse" />
+                    <span className="text-[9px] font-black uppercase tracking-wider text-white">
+                      {uploadingLogo ? 'Enviando...' : 'Trocar Foto'}
+                    </span>
+                  </button>
+                </>
               )}
             </div>
 
@@ -812,17 +957,77 @@ export default function TeamManagement({ onNavigate }) {
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-zinc-300 uppercase mb-1">
-                URL do Brasão / Logotipo
+            {/* Foto / Brasão da Equipe */}
+            <div className="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 space-y-3">
+              <label className="block text-xs font-bold text-zinc-300 uppercase">
+                Foto / Brasão da Equipe
               </label>
-              <input
-                type="url"
-                value={formLogo}
-                onChange={(e) => setFormLogo(e.target.value)}
-                placeholder="https://..."
-                className="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-amber-500 text-white text-sm outline-none transition"
-              />
+
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="w-20 h-20 rounded-2xl bg-black border-2 border-amber-500/40 overflow-hidden flex items-center justify-center shrink-0 shadow-lg relative group">
+                  {formLogo ? (
+                    <img src={formLogo} alt="Brasão da Equipe" className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-3xl filter drop-shadow">🥋</span>
+                  )}
+                </div>
+
+                <div className="flex-1 space-y-2 text-center sm:text-left w-full">
+                  <input
+                    ref={editFileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoFileSelect}
+                    className="hidden"
+                  />
+
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                    <button
+                      type="button"
+                      onClick={() => editFileInputRef.current?.click()}
+                      className="px-4 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold transition flex items-center gap-2"
+                    >
+                      <Camera className="w-4 h-4" />
+                      <span>{formLogo ? 'Trocar Foto / Brasão' : 'Selecionar Foto do Computador'}</span>
+                    </button>
+
+                    {formLogo && (
+                      <button
+                        type="button"
+                        onClick={() => setFormLogo('')}
+                        className="px-3 py-2 rounded-xl bg-zinc-900 hover:bg-red-950 text-zinc-400 hover:text-red-300 border border-zinc-800 text-xs font-semibold transition flex items-center gap-1.5"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                        <span>Remover</span>
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => setLogoUrlMode(!logoUrlMode)}
+                      className="px-3 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-800 text-xs transition"
+                    >
+                      {logoUrlMode ? 'Ocultar URL' : 'Inserir Link URL'}
+                    </button>
+                  </div>
+
+                  <p className="text-[11px] text-zinc-500">
+                    Formatos: PNG, JPG, WebP (até 5MB).
+                  </p>
+                </div>
+              </div>
+
+              {logoUrlMode && (
+                <div className="pt-2 border-t border-zinc-800/80">
+                  <input
+                    type="url"
+                    value={formLogo}
+                    onChange={(e) => setFormLogo(e.target.value)}
+                    placeholder="Ou cole a URL direta da imagem (https://...)"
+                    className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-amber-500 text-white text-xs outline-none transition"
+                  />
+                </div>
+              )}
             </div>
 
             <div>
