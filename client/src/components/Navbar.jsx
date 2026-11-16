@@ -78,7 +78,7 @@ export default function Navbar({ onMobileMenuToggle, onNavigate }) {
                 : 'text-zinc-300 hover:text-white hover:bg-zinc-900'
             }`}
           >
-            Mestre Carlos (Professor)
+            Mestre Phillipe (5º Grau)
           </button>
           <button
             onClick={() => handleQuickSwitch('student')}

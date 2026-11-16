@@ -260,18 +260,20 @@ export default function Login() {
             <button
               type="button"
               onClick={() => handleQuickLogin('professor@artesuave.com', 'senha123')}
-              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold transition shadow-xs hover:shadow-[0_0_10px_rgba(245,158,11,0.3)]"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold transition shadow-xs hover:shadow-[0_0_10px_rgba(245,158,11,0.3)] text-center truncate"
+              title="Acessar como Mestre Phillipe Spakauskas (Faixa Preta 5º Grau - Líder Spakauskas Team)"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-              Mestre Carlos (Prof)
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span className="truncate">Mestre Phillipe (5º Grau)</span>
             </button>
             <button
               type="button"
               onClick={() => handleQuickLogin('aluno@artesuave.com', 'senha123')}
-              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-red-950/60 hover:bg-red-900/60 border border-red-700/50 text-red-300 text-xs font-bold transition shadow-xs hover:shadow-[0_0_10px_rgba(239,68,68,0.3)]"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-red-950/60 hover:bg-red-900/60 border border-red-700/50 text-red-300 text-xs font-bold transition shadow-xs hover:shadow-[0_0_10px_rgba(239,68,68,0.3)] text-center truncate"
+              title="Acessar como Gabriel Rocha (Aluno Oficial Spakauskas Team)"
             >
-              <UserCheck className="w-3.5 h-3.5 text-red-400" />
-              Gabriel Rocha (Aluno)
+              <UserCheck className="w-3.5 h-3.5 text-red-400 shrink-0" />
+              <span className="truncate">Gabriel Rocha (Aluno)</span>
             </button>
           </div>
           <p className="text-[10px] text-zinc-500 mt-2 text-center flex items-center justify-center gap-1">

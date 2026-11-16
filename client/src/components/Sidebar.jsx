@@ -171,7 +171,7 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
                     : 'bg-zinc-900 text-zinc-300 hover:bg-zinc-800'
                 }`}
               >
-                Professor
+                Mestre Phillipe
               </button>
               <button
                 type="button"

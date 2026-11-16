@@ -261,14 +261,14 @@ function migrateTeams() {
       `);
 
       const res = teamInsert.run(
-        'Arte Suave BJJ - Matriz',
-        'ARTE-01',
+        'Spakauskas Team Jiu-Jitsu',
+        'SPAK-01',
         leaderId,
-        'https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=300&auto=format&fit=crop&q=80',
+        '/spakauskas-team-crest.svg',
         'São Paulo',
         'SP',
-        'Mitsuyo Maeda > Carlos Gracie > Carlson Gracie > Mestre Carlos',
-        'Centro de Treinamento e Dojô Principal da Arte Suave Jiu-Jitsu.'
+        'Mitsuyo Maeda > Carlos Gracie > Carlson Gracie > Mestre Phillipe Spakauskas',
+        'Centro de Treinamento Oficial Spakauskas Team. Dojô de Jiu-Jitsu tradicional e de alta performance, sob a liderança do Mestre Phillipe Spakauskas (Faixa Preta 5º Grau).'
       );
 
       const defaultTeamId = res.lastInsertRowid;
@@ -299,16 +299,16 @@ function seedData() {
   `);
 
   const profId = insertUser.run(
-    'Mestre Carlos Gracie Silva',
+    'Mestre Phillipe Spakauskas',
     'professor@artesuave.com',
     defaultHash,
     'professor',
     '(11) 98765-4321',
-    '1985-04-12',
+    '1982-06-15',
     'Preta',
-    3,
+    5,
     '2015-01-10',
-    'https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=300&auto=format&fit=crop&q=80',
+    '/mestre-phillipe.svg',
     'Esposa: Fabiana (11) 97777-1111'
   ).lastInsertRowid;
 

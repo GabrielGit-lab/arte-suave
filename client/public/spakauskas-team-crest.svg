@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Radial Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1c1917" />
+      <stop offset="70%" stop-color="#0a0a0a" />
+      <stop offset="100%" stop-color="#000000" />
+    </radialGradient>
+
+    <!-- Gold Metallic Gradients -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="25%" stop-color="#f59e0b" />
+      <stop offset="50%" stop-color="#d97706" />
+      <stop offset="75%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+
+    <linearGradient id="goldLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#92400e" />
+    </linearGradient>
+
+    <!-- Crimson Gradient -->
+    <linearGradient id="crimsonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444" />
+      <stop offset="50%" stop-color="#b91c1c" />
+      <stop offset="100%" stop-color="#7f1d1d" />
+    </linearGradient>
+
+    <!-- Text Paths -->
+    <path id="textArcTop" d="M 65,250 A 185,185 0 0,1 435,250" fill="none" />
+    <path id="textArcBottom" d="M 435,250 A 185,185 0 0,1 65,250" fill="none" />
+
+    <!-- Glow Filter -->
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Outer Ring Shadow & Base -->
+  <circle cx="250" cy="250" r="240" fill="#000000" stroke="url(#goldGrad)" stroke-width="4" filter="url(#goldGlow)" />
+  <circle cx="250" cy="250" r="232" fill="url(#bgGrad)" stroke="#262626" stroke-width="2" />
+
+  <!-- Outer Decorative Notches / Ring -->
+  <circle cx="250" cy="250" r="222" fill="none" stroke="url(#goldGrad)" stroke-width="2" stroke-dasharray="8 6" opacity="0.6" />
+  <circle cx="250" cy="250" r="214" fill="none" stroke="#dc2626" stroke-width="2.5" />
+  <circle cx="250" cy="250" r="162" fill="none" stroke="url(#goldGrad)" stroke-width="2" />
+
+  <!-- Inner Textured Shield Background -->
+  <circle cx="250" cy="250" r="160" fill="#0c0a09" />
+  
+  <!-- Subtle Rays in Center -->
+  <g opacity="0.08" stroke="#ffffff" stroke-width="1.5">
+    <line x1="250" y1="90" x2="250" y2="410" />
+    <line x1="90" y1="250" x2="410" y2="250" />
+    <line x1="137" y1="137" x2="363" y2="363" />
+    <line x1="137" y1="363" x2="363" y2="137" />
+  </g>
+
+  <!-- Circular Texts -->
+  <!-- SPAKAUSKAS TEAM -->
+  <text fill="url(#goldGrad)" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="28" letter-spacing="7">
+    <textPath href="#textArcTop" startOffset="50%" text-anchor="middle">
+      SPAKAUSKAS TEAM
+    </textPath>
+  </text>
+
+  <!-- JIU-JITSU • SÃO PAULO -->
+  <text fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="19" letter-spacing="5" opacity="0.95">
+    <textPath href="#textArcBottom" startOffset="50%" text-anchor="middle">
+      ★ JIU-JITSU • BRASIL ★
+    </textPath>
+  </text>
+
+  <!-- Center Shield / Crest -->
+  <g transform="translate(250, 240)">
+    <!-- Central Shield Shape -->
+    <path d="M 0,-85 L 65,-40 L 55,40 C 45,75 0,105 0,105 C 0,105 -45,75 -55,40 L -65,-40 Z"
+          fill="url(#crimsonGrad)" stroke="url(#goldGrad)" stroke-width="3.5" filter="url(#goldGlow)" />
+
+    <!-- Inner Shield Inset -->
+    <path d="M 0,-76 L 56,-37 L 47,35 C 38,65 0,92 0,92 C 0,92 -38,65 -47,35 L -56,-37 Z"
+          fill="#171717" stroke="#fbbf24" stroke-width="1.5" opacity="0.95" />
+
+    <!-- Stylized Monogram S / Martial Emblem -->
+    <!-- Japanese Kanji: 柔術 (Jiu-Jitsu) -->
+    <text x="0" y="-18" text-anchor="middle" font-family="'Noto Serif JP', 'Hiragino Mincho Pro', serif" font-weight="900" font-size="34" fill="url(#goldLight)">
+      柔
+    </text>
+    <text x="0" y="24" text-anchor="middle" font-family="'Noto Serif JP', 'Hiragino Mincho Pro', serif" font-weight="900" font-size="34" fill="url(#goldLight)">
+      術
+    </text>
+
+    <!-- Crown / Crest Stars on Top of Shield -->
+    <g fill="url(#goldGrad)" transform="translate(0, -96)">
+      <!-- 5 Stars representing 5th Degree -->
+      <polygon points="0,-10 3,-3 10,-3 4,2 6,9 0,5 -6,9 -4,2 -10,-3 -3,-3" transform="translate(0, 0) scale(1.1)" />
+      <polygon points="0,-10 3,-3 10,-3 4,2 6,9 0,5 -6,9 -4,2 -10,-3 -3,-3" transform="translate(-24, 4) scale(0.85)" />
+      <polygon points="0,-10 3,-3 10,-3 4,2 6,9 0,5 -6,9 -4,2 -10,-3 -3,-3" transform="translate(24, 4) scale(0.85)" />
+      <polygon points="0,-10 3,-3 10,-3 4,2 6,9 0,5 -6,9 -4,2 -10,-3 -3,-3" transform="translate(-46, 11) scale(0.65)" />
+      <polygon points="0,-10 3,-3 10,-3 4,2 6,9 0,5 -6,9 -4,2 -10,-3 -3,-3" transform="translate(46, 11) scale(0.65)" />
+    </g>
+
+    <!-- 5th Degree Black Belt Banner Across Lower Shield -->
+    <g transform="translate(0, 68)">
+      <!-- Belt Body (Black) -->
+      <rect x="-85" y="-11" width="170" height="22" rx="4" fill="#000000" stroke="url(#goldGrad)" stroke-width="2" />
+      <!-- Red Bar (Ponteira Vermelha de Mestre) -->
+      <rect x="20" y="-9" width="60" height="18" rx="2" fill="url(#crimsonGrad)" stroke="#ffffff" stroke-width="0.8" />
+      <!-- 5 White Stripes (5 Graus na Faixa Preta) -->
+      <rect x="25" y="-8" width="4" height="16" fill="#ffffff" />
+      <rect x="33" y="-8" width="4" height="16" fill="#ffffff" />
+      <rect x="41" y="-8" width="4" height="16" fill="#ffffff" />
+      <rect x="49" y="-8" width="4" height="16" fill="#ffffff" />
+      <rect x="57" y="-8" width="4" height="16" fill="#ffffff" />
+      <!-- Left side text: 5º GRAU -->
+      <text x="-32" y="4" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="10" fill="url(#goldGrad)" letter-spacing="1">
+        5º GRAU
+      </text>
+    </g>
+
+    <!-- Ribbon with Master Name / Motto below -->
+    <g transform="translate(0, 118)">
+      <rect x="-105" y="-12" width="210" height="24" rx="12" fill="#09090b" stroke="url(#goldGrad)" stroke-width="1.8" />
+      <text x="0" y="4" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="11" fill="#ffffff" letter-spacing="2">
+        MESTRE PHILLIPE
+      </text>
+    </g>
+  </g>
+
+  <!-- Left & Right Decorative Golden Laurels -->
+  <g fill="url(#goldGrad)" opacity="0.85">
+    <!-- Left Laurel -->
+    <ellipse cx="68" cy="230" rx="6" ry="14" transform="rotate(-30 68 230)" />
+    <ellipse cx="68" cy="270" rx="6" ry="14" transform="rotate(30 68 270)" />
+    <!-- Right Laurel -->
+    <ellipse cx="432" cy="230" rx="6" ry="14" transform="rotate(30 432 230)" />
+    <ellipse cx="432" cy="270" rx="6" ry="14" transform="rotate(-30 432 270)" />
+  </g>
+</svg>
