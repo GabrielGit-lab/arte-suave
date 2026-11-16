@@ -23,7 +23,9 @@ import {
   Zap,
   Sparkles,
   Quote,
-  Edit3
+  Edit3,
+  Building2,
+  ShieldCheck
 } from 'lucide-react';
 
 export default function Dashboard({ onNavigate }) {
@@ -125,11 +127,42 @@ export default function Dashboard({ onNavigate }) {
             </div>
 
             <div>
-              <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1.5">
                 <span className="px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold uppercase tracking-wider bg-red-950/80 text-red-400 border border-red-700/50">
                   {isProfessor ? 'Professor Responsável' : 'Área do Aluno'}
                 </span>
-                <span className="text-amber-400/80 text-xs font-semibold">• Arte Suave BJJ</span>
+
+                {user?.team_name ? (
+                  <button
+                    type="button"
+                    onClick={() => onNavigate && onNavigate('team')}
+                    title="Clique para abrir a gestão da equipe"
+                    className="flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 transition cursor-pointer group"
+                  >
+                    <div className="w-3.5 h-3.5 rounded-full overflow-hidden shrink-0 bg-black flex items-center justify-center">
+                      {user.team_logo ? (
+                        <img src={user.team_logo} alt={user.team_name} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-[8px]">🥋</span>
+                      )}
+                    </div>
+                    <span className="group-hover:underline">{user.team_name}</span>
+                    {user.team_code && (
+                      <span className="text-[9px] font-mono px-1 rounded bg-black text-amber-400 border border-amber-500/30">
+                        {user.team_code}
+                      </span>
+                    )}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => onNavigate && onNavigate('team')}
+                    className="flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-red-950/60 hover:bg-red-900/60 border border-red-700/60 text-red-300 transition cursor-pointer"
+                  >
+                    <Building2 className="w-3 h-3 text-amber-400" />
+                    <span>Vincular Equipe</span>
+                  </button>
+                )}
               </div>
               <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight">
                 Oss, {user?.name}!
@@ -143,7 +176,7 @@ export default function Dashboard({ onNavigate }) {
                 <button
                   type="button"
                   onClick={() => setIsAvatarModalOpen(true)}
-                  className="text-[11px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold"
+                  className="text-[11px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold cursor-pointer"
                 >
                   <Camera className="w-3.5 h-3.5" />
                   {user?.avatar ? 'Alterar foto de perfil' : 'Adicionar foto de perfil'}
@@ -152,23 +185,62 @@ export default function Dashboard({ onNavigate }) {
                 <button
                   type="button"
                   onClick={() => setIsProfileModalOpen(true)}
-                  className="text-[11px] text-red-400 hover:text-red-300 flex items-center gap-1 font-semibold"
+                  className="text-[11px] text-red-400 hover:text-red-300 flex items-center gap-1 font-semibold cursor-pointer"
                 >
                   <Crosshair className="w-3.5 h-3.5 text-amber-400" />
-                  Aba de Curiosidades no Perfil
+                  Dossiê Marcial Completo
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="bg-black/90 p-3 sm:p-4 rounded-xl border border-amber-500/30 flex flex-col items-center w-full sm:w-auto min-w-[180px] shrink-0 shadow-lg">
-            <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold mb-1">
-              Graduação Atual
-            </span>
-            <BeltBadge belt={user?.belt} degrees={user?.degrees} size="md" showLabel={true} />
-            <span className="text-[11px] text-amber-400/90 font-medium mt-1">
-              {user?.belt} • {user?.degrees}º Grau
-            </span>
+          {/* Right Cards: Team Crest Card & Belt Badge */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto shrink-0">
+            {/* Team Crest / Brasão Card */}
+            <div 
+              onClick={() => onNavigate && onNavigate('team')}
+              className="bg-black/90 hover:bg-zinc-950 p-3.5 rounded-xl border border-amber-500/40 hover:border-amber-400 flex flex-col items-center w-full sm:w-44 shrink-0 shadow-lg cursor-pointer transition group"
+              title="Clique para ir à aba de gestão da equipe"
+            >
+              <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold mb-1.5 flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-amber-400" />
+                <span>Minha Equipe / CT</span>
+              </span>
+
+              <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-amber-500/60 overflow-hidden flex items-center justify-center my-0.5 shadow-inner group-hover:scale-105 transition">
+                {user?.team_logo ? (
+                  <img src={user.team_logo} alt={user.team_name || 'Equipe'} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-2xl filter drop-shadow">🥋</span>
+                )}
+              </div>
+
+              <span className="text-xs font-black text-white group-hover:text-amber-300 transition text-center truncate max-w-[150px] mt-1">
+                {user?.team_name || 'Arte Suave BJJ'}
+              </span>
+
+              <div className="flex items-center gap-1 mt-0.5">
+                <span className="text-[9px] font-bold px-1.5 py-0.2 rounded uppercase bg-red-950 text-red-300 border border-red-800/50">
+                  {user?.team_role === 'leader' ? 'Mestre / Líder' : user?.team_role === 'instructor' ? 'Instrutor' : 'Aluno Oficial'}
+                </span>
+                {user?.team_code && (
+                  <span className="text-[9px] font-mono font-bold text-amber-400">
+                    {user.team_code}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Belt Badge Card */}
+            <div className="bg-black/90 p-3.5 rounded-xl border border-amber-500/30 flex flex-col items-center w-full sm:w-44 shrink-0 shadow-lg justify-between">
+              <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold mb-1.5">
+                Graduação Atual
+              </span>
+              <BeltBadge belt={user?.belt} degrees={user?.degrees} size="md" showLabel={true} />
+              <span className="text-[11px] text-amber-400/90 font-medium mt-1">
+                {user?.belt} • {user?.degrees}º Grau
+              </span>
+            </div>
           </div>
         </div>
       </div>

@@ -243,8 +243,40 @@ export default function Sidebar({ activeTab, setActiveTab, mobileOpen, setMobile
           })}
         </div>
 
+        {/* Minha Equipe / Dojô Card in Sidebar */}
+        <div 
+          onClick={() => handleSelect('team')}
+          className="p-3 bg-gradient-to-br from-black via-zinc-950 to-neutral-900 rounded-xl border border-amber-500/30 hover:border-amber-400 mt-3 shadow-md cursor-pointer transition group"
+          title="Clique para abrir a página da equipe"
+        >
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-lg bg-zinc-900 border border-amber-500/60 overflow-hidden flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition">
+              {user?.team_logo ? (
+                <img src={user.team_logo} alt={user.team_name || 'Equipe'} className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-base">🥋</span>
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-[10px] text-zinc-400 uppercase font-bold tracking-wider">
+                  {user?.team_role === 'leader' ? 'Mestre' : user?.team_role === 'instructor' ? 'Instrutor' : 'Minha Equipe'}
+                </span>
+                {user?.team_code && (
+                  <span className="text-[9px] font-mono text-amber-400 font-bold px-1 rounded bg-black/60 border border-amber-500/30">
+                    {user.team_code}
+                  </span>
+                )}
+              </div>
+              <h5 className="text-xs font-black text-white group-hover:text-amber-300 transition truncate mt-0.5">
+                {user?.team_name || 'Arte Suave BJJ'}
+              </h5>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom Academy badge */}
-        <div className="p-3 bg-gradient-to-br from-black to-zinc-950 rounded-xl border border-amber-500/25 mt-4 shadow-md">
+        <div className="p-3 bg-gradient-to-br from-black to-zinc-950 rounded-xl border border-zinc-800/80 mt-2 shadow-md">
           <div className="flex items-center gap-2 mb-1.5">
             <ShieldCheck className="w-4 h-4 text-amber-400" />
             <span className="text-xs font-bold text-zinc-200">

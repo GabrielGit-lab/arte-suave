@@ -3,9 +3,9 @@ import { useAuth } from '../context/AuthContext';
 import BeltBadge from './BeltBadge';
 import AvatarUploadModal from './AvatarUploadModal';
 import StudentProfileModal from './StudentProfileModal';
-import { LogOut, ShieldAlert, Award, User, RefreshCw, Camera, Crosshair } from 'lucide-react';
+import { LogOut, ShieldAlert, Award, User, RefreshCw, Camera, Crosshair, Building2, ShieldCheck } from 'lucide-react';
 
-export default function Navbar({ onMobileMenuToggle }) {
+export default function Navbar({ onMobileMenuToggle, onNavigate }) {
   const { user, logout, login, refreshUser } = useAuth();
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
@@ -95,6 +95,44 @@ export default function Navbar({ onMobileMenuToggle }) {
         {/* Right: User Profile & Belt Badge */}
         {user && (
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Team Crest & Name Affiliation Pill */}
+            {user.team_name ? (
+              <button
+                type="button"
+                onClick={() => onNavigate && onNavigate('team')}
+                title={`Equipe: ${user.team_name} (Código: ${user.team_code || '---'}) - Clique para gerenciar`}
+                className="hidden md:flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-black/90 hover:bg-zinc-900 border border-amber-500/40 hover:border-amber-400 text-left transition shadow-[0_0_12px_rgba(245,158,11,0.15)] group cursor-pointer"
+              >
+                <div className="w-7 h-7 rounded-lg bg-zinc-900 border border-amber-500/60 overflow-hidden flex items-center justify-center shrink-0 shadow-inner">
+                  {user.team_logo ? (
+                    <img src={user.team_logo} alt={user.team_name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-xs">🥋</span>
+                  )}
+                </div>
+                <div className="leading-tight">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] font-black text-amber-300 group-hover:text-amber-200 transition truncate max-w-[130px]">
+                      {user.team_name}
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-bold text-zinc-400 font-mono tracking-wider">
+                    {user.team_role === 'leader' ? 'Mestre / Fundador' : user.team_role === 'instructor' ? 'Instrutor' : 'Aluno Oficial'}
+                  </span>
+                </div>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => onNavigate && onNavigate('team')}
+                title="Você ainda não está vinculado a uma equipe. Clique para entrar ou registrar."
+                className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-red-950/40 hover:bg-red-950/70 border border-red-700/50 text-red-300 text-xs font-bold transition cursor-pointer"
+              >
+                <Building2 className="w-3.5 h-3.5 text-amber-400" />
+                <span>Vincular Equipe</span>
+              </button>
+            )}
+
             <button
               type="button"
               onClick={() => setIsProfileModalOpen(true)}
@@ -116,15 +154,21 @@ export default function Navbar({ onMobileMenuToggle }) {
                 </div>
                 <div className="mt-0.5 flex items-center gap-1.5">
                   <BeltBadge belt={user.belt} degrees={user.degrees} size="sm" showLabel={true} />
-                  <span className={`text-[9px] font-black uppercase px-1 py-0.2 rounded border ${
-                    user.game_style === 'Passador'
-                      ? 'bg-amber-950/80 text-amber-400 border-amber-600/40'
-                      : user.game_style === 'Guardeiro'
-                      ? 'bg-red-950/80 text-red-400 border-red-700/40'
-                      : 'bg-zinc-900 text-zinc-400 border-zinc-700'
-                  }`}>
-                    {user.game_style || 'Guardeiro'}
-                  </span>
+                  {user.team_name ? (
+                    <span className="text-[9px] font-bold text-amber-400/90 truncate max-w-[110px]">
+                      • {user.team_name}
+                    </span>
+                  ) : (
+                    <span className={`text-[9px] font-black uppercase px-1 py-0.2 rounded border ${
+                      user.game_style === 'Passador'
+                        ? 'bg-amber-950/80 text-amber-400 border-amber-600/40'
+                        : user.game_style === 'Guardeiro'
+                        ? 'bg-red-950/80 text-red-400 border-red-700/40'
+                        : 'bg-zinc-900 text-zinc-400 border-zinc-700'
+                    }`}>
+                      {user.game_style || 'Guardeiro'}
+                    </span>
+                  )}
                 </div>
               </div>
 

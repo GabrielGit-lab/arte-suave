@@ -223,9 +223,12 @@ router.put('/profile-curiosities', authenticateToken, (req, res) => {
   );
 
   const updatedUser = db.prepare(`
-    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact,
-           game_style, favorite_position, favorite_submission, idol, bjj_motto, created_at
-    FROM users WHERE id = ?
+    SELECT u.id, u.name, u.email, u.role, u.phone, u.birthdate, u.belt, u.degrees, u.academy_join_date, u.avatar, u.emergency_contact,
+           u.game_style, u.favorite_position, u.favorite_submission, u.idol, u.bjj_motto, u.team_id, u.team_role, u.created_at,
+           t.name as team_name, t.code as team_code, t.logo as team_logo, t.city as team_city, t.state as team_state
+    FROM users u
+    LEFT JOIN teams t ON u.team_id = t.id
+    WHERE u.id = ?
   `).get(req.user.id);
 
   res.json({
@@ -246,9 +249,12 @@ router.put('/avatar', authenticateToken, (req, res) => {
   db.prepare('UPDATE users SET avatar = ? WHERE id = ?').run(avatar || null, req.user.id);
 
   const updatedUser = db.prepare(`
-    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact,
-           game_style, favorite_position, favorite_submission, idol, bjj_motto, created_at
-    FROM users WHERE id = ?
+    SELECT u.id, u.name, u.email, u.role, u.phone, u.birthdate, u.belt, u.degrees, u.academy_join_date, u.avatar, u.emergency_contact,
+           u.game_style, u.favorite_position, u.favorite_submission, u.idol, u.bjj_motto, u.team_id, u.team_role, u.created_at,
+           t.name as team_name, t.code as team_code, t.logo as team_logo, t.city as team_city, t.state as team_state
+    FROM users u
+    LEFT JOIN teams t ON u.team_id = t.id
+    WHERE u.id = ?
   `).get(req.user.id);
 
   res.json({
@@ -263,9 +269,12 @@ router.delete('/avatar', authenticateToken, (req, res) => {
   db.prepare('UPDATE users SET avatar = NULL WHERE id = ?').run(req.user.id);
 
   const updatedUser = db.prepare(`
-    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact,
-           game_style, favorite_position, favorite_submission, idol, bjj_motto, created_at
-    FROM users WHERE id = ?
+    SELECT u.id, u.name, u.email, u.role, u.phone, u.birthdate, u.belt, u.degrees, u.academy_join_date, u.avatar, u.emergency_contact,
+           u.game_style, u.favorite_position, u.favorite_submission, u.idol, u.bjj_motto, u.team_id, u.team_role, u.created_at,
+           t.name as team_name, t.code as team_code, t.logo as team_logo, t.city as team_city, t.state as team_state
+    FROM users u
+    LEFT JOIN teams t ON u.team_id = t.id
+    WHERE u.id = ?
   `).get(req.user.id);
 
   res.json({

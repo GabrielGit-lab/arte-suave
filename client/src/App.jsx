@@ -27,7 +27,7 @@ function AppContent() {
     return (
       <div className="min-h-screen bg-[#060608] text-zinc-100 flex flex-col selection:bg-amber-500 selection:text-black relative overflow-x-hidden">
         <CyberOrientalBackground />
-        <Navbar onMobileMenuToggle={() => setMobileOpen(!mobileOpen)} />
+        <Navbar onMobileMenuToggle={() => setMobileOpen(!mobileOpen)} onNavigate={setActiveTab} />
         <div className="flex-1 flex max-w-7xl w-full mx-auto">
           <Sidebar
             activeTab={activeTab}
@@ -53,7 +53,7 @@ function AppContent() {
   return (
     <div className="min-h-screen bg-[#060608] text-zinc-100 flex flex-col selection:bg-amber-500 selection:text-black relative overflow-x-hidden">
       <CyberOrientalBackground />
-      <Navbar onMobileMenuToggle={() => setMobileOpen(!mobileOpen)} />
+      <Navbar onMobileMenuToggle={() => setMobileOpen(!mobileOpen)} onNavigate={setActiveTab} />
 
       {/* Demo Mode Notice Banner */}
       {(user?.is_demo || user?.email === 'professor@artesuave.com' || user?.email === 'aluno@artesuave.com') && (

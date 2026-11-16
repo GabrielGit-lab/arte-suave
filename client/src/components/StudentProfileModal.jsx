@@ -24,6 +24,8 @@ import {
   FileText,
   UserCheck,
   Shield,
+  Building2,
+  ShieldCheck,
   Activity,
   AlertCircle
 } from 'lucide-react';
@@ -302,7 +304,7 @@ export default function StudentProfileModal({
               />
 
               <div className="w-full sm:w-auto">
-                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1.5">
                   <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${
                     details.role === 'professor'
                       ? 'bg-amber-950/80 text-amber-300 border border-amber-700/60'
@@ -310,7 +312,26 @@ export default function StudentProfileModal({
                   }`}>
                     {details.role === 'professor' ? 'Professor Faixa Preta' : 'Atleta Cadastrado'}
                   </span>
-                  <span className="text-[11px] text-zinc-500 hidden xs:inline">• Arte Suave BJJ</span>
+
+                  {details.team_name ? (
+                    <span className="flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 border border-amber-500/40 text-amber-300">
+                      <div className="w-3.5 h-3.5 rounded-full overflow-hidden shrink-0 bg-black flex items-center justify-center">
+                        {details.team_logo ? (
+                          <img src={details.team_logo} alt={details.team_name} className="w-full h-full object-cover" />
+                        ) : (
+                          <span className="text-[8px]">🥋</span>
+                        )}
+                      </div>
+                      <span>{details.team_name}</span>
+                      {details.team_code && (
+                        <span className="text-[9px] font-mono px-1 rounded bg-black text-amber-400 border border-amber-500/30">
+                          {details.team_code}
+                        </span>
+                      )}
+                    </span>
+                  ) : (
+                    <span className="text-[10px] text-zinc-500 italic">Sem equipe vinculada</span>
+                  )}
                 </div>
 
                 <h3 className="text-lg sm:text-2xl font-black text-white tracking-tight">
@@ -355,12 +376,35 @@ export default function StudentProfileModal({
               </div>
             </div>
 
-            <div className="w-full sm:w-auto text-center sm:text-right shrink-0 bg-black/60 p-3 rounded-xl border border-zinc-800/80 flex flex-col items-center sm:items-end">
-              <span className="text-[10px] text-zinc-500 uppercase font-semibold block mb-1">Graduação</span>
-              <BeltBadge belt={details.belt} degrees={details.degrees} size="md" showLabel={true} />
-              <p className="text-[11px] text-amber-400/90 font-bold mt-1">
-                {details.total_attendances || 0} Presenças no Tatame
-              </p>
+            <div className="flex items-center gap-2.5 w-full sm:w-auto justify-center sm:justify-end">
+              {/* Team Crest Box */}
+              {details.team_name && (
+                <div className="bg-black/90 p-2.5 sm:p-3 rounded-xl border border-amber-500/40 flex flex-col items-center shrink-0 min-w-[105px]">
+                  <span className="text-[9px] text-zinc-400 uppercase font-bold tracking-wider mb-1 flex items-center gap-1">
+                    <ShieldCheck className="w-2.5 h-2.5 text-amber-400" />
+                    <span>Equipe / CT</span>
+                  </span>
+                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-zinc-900 border border-amber-500/60 overflow-hidden flex items-center justify-center shadow-inner">
+                    {details.team_logo ? (
+                      <img src={details.team_logo} alt={details.team_name} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-xl">🥋</span>
+                    )}
+                  </div>
+                  <span className="text-[10px] font-black text-amber-300 text-center truncate max-w-[100px] mt-1">
+                    {details.team_name}
+                  </span>
+                </div>
+              )}
+
+              {/* Graduation Belt Badge */}
+              <div className="text-center sm:text-right shrink-0 bg-black/90 p-3 rounded-xl border border-zinc-800/80 flex flex-col items-center sm:items-end min-w-[120px]">
+                <span className="text-[10px] text-zinc-500 uppercase font-semibold block mb-1">Graduação</span>
+                <BeltBadge belt={details.belt} degrees={details.degrees} size="md" showLabel={true} />
+                <p className="text-[11px] text-amber-400/90 font-bold mt-1">
+                  {details.total_attendances || 0} Presenças no Tatame
+                </p>
+              </div>
             </div>
           </div>
 
@@ -763,6 +807,49 @@ export default function StudentProfileModal({
           {/* TAB 2: DADOS DO ALUNO */}
           {activeTab === 'overview' && (
             <div className="space-y-4">
+              {/* Equipe / Dojô Vinculado */}
+              <div className="p-4 rounded-xl bg-gradient-to-r from-black via-zinc-950 to-neutral-900 border border-amber-500/30 shadow-md">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-14 h-14 rounded-2xl bg-zinc-900 border-2 border-amber-500/60 overflow-hidden flex items-center justify-center shrink-0 shadow-lg">
+                      {details.team_logo ? (
+                        <img src={details.team_logo} alt={details.team_name || 'Equipe'} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-3xl filter drop-shadow">🥋</span>
+                      )}
+                    </div>
+
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] uppercase font-bold px-1.5 py-0.2 rounded bg-red-950 text-red-300 border border-red-800/50">
+                          {details.team_role === 'leader' ? 'Mestre Fundador' : details.team_role === 'instructor' ? 'Instrutor' : 'Aluno Oficial'}
+                        </span>
+                        {details.team_city && (
+                          <span className="text-[11px] text-zinc-400">
+                            {details.team_city}{details.team_state ? ` - ${details.team_state}` : ''}
+                          </span>
+                        )}
+                      </div>
+                      <h4 className="text-sm sm:text-base font-black text-white mt-0.5">
+                        {details.team_name || 'Arte Suave BJJ - Matriz'}
+                      </h4>
+                      <p className="text-[11px] text-zinc-400 mt-0.5">
+                        Centro de Treinamento e Dojô oficial de Jiu-Jitsu.
+                      </p>
+                    </div>
+                  </div>
+
+                  {details.team_code && (
+                    <div className="text-center sm:text-right shrink-0 bg-black/80 px-3 py-2 rounded-xl border border-amber-500/30">
+                      <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Código da Equipe</span>
+                      <span className="font-mono text-xs font-black text-amber-400 tracking-wider">
+                        {details.team_code}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div className="p-3.5 rounded-xl bg-black border border-zinc-800 text-xs">
                   <span className="text-zinc-500 text-[10px] uppercase font-bold block mb-1">Data de Nascimento</span>

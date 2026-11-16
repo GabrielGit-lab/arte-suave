@@ -10,12 +10,14 @@ router.get('/', authenticateToken, (req, res) => {
   let query = `
     SELECT 
       u.id, u.name, u.email, u.phone, u.birthdate, u.belt, u.degrees, u.academy_join_date, u.avatar, u.emergency_contact,
-      u.game_style, u.favorite_position, u.favorite_submission, u.idol, u.bjj_motto,
+      u.game_style, u.favorite_position, u.favorite_submission, u.idol, u.bjj_motto, u.team_id, u.team_role,
+      t.name as team_name, t.code as team_code, t.logo as team_logo, t.city as team_city, t.state as team_state,
       (SELECT COUNT(*) FROM attendances a WHERE a.student_id = u.id AND a.status = 'present') as total_attendances,
       (SELECT p.weight FROM physical_records p WHERE p.student_id = u.id ORDER BY p.recorded_at DESC, p.id DESC LIMIT 1) as current_weight,
       (SELECT p.height FROM physical_records p WHERE p.student_id = u.id ORDER BY p.recorded_at DESC, p.id DESC LIMIT 1) as current_height,
       (SELECT MAX(g.awarded_date) FROM graduations g WHERE g.student_id = u.id) as last_graduation_date
     FROM users u
+    LEFT JOIN teams t ON u.team_id = t.id
     WHERE u.role = 'student'
   `;
   const params = [];
@@ -64,9 +66,12 @@ router.get('/:id', authenticateToken, (req, res) => {
   }
 
   const student = db.prepare(`
-    SELECT id, name, email, role, phone, birthdate, belt, degrees, academy_join_date, avatar, emergency_contact,
-           game_style, favorite_position, favorite_submission, idol, bjj_motto, created_at
-    FROM users WHERE id = ?
+    SELECT u.id, u.name, u.email, u.role, u.phone, u.birthdate, u.belt, u.degrees, u.academy_join_date, u.avatar, u.emergency_contact,
+           u.game_style, u.favorite_position, u.favorite_submission, u.idol, u.bjj_motto, u.team_id, u.team_role, u.created_at,
+           t.name as team_name, t.code as team_code, t.logo as team_logo, t.city as team_city, t.state as team_state
+    FROM users u
+    LEFT JOIN teams t ON u.team_id = t.id
+    WHERE u.id = ?
   `).get(studentId);
 
   if (!student) {

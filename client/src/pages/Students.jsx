@@ -232,6 +232,18 @@ export default function Students() {
                     <div>
                       <h4 className="text-sm font-bold text-white">{student.name}</h4>
                       <p className="text-[11px] text-zinc-400">{student.email}</p>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <div className="w-3.5 h-3.5 rounded-full overflow-hidden shrink-0 bg-black flex items-center justify-center">
+                          {student.team_logo ? (
+                            <img src={student.team_logo} alt={student.team_name} className="w-full h-full object-cover" />
+                          ) : (
+                            <span className="text-[8px]">🥋</span>
+                          )}
+                        </div>
+                        <span className="text-[10px] font-bold text-amber-400/90 truncate max-w-[130px]">
+                          {student.team_name || 'Arte Suave BJJ'}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
