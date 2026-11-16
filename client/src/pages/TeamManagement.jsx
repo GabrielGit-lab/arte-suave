@@ -558,6 +558,7 @@ export default function TeamManagement({ onNavigate }) {
   const members = teamData?.members || [];
   const stats = teamData?.stats || { totalMembers: 0, totalInstructors: 0, totalStudents: 0 };
   const isLeader = teamData?.isLeader;
+  const canManageTeam = isLeader || (isProfessor && (user?.team_role === 'instructor' || user?.team_role === 'leader'));
 
   return (
     <div className="space-y-6">
@@ -576,7 +577,7 @@ export default function TeamManagement({ onNavigate }) {
                 <span className="text-4xl filter drop-shadow">🥋</span>
               )}
 
-              {isLeader && (
+              {canManageTeam ? (
                 <>
                   <input
                     ref={bannerLogoInputRef}
@@ -589,15 +590,25 @@ export default function TeamManagement({ onNavigate }) {
                     type="button"
                     onClick={() => bannerLogoInputRef.current?.click()}
                     disabled={uploadingLogo}
-                    title="Alterar Foto / Brasão da Equipe"
+                    title="Alterar Foto / Brasão da Equipe (Exclusivo do Mestre / Instrutores)"
                     className="absolute inset-0 bg-black/75 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-amber-300 gap-1 cursor-pointer"
                   >
                     <Camera className="w-5 h-5 animate-pulse" />
                     <span className="text-[9px] font-black uppercase tracking-wider text-white">
-                      {uploadingLogo ? 'Enviando...' : 'Trocar Foto'}
+                      {uploadingLogo ? 'Enviando...' : 'Trocar Brasão'}
                     </span>
                   </button>
                 </>
+              ) : (
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-zinc-300 pointer-events-none p-1 text-center">
+                  <ShieldCheck className="w-4 h-4 text-amber-400 mb-0.5" />
+                  <span className="text-[8px] font-bold text-amber-200 uppercase leading-tight">
+                    Brasão Oficial
+                  </span>
+                  <span className="text-[7px] text-zinc-400">
+                    Definido pelo Mestre
+                  </span>
+                </div>
               )}
             </div>
 
@@ -749,7 +760,7 @@ export default function TeamManagement({ onNavigate }) {
           Convidar Alunos
         </button>
 
-        {isLeader && (
+        {canManageTeam && (
           <button
             onClick={() => setActiveSubTab('edit')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
@@ -759,10 +770,20 @@ export default function TeamManagement({ onNavigate }) {
             }`}
           >
             <Edit3 className="w-4 h-4" />
-            Editar Dados da Equipe
+            Editar Dados & Brasão
           </button>
         )}
       </div>
+
+      {/* Student View Banner: Explaining that Master configures team & crest */}
+      {!canManageTeam && (
+        <div className="flex items-center gap-2.5 p-3 rounded-xl bg-zinc-950/90 border border-zinc-800 text-xs text-zinc-400 shadow-md">
+          <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+          <span>
+            Você está vinculado como <strong>Membro Oficial</strong>. O cadastro da equipe, definição do nome e a troca do brasão/logotipo são exclusivos do Mestre Responsável ou instrutores autorizados.
+          </span>
+        </div>
+      )}
 
       {/* Status Alert */}
       {statusMsg.text && (
@@ -887,8 +908,8 @@ export default function TeamManagement({ onNavigate }) {
         </div>
       )}
 
-      {/* SUB-TAB 3: EDIT TEAM DETAILS (LEADER ONLY) */}
-      {activeSubTab === 'edit' && isLeader && (
+      {/* SUB-TAB 3: EDIT TEAM DETAILS (MESTRE / INSTRUTORES AUTORIZADOS) */}
+      {activeSubTab === 'edit' && canManageTeam && (
         <div className="max-w-2xl mx-auto p-6 sm:p-8 rounded-2xl bg-black border border-amber-500/30 shadow-2xl">
           <div className="flex items-center gap-3 mb-6 pb-4 border-b border-zinc-800">
             <div className="p-2.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400">

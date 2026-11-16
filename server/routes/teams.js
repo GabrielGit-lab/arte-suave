@@ -187,9 +187,10 @@ router.put('/my-team', authenticateToken, (req, res) => {
       return res.status(404).json({ error: 'Equipe não encontrada' });
     }
 
-    // Only leader or professor can edit team info
-    if (user.role !== 'professor' && user.team_role !== 'leader') {
-      return res.status(403).json({ error: 'Você não tem permissão para editar os dados da equipe' });
+    // Only leader or authorized professor/instructor can edit team info
+    const canEdit = user.role === 'professor' || user.team_role === 'leader' || user.team_role === 'instructor';
+    if (!canEdit) {
+      return res.status(403).json({ error: 'Apenas o mestre responsável ou instrutores autorizados podem alterar os dados da equipe' });
     }
 
     const { name, city, state, lineage, logo, description } = req.body;
@@ -239,8 +240,9 @@ router.put('/my-team/logo', authenticateToken, (req, res) => {
       return res.status(404).json({ error: 'Equipe não encontrada' });
     }
 
-    if (user.role !== 'professor' && user.team_role !== 'leader') {
-      return res.status(403).json({ error: 'Apenas professores e líderes podem alterar a foto da equipe' });
+    const canEdit = user.role === 'professor' || user.team_role === 'leader' || user.team_role === 'instructor';
+    if (!canEdit) {
+      return res.status(403).json({ error: 'Apenas o mestre responsável ou instrutores autorizados podem alterar o brasão da academia' });
     }
 
     const { logo } = req.body;

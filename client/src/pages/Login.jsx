@@ -642,9 +642,9 @@ export default function Login() {
                           </span>
                         </div>
                       ) : (
-                        <div>
-                          <label className="block text-xs font-semibold text-zinc-300 mb-1">
-                            Código da Equipe do Professor (Opcional)
+                        <div className="p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-800 space-y-2">
+                          <label className="block text-xs font-semibold text-zinc-300">
+                            Código de Vínculo à Equipe (Opcional)
                           </label>
                           <div className="relative">
                             <Building2 className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
@@ -652,12 +652,12 @@ export default function Login() {
                               type="text"
                               value={teamCode}
                               onChange={(e) => setTeamCode(e.target.value.toUpperCase())}
-                              placeholder="Ex: ARTE-01"
+                              placeholder="Ex: SPAK-01"
                               className="w-full pl-9 pr-3 py-2 bg-black border border-zinc-800 rounded-lg text-sm text-amber-300 font-mono tracking-wider focus:outline-none focus:border-amber-500 uppercase"
                             />
                           </div>
-                          <span className="text-[10px] text-zinc-500 mt-1 block">
-                            Insira o código do seu professor para ingressar na equipe dele.
+                          <span className="text-[10px] text-zinc-400 block leading-relaxed">
+                            🥋 <strong>Apenas vínculo para alunos:</strong> Insira o código da sua equipe (ex: <code>SPAK-01</code>) para ser filiado ao dojô. O cadastro e o brasão da academia são definidos pelo mestre responsável.
                           </span>
                         </div>
                       )}
